@@ -48,8 +48,7 @@ Follow these steps to install and run the project locally:
 4. Create a `.env` file in the root directory of the project and add the following environment variables:
 
 ```properties
-DB_CONNECTION=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
-TOKEN_SECRET=your_jwt_secret
+MONGODB_URI=mongodb+srv://root:pwd12345@museum-app.pxby5he.mongodb.net/?retryWrites=true&w=majority
 PORT=5000
 ```
 
