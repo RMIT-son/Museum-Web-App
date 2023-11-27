@@ -1,27 +1,54 @@
-const User = require('/models/userModel');
+const { User, Manager, Visitor} = require('./models/userModel');
+const Artwork = require('./models/artModel');
 
 const userData = [
     {
-        name: "admin1",
-        password: "admin1",
-        email: "admin1@email.com",
-        userType: "admin",
+        name: "mana1",
+        password: "mana1",
+        email: "mana1@email.com",
+        userType: "manager",
         profilePicture: null
     },
     {
-        name: "user1",
-        password: "user1",
-        email: "user1@email.com",
-        userType: "user",
+        name: "mana2",
+        password: "mana2",
+        email: "mana1@email.com",
+        userType: "manager",
         profilePicture: null
     }
 ];
-
-User.collection
+console.log(Artwork);
+Manager.collection
     .drop()
     .then(() => {
         console.log("User collection dropped");
-        return User.insertMany(userData);
+        return Manager.insertMany(userData);
     })
     .then(() => console.log("User collection seeded"))
+    .catch((err) => console.error(err));
+
+const artData = [
+    {
+        title: "art1",
+        description: "art1",
+        price: 100,
+        image: null,
+        type: "painting"
+    },
+    {
+        title: "art2",
+        description: "art2",
+        price: 200,
+        image: null,
+        type: "sculpture"
+    }
+];
+
+Artwork.collection
+    .drop()
+    .then(() => {
+        console.log("Art collection dropped");
+        return Artwork.insertMany(artData);
+    })
+    .then(() => console.log("Art collection seeded"))
     .catch((err) => console.error(err));

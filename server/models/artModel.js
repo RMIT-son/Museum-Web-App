@@ -1,4 +1,4 @@
-const mongoose = require("/server/services/mongoose");
+const mongoose = require('../services/mongoose');
 
 const artSchema = new mongoose.Schema({
     title: { type: String,
@@ -8,15 +8,14 @@ const artSchema = new mongoose.Schema({
     price: { type: Number,
             required: true },
     image: { data: Buffer,
-            contentType: String,
-            required: false },
+            contentType: String},
     type: { type: String,
             required: true,
             enum: ['painting', 'sculpture', 'photography', 'other'],
             default: 'painting' },
     }, { timestamps: true });
 
-const Art = mongoose.model('Art', artSchema);
+const Artwork = mongoose.model('artwork', artSchema);
 
-module.exports = { Art };
+module.exports = Artwork;
 

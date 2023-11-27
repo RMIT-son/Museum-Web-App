@@ -1,28 +1,35 @@
-const mongoose = require('/server/services/mongoose.js');
+const mongoose = require('../services/mongoose');
 
 const userSchema = new mongoose.Schema({
     name: { type: String,
             required: true },
     password: { type: String,
                 required: true},
-    email: { type: String,
+    email: {type: String,
             required: true },
     userType: { type: String,
                 required: true,
-                enum: ['admin', 'user'],
+                enum: ['manager', 'visitor'],
                 default: 'user' },
     profilePicture: { data: Buffer,
-                    contentType: String,
-                    required: false },
-    }, { timestamps: true }, {discriminatorKey: 'userType'});
+                      contentType: String},
+    },
+    { timestamps: true },
+            {discriminatorKey: 'userType'});
 
-const adminSchema = new mongoose.Schema({
-    admin: { type: mongoose.Schema.Types.ObjectId,
+const managerSchema = new mongoose.Schema({
+    manager: { type: mongoose.Schema.Types.ObjectId,
             ref: 'User' },
     }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
-const Admin = User.discriminator('admin', adminSchema);
+const visitorSchema = new mongoose.Schema({
+    visitor: { type: mongoose.Schema.Types.ObjectId,
+                ref: 'User' },
+    }, { timestamps: true });
 
-module.exports = { User, Admin };
+const User = mongoose.model('User', userSchema);
+const Manager = User.discriminator('manager', managerSchema);
+const Visitor = User.discriminator('visitor', visitorSchema);
+
+module.exports = {User, Manager, Visitor};
 
