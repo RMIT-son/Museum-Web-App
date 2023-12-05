@@ -49,7 +49,7 @@ Follow these steps to install and run the project locally:
 
 ```properties
 MONGODB_URI=mongodb+srv://root:pwd12345@museum-app.pxby5he.mongodb.net/?retryWrites=true&w=majority
-PORT=5000
+PORT=3000
 ```
 
 Replace `<username>`, `<password>`, and `<dbname>` with your MongoDB username, password, and database name respectively. TOKEN_SECRET should be a secret string used to sign JSON Web Tokens, and PORT is the port number your server will run on.  

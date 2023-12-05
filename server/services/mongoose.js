@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const mongoose = require('mongoose');
 
 // Connect to MongoDB Atlas
-const URI = process.env.MONGODB_URI || "mongodb+srv://root:pwd12345@museum-app.pxby5he.mongodb.net/?retryWrites=true&w=majority";
+const URI = process.env.MONGODB_URI;
 
 // Connect to MongoDB Atlas
 mongoose

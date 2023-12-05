@@ -2,16 +2,18 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { connectDB } = require('./services/mongoose');
+const userRouter = require('./routers/userRoutes');
+const artRouter = require('./routers/artRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const URI = process.env.MONGODB_URI;
-
+const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/', userRouter);
+app.use('/', artRouter);
 
-connectDB(URI).then(r => {});
-
-
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
+});
 
