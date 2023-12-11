@@ -15,7 +15,7 @@ project-root/
 |   |   |-- services/  
 |   |   |-- styles/  
 |   |   |-- App.js
-|   |   |-- index.js
+|   |   |-- app.js
 |   |   |-- ...
 |-- server/  
 |   |-- controllers/  
@@ -23,7 +23,7 @@ project-root/
 |   |-- models/  
 |   |-- routers/  
 |   |-- services/  
-|   |-- index.js
+|   |-- app.js
 |-- tests/  
 |   |-- client/  
 |   |   |-- ... (client-side tests)
