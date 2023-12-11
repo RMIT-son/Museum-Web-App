@@ -6,9 +6,11 @@ const userRouter = require('./routers/userRoutes');
 const artRouter = require('./routers/artRoutes');
 const authRouter = require('./routers/authRoutes')
 
+
 const app = express();
 const PORT = process.env.PORT;
 app.use(cors());
+app.engine('html', require('ejs').renderFile);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

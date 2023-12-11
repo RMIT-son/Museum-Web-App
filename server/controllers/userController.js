@@ -1,4 +1,4 @@
-const {Manager, Visitor} = require('../models/userModel');
+const {Manager, Visitor } = require('../models/userModel');
 
 async function getAllUsers(req, res) {
     Manager.find()
