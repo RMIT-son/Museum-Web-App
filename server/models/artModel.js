@@ -5,14 +5,16 @@ const artSchema = new mongoose.Schema({
             required: true },
     description: { type: String,
                     required: true },
-    price: { type: Number,
-            required: true },
     image: { type: mongoose.Schema.Types.ObjectId,
             ref: 'artImage' },
     type: { type: String,
             required: true,
             enum: ['painting', 'sculpture', 'photography', 'other'],
             default: 'painting' },
+    artist: { type: mongoose.Schema.Types.ObjectId,
+              ref: 'artist' },
+    year: { type: Number,
+            required: true },
     }, { timestamps: true });
 
 const Artwork = mongoose.model('artwork', artSchema);

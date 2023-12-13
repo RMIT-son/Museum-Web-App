@@ -31,16 +31,19 @@ const artData = [
     {
         title: "art1",
         description: "art1",
-        price: 100,
         image: null,
-        type: "painting"
+        type: "painting",
+        artist: null,
+        year: 2021
     },
     {
         title: "art2",
         description: "art2",
         price: 200,
         image: null,
-        type: "sculpture"
+        type: "sculpture",
+        artist: null,
+        year: 2021
     }
 ];
 

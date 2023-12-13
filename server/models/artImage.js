@@ -1,4 +1,5 @@
 const mongoose = require('../services/mongoose');
+const upload = require('../middleware/multer');
 
 const artImageSchema = new mongoose.Schema({
     data: Buffer,
