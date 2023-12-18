@@ -267,10 +267,8 @@ function handleDragEnd(event) {
   }
 
   const scrollTarget = currentIndex * window.innerWidth;
-  imageContainer.scrollTo({
-    left: scrollTarget,
-    behavior: "smooth",
-  });
+  smoothScroll(imageContainer, scrollTarget, 10);
+
   const displayedArtwork = document.querySelector(
     `.artwork:nth-child(${currentIndex + 1})`
   );
@@ -280,7 +278,7 @@ function handleDragEnd(event) {
     informationBox2.classList.add("fade-in");
   }
 
-  if (currentIndex == 0) {
+  if (currentIndex === 0) {
     leftArrow.style.display = "none";
   } else {
     leftArrow.style.display = "block";
@@ -291,6 +289,30 @@ function handleDragEnd(event) {
   } else {
     rightArrow.style.display = "block";
   }
+}
+
+function smoothScroll(element, target, duration) {
+  const start = element.scrollLeft;
+  const distance = target - start;
+  const startTime = performance.now();
+
+  function scroll(timestamp) {
+    const timeElapsed = timestamp - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const ease = easeOutQuart(progress);
+
+    element.scrollLeft = start + distance * ease;
+
+    if (timeElapsed < duration) {
+      requestAnimationFrame(scroll);
+    }
+  }
+
+  requestAnimationFrame(scroll);
+}
+
+function easeOutQuart(t) {
+  return 1 - --t * t * t * t;
 }
 
 imageContainer.addEventListener("mousedown", handleDragStart);
