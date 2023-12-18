@@ -1,0 +1,243 @@
+:root {
+    --timing: 200ms;
+    --z-index: 999;
+  }
+  
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body.open {
+    overflow: hidden;
+  }
+  
+  /* Navbar */
+  .navbar {
+    width: 100vw;
+    height: 90px;
+    background-color: #333333;
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1%;
+  }
+  
+  .header {
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 380px;
+    padding-left: 10px;
+  }
+  
+  .museum-name {
+    font-size: larger;
+  }
+  
+  .manager {
+    font-size: smaller;
+    color: #b6b6b6;
+  }
+  
+  .toggle_btn {
+    z-index: 99999;
+  }
+  
+  .toggle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .toggle span {
+    position: absolute;
+    width: 40%;
+    height: 2px;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-color: #ffffff;
+  }
+  
+  .toggle span:nth-child(1) {
+    transform: translateY(-8px);
+    left: 15px;
+  }
+  
+  .toggle.active span:nth-child(1) {
+    transform: translateY(0px) rotate(-45deg);
+  }
+  
+  .toggle span:nth-child(2) {
+    transform: translateY(8px);
+    left: 15px;
+  }
+  
+  .toggle.active span:nth-child(2) {
+    transform: translateY(0px) rotate(45deg);
+  }
+  
+  /* over-lay */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  .overlay.open {
+    opacity: 1;
+    z-index: 1001;
+  }
+  
+  /* map container */
+  .map-title {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    row-gap: 1.25rem;
+    column-gap: 1.25rem;
+  }
+  
+  .mb-4 {
+    height: auto;
+    width: 100%;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  /* dropdown-menu */
+  .dropdown-menu {
+    width: 1000px;
+    height: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: var(--timing) ease-in;
+    pointer-events: none;
+  }
+  
+  .dropdown-menu.open {
+    z-index: 1002;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .dropdown-menu li {
+    list-style: none;
+    overflow: hidden;
+  }
+  
+  .dropdown-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  /* Content */
+  .main {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: grid;
+    width: 70%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+  }
+  
+  .graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    height: 125px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+  }
+  
+  .graph:nth-child(1) {
+    grid-column: span 3;
+    height: 150px;
+  }
+  
+  @media (max-width: 992px) {
+    .dropdown-menu {
+      width: 80% !important;
+    }
+    .container {
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: baseline;
+    }
+  
+    .main {
+      margin-top: 50px;
+    }
+  
+    .content {
+      grid-template-columns: auto;
+    }
+  
+    .graph:nth-child(1) {
+      grid-column: span 1;
+      height: 150px;
+    }
+  
+    .dropdown-menu {
+      height: 70vh;
+    }
+  
+    .grid {
+      grid-template-columns: auto;
+    }
+  
+    .map-title {
+      margin-bottom: 10px;
+    }
+  
+    .mb-4 {
+      padding: 10px;
+    }
+  }
+  

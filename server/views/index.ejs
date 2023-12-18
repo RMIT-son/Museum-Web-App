@@ -1,11 +1,22 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Test</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Home Page</title>
 </head>
 <body>
-<h1>Test</h1>
+
+<!-- <h1>Test</h1>
 <p>Test</p>
 <form id="uploadForm">
     <input type="file" name="file" id="file">
@@ -40,7 +51,67 @@
                 console.warn('Please select a file before uploading.');
             }
         });
-    </script>
+    </script> -->
 
+
+    <div class="overlay"></div>
+    <div class="dropdown-menu">
+      <div class="container">
+          <div class="map-title">
+            <h1>Map</h1>
+          </div>
+        <div class="grid">
+          <a href="/">
+              <div class="mb-4">
+                Main Hall 
+              </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Featured Collection 
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Collection Name 
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Information Desk 
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Collection Name 
+            </div>
+          </a>
+          <a href="/personal-collection">
+            <div class="mb-4">
+              Personal Collection 
+            </div>
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="toggle_btn">
+      <div class="toggle">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="title" id="elementToSlideUp">
+        <div class="welcome">WELCOME TO</div>
+        <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
+        <i class="fa-solid fa-arrow-right arrow-icon"></i>
+    </div>
+
+    <div class="background-artwork">
+        <img src="https://blog.artsper.com/wp-content/uploads/2022/02/toulouse-lautrec-2.png" alt="">
+    </div>
+    <script src="/js/script.js"></script>
 </body>
 </html>
