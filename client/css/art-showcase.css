@@ -1,0 +1,361 @@
+:root {
+    --timing: 200ms;
+    --z-index: 999;
+  }
+  
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: hidden;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  .mb-4 {
+    overflow: hidden;
+  }
+  
+  /* over-lay */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  .overlay.open {
+    opacity: 1;
+    z-index: 1001;
+  }
+  
+  /* map container */
+  .map-title {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    row-gap: 1.25rem;
+    column-gap: 1.25rem;
+  }
+  
+  .mb-4 {
+    height: auto;
+    width: 100%;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  /* dropdown-menu */
+  .dropdown-menu {
+    width: 1000px;
+    height: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: var(--timing) ease-in;
+    pointer-events: none;
+  }
+  
+  .dropdown-menu.open {
+    z-index: 1002;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .dropdown-menu li {
+    list-style: none;
+    overflow: hidden;
+  }
+  
+  .dropdown-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .toggle_btn {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    right: 18px;
+    top: 18px;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .toggle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .toggle span {
+    position: absolute;
+    width: 40%;
+    height: 2px;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-color: white;
+  }
+  
+  .toggle span:nth-child(1) {
+    transform: translateY(-8px);
+    left: 15px;
+  }
+  
+  .toggle.active span:nth-child(1) {
+    transform: translateY(0px) rotate(-45deg);
+  }
+  
+  .toggle span:nth-child(2) {
+    transform: translateY(8px);
+    left: 15px;
+  }
+  
+  .toggle.active span:nth-child(2) {
+    transform: translateY(0px) rotate(45deg);
+  }
+  
+  /* Content */
+  .content {
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  
+  .slider-wrapper {
+    position: relative;
+    max-width: 100vw;
+    margin: 0 auto;
+    user-select: none;
+  }
+  
+  .slider {
+    display: flex;
+    width: 100vw;
+    height: 102vh;
+    aspect-ratio: 16 / 9;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    pointer-events: all;
+  }
+  
+  .slider.dragging {
+    scroll-behavior: auto;
+  }
+  
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .slider .artwork {
+    flex: 1 0 100%;
+    overflow-y: hidden;
+    position: relative;
+  }
+  
+  .slider a.disabled {
+    pointer-events: none;
+  }
+  
+  .slider a img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+    object-fit: cover;
+  }
+  
+  .content .slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: var(--z-index);
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+  
+  .content .right:hover {
+    transform: translateY(-50%) translateX(4px);
+  }
+  
+  .content .left:hover {
+    transform: translateY(-50%) translateX(-4px);
+  }
+  
+  .content .right {
+    right: 10px;
+  }
+  
+  .content .left {
+    left: 10px;
+  }
+  
+  /* Information Box */
+  .information {
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(8, 8, 8, 0.6) 30%,
+        rgb(25, 25, 25, 0.8) 70%,
+        #19191c
+      )
+      scroll no-repeat bottom transparent;
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+    color: white;
+    opacity: 0;
+    padding: 20px 40px 0 40px;
+    max-height: 160px;
+    transition: 1400ms ease-in-out;
+  }
+  
+  .information.open {
+    min-height: 92vh;
+  }
+  
+  .information.fade-in {
+    opacity: 1;
+  }
+  
+  .information-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .art-name {
+    color: white;
+    height: 70px;
+    padding-top: 25px;
+    margin-bottom: 5px;
+    font-size: 2.4rem;
+  }
+  
+  .artist {
+    font-size: 1.25rem;
+    padding-bottom: 30px;
+  }
+  
+  .description {
+    font-size: 1.25rem;
+    max-width: 900px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  
+  .information.open {
+    z-index: 1000;
+  }
+  
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    font-size: 25px;
+  }
+  
+  .icons.close {
+    pointer-events: none;
+  }
+
+  .info-icon,
+  .heart-icon,
+  .bookmark-icon,
+  .collection-icon {
+    color: white;
+  }
+  
+  .heart-icon.fa-solid {
+    color: red;
+  }
+  
+  .bookmark-icon.fa-solid {
+    color: yellow;
+  }
+  
+  @media (max-width: 992px) {
+    .dropdown-menu {
+      width: 80% !important;
+    }
+    .container {
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dropdown-menu {
+      height: 70vh;
+    }
+  
+    .grid {
+      grid-template-columns: auto;
+    }
+  
+    .map-title {
+      margin-bottom: 10px;
+    }
+  
+    .mb-4 {
+      padding: 10px;
+    }
+
+    .icons {
+      flex-direction: column;
+      align-items: center;
+      width: 50px;
+    }
+
+    .collection-icon, .heart-icon, .bookmark-icon {
+      display: none !important;
+    }
+  }
+  
