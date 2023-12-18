@@ -303,6 +303,10 @@
     font-size: 25px;
   }
   
+  .icons.close {
+    pointer-events: none;
+  }
+
   .info-icon,
   .heart-icon,
   .bookmark-icon,

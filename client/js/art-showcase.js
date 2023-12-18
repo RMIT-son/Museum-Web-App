@@ -10,18 +10,13 @@ const rightArrow = document.querySelector(".right");
 const toggleBtn = document.querySelector(".toggle_btn");
 const dropDownMenu = document.querySelector(".dropdown-menu");
 const overlay = document.querySelector(".overlay");
-const icons = document.querySelector(".icons");
+const icons = document.querySelectorAll(".icons");
 const information = document.querySelector(".information");
 const infoIcons = document.querySelectorAll(".info-icon");
 const heartIcons = document.querySelectorAll(".heart-icon");
 const bookMarkIcons = document.querySelectorAll(".bookmark-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
-
-function simulateMouseDown(event) {
-  event.preventDefault();
-  event.stopPropagation();
-}
 
 heartIcons.forEach((icon, index) => {
   icon.onclick = function () {
@@ -33,9 +28,6 @@ heartIcons.forEach((icon, index) => {
     icon.classList.toggle("fa-solid");
     icon.classList.toggle("fa-regular");
 
-    if (isInformationOpen && !isDragging) {
-      simulateMouseDown();
-    }
   };
 });
 
@@ -70,10 +62,6 @@ infoIcons.forEach((icon, index) => {
     isInformationOpen = !isInformationOpen;
     icon.classList.toggle("fa-info");
     icon.classList.toggle("fa-times");
-
-    if (isInformationOpen && !isDragging) {
-      simulateMouseDown();
-    }
   };
 });
 
@@ -203,7 +191,6 @@ document.addEventListener("keydown", function (event) {
 // Drag Start
 function handleDragStart(event) {
   if (isInformationOpen) {
-    simulateMouseDown(event);
     return;
   }
   isDragging = true;
@@ -217,8 +204,10 @@ function handleDrag(event) {
   if (!isDragging) return;
   imageContainer.classList.add("dragging");
   event.preventDefault();
-  icons.classList.add("close");
-  positionDiff = event.pageX - prevPageX;
+  icons.forEach(icon => {
+    icon.classList.add('close');
+  });
+  positionDiff = (event.pageX - prevPageX);
   imageContainer.scrollLeft = prevScrollLeft - positionDiff;
 
   const closestAnchor = event.target.closest("a");
@@ -229,7 +218,9 @@ function handleDrag(event) {
 
 // Drag End
 function handleDragEnd(event) {
-  icons.classList.remove("close");
+  icons.forEach(icon => {
+    icon.classList.remove('close');
+  });
   if (isInformationOpen) return;
 
   isDragging = false;
@@ -242,7 +233,7 @@ function handleDragEnd(event) {
     anchor.classList.remove("disabled");
   });
 
-  const scrollThreshold = window.innerWidth / 20;
+  const scrollThreshold = window.innerWidth / 30;
 
   if (positionDiff > scrollThreshold) {
     const currentlyDisplayedArtwork = document.querySelector(
@@ -336,7 +327,9 @@ function handleTouchMove(event) {
   if (!isDragging) return;
   imageContainer.classList.add("dragging");
   event.preventDefault();
-  icons.classList.add("close");
+  icons.forEach(icon => {
+    icon.classList.add('close');
+  });
   positionDiff = event.touches[0].pageX - prevPageX;
   imageContainer.scrollLeft = prevScrollLeft - positionDiff;
 
@@ -350,7 +343,9 @@ function handleTouchMove(event) {
 
 // Touch End
 function handleTouchEnd(event) {
-  icons.classList.remove("close");
+  icons.forEach(icon => {
+    icon.classList.remove('close');
+  });
   if (isInformationOpen) return;
 
   isDragging = false;
@@ -363,7 +358,7 @@ function handleTouchEnd(event) {
     anchor.classList.remove("disabled");
   });
 
-  const scrollThreshold = window.innerWidth / 20;
+  const scrollThreshold = window.innerWidth / 30;
 
   if (positionDiff > scrollThreshold) {
     const currentlyDisplayedArtwork = document.querySelector(
