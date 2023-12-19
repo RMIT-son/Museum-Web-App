@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User</title>
-    <link rel="stylesheet" href="/css/collection.css" />
+    <link rel="stylesheet" href="/css/personal-collection.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div class="overlay"></div>
@@ -58,13 +65,27 @@
 
     <div class="content">
       <header>
-        <h1>[USERNAME]</h1>
+        <h1>EM RUY</h1>
       </header>
-      <div class="gallery">
+      <div class="tabs">
+        <div class="like tablinks active" onclick="showGallery(event, 'like')"><i class="fa-regular fa-heart"></i> <span id="LIKE">Like</span></div>
+        <div class="bookmark tablinks" onclick="showGallery(event, 'bookmark')"><i class="fa-regular fa-bookmark"></i> <span id="BOOKMARK">Bookmark</span></div>
+        <div class="insert tablinks" onclick="showGallery(event, 'insert')">Insert</div>
+      </div>
+      <div class="gallery" id="like">
         <div class="artwork1">
           <img
             src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
             alt="Starry Night"
+          />
+        </div>
+      </div>
+
+      <div class="gallery" id="bookmark">
+        <div class="artwork1">
+          <img
+            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+            alt="Almond Blossoms"
           />
         </div>
         <div class="artwork1">
@@ -73,6 +94,9 @@
             alt="Almond Blossoms"
           />
         </div>
+      </div>
+
+      <div class="gallery" id="insert">
         <div class="artwork1">
           <img
             src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
@@ -81,32 +105,8 @@
         </div>
         <div class="artwork1">
           <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
-        </div>
-        <div class="artwork1">
-          <img
             src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
             alt="Sunflowers"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
           />
         </div>
         <div class="artwork1">

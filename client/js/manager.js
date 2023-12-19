@@ -13,3 +13,19 @@ let menutoggle = document.querySelector(".toggle");
 menutoggle.onclick = function () {
   menutoggle.classList.toggle("active");
 };
+
+function showGallery(evt, galleryName) {
+  var i, gallery, tablinks;
+  gallery = document.getElementsByClassName("gallery");
+  for (i = 0; i < gallery.length; i++) {
+    gallery[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(galleryName).style.display = "grid";
+  evt.currentTarget.className += " active"
+}
