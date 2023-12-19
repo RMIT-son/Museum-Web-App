@@ -1,11 +1,36 @@
 const express = require('express');
-const upload = require('../../server/middleware/multer');
 const fs = require('fs');
 const path = require('path');
 const supertest = require('supertest');
 const app = express();
 const port = 3000;
 const filePath = path.join(__dirname, 'tables.jpg'); // Replace with your actual file name and extension
+
+require('dotenv').config({ path: '../.env' });
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+
+
+const storage = new GridFsStorage({
+    url: "mongodb+srv://root:pwd12345@museum-app.pxby5he.mongodb.net/?retryWrites=true&w=majority",
+    options: { useNewUrlParser: true, useUnifiedTopology: true },
+    file: (req, file) => {
+        const match = ['image/png', 'image/jpeg'];
+
+        if (match.indexOf(file.mimetype) === -1) {
+            const filename = `${Date.now()}-image-${file.originalname}`;
+            return { filename };
+        }
+
+        return {
+            bucketName: 'photos',
+            filename: `${Date.now()}-any-name-${file.originalname}`
+        };
+    }
+});
+
+const upload = multer({ storage });
+module.exports = upload;
 
 // Read the content of the file
 const fileContent = fs.readFileSync(filePath);

@@ -17,7 +17,7 @@ async function createArt(req, res) {
         title: req.body.title,
         description: req.body.description,
         price: req.body.price,
-        image: req.body.image,
+        image: req.file.path,
         type: req.body.type,
     });
 
