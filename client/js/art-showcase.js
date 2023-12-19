@@ -40,10 +40,6 @@ bookMarkIcons.forEach((icon, index) => {
 
     icon.classList.toggle("fa-solid");
     icon.classList.toggle("fa-regular");
-
-    if (isInformationOpen && !isDragging) {
-      simulateMouseDown();
-    }
   };
 });
 
@@ -313,7 +309,6 @@ imageContainer.addEventListener("mouseup", handleDragEnd);
 // Touch Start
 function handleTouchStart(event) {
   if (isInformationOpen) {
-    simulateTouchStart(event);
     return;
   }
   isDragging = true;
