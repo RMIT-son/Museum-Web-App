@@ -15,45 +15,6 @@
     <title>Home Page</title>
 </head>
 <body>
-
-<!-- <h1>Test</h1>
-<p>Test</p>
-<form id="uploadForm">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload">
-</form>
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const fileInput = document.getElementById('file');
-            const file = fileInput.files[0];
-            if (file) {
-                const formData = new FormData();
-                formData.append('image', file);
-
-                fetch('api/art/upload', {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Upload successful:', data);
-                    })
-                    .catch(error => {
-                        console.error('Error uploading file:', error);
-                    });
-            } else {
-                console.warn('Please select a file before uploading.');
-            }
-        });
-    </script> -->
-
-
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
@@ -106,7 +67,7 @@
     <div class="title" id="elementToSlideUp">
         <div class="welcome">WELCOME TO</div>
         <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
-        <i class="fa-solid fa-arrow-right arrow-icon"></i>
+        <a href="/art-showcase"><i class="fa-solid fa-arrow-right arrow-icon"></i></a>
     </div>
 
     <div class="background-artwork">

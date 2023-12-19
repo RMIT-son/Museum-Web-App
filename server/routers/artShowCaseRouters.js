@@ -1,8 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const artModel = require("../models/artModel.js");
 
-router.get('/', (req, res) => {
-    res.render("./visitor/art-showcase");
+router.get("/", async (req, res) => {
+  try {
+    const artworks = await artModel.find({});
+    res.render("./visitor/art-showcase", { artworks: artworks });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = router;
