@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User</title>
+    <title>Personal Collection</title>
     <link rel="stylesheet" href="/css/personal-collection.css" />
     <link
       rel="stylesheet"
@@ -65,7 +65,8 @@
 
     <div class="content">
       <header>
-        <h1>EM RUY</h1>
+        <!-- <h1><%= JSON.stringify(user,null,2) %></h1> -->
+        <h1><%= user.name %><br><%= user.email %></h1>
       </header>
       <div class="tabs">
         <div class="like tablinks active" onclick="showGallery(event, 'like')"><i class="fa-regular fa-heart"></i> <span id="LIKE">Like</span></div>
@@ -73,12 +74,14 @@
         <div class="insert tablinks" onclick="showGallery(event, 'insert')">Insert</div>
       </div>
       <div class="gallery" id="like">
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
-        </div>
+        <% artworks.forEach((artwork) => { %>
+          <div class="artwork1">
+            <img
+              src="<%= artwork.image %>"
+              alt="Starry Night"
+            />
+          </div>
+        <% }) %>  
       </div>
 
       <div class="gallery" id="bookmark">
@@ -118,5 +121,6 @@
       </div>
     </div>
     <script src="/js/manager.js"></script>
+    <%- include('../partials/footer.ejs') %>
   </body>
 </html>

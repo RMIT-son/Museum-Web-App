@@ -59,7 +59,7 @@ app.post("/form", upload.single("image"), async (req, res) => {
     });
 
     await newArtwork.save();
-    res.status(500).send('Upload successfully')
+    res.status(500).send("Upload successfully");
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the product");
@@ -71,8 +71,17 @@ app.use("/manager", managerRouter);
 app.use("/overall", overallRouter);
 app.use("/collection-list", collectionListRouter);
 app.use("/collection", collectionRouter);
-app.use("/personal-collection", personalCollectionRouter);
+app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
+  if (!req.oidc.isAuthenticated()) {
+    return res.redirect("/login");
+  }
+  next();
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
   console.log(`http://localhost:${PORT}`);
+});
+
+app.get("/login", (req, res) => {
+  res.redirect("/auth/login");
 });

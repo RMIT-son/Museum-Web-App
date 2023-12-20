@@ -278,9 +278,9 @@ h5,
   }
 }
 
-
-@media (max-width: 645px) {
+@media (max-width: 1200px) {
   img {
-    object-position: -130px center;
+    height: 100%;
+    width: 100%;
   }
 }

@@ -6,7 +6,7 @@ const body = document.querySelector("body");
 toggleBtn.onclick = function () {
   dropDownMenu.classList.toggle("open");
   overlay.classList.toggle("open");
-  body.classList.toggle("open");
+  body.classList.toggle("close");
 };
 
 let menutoggle = document.querySelector(".toggle");

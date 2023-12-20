@@ -13,6 +13,8 @@ const artSchema = new mongoose.Schema(
     },
     artist: { type: mongoose.Schema.Types.ObjectId, ref: "artist" },
     year: { type: Number, required: true },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

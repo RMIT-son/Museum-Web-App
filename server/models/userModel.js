@@ -32,4 +32,3 @@ const Manager = User.discriminator('manager', managerSchema);
 const Visitor = User.discriminator('visitor', visitorSchema);
 
 module.exports = {User, Manager, Visitor};
-
