@@ -4,7 +4,7 @@ const artSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String },
     type: {
       type: String,
       required: true,
@@ -13,8 +13,8 @@ const artSchema = new mongoose.Schema(
     },
     artist: { type: mongoose.Schema.Types.ObjectId, ref: "artist" },
     year: { type: Number, required: true },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    likes: [{ type: String, ref: 'User' }],
+    bookmarks: [{ type: String, ref: 'User' }],
   },
   { timestamps: true }
 );

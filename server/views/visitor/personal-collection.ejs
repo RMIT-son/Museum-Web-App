@@ -17,42 +17,29 @@
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
-          <div class="map-title">
-            <h1>Map</h1>
-          </div>
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
         <div class="grid">
           <a href="/">
-              <div class="mb-4">
-                Main Hall 
-              </div>
+            <div class="mb-4">Main Hall</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Featured Collection 
-            </div>
+            <div class="mb-4">Featured Collection</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
+            <div class="mb-4">Information Desk</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
           <a href="/personal-collection">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
+            <div class="mb-4">Personal Collection</div>
           </a>
         </div>
-      </div>
       </div>
     </div>
 
@@ -66,37 +53,36 @@
     <div class="content">
       <header>
         <!-- <h1><%= JSON.stringify(user,null,2) %></h1> -->
-        <h1><%= user.name %><br><%= user.email %></h1>
+        <h1><%= user.name %><br /><%= user.email %></h1>
       </header>
       <div class="tabs">
-        <div class="like tablinks active" onclick="showGallery(event, 'like')"><i class="fa-regular fa-heart"></i> <span id="LIKE">Like</span></div>
-        <div class="bookmark tablinks" onclick="showGallery(event, 'bookmark')"><i class="fa-regular fa-bookmark"></i> <span id="BOOKMARK">Bookmark</span></div>
-        <div class="insert tablinks" onclick="showGallery(event, 'insert')">Insert</div>
+        <div class="like tablinks active" onclick="showGallery(event, 'like')">
+          <i class="fa-regular fa-heart"></i> <span id="LIKE">Like</span>
+        </div>
+        <div class="bookmark tablinks" onclick="showGallery(event, 'bookmark')">
+          <i class="fa-regular fa-bookmark"></i>
+          <span id="BOOKMARK">Bookmark</span>
+        </div>
+        <div class="insert tablinks" onclick="showGallery(event, 'insert')">
+          Insert
+        </div>
       </div>
       <div class="gallery" id="like">
-        <% artworks.forEach((artwork) => { %>
-          <div class="artwork1">
-            <img
-              src="<%= artwork.image %>"
-              alt="Starry Night"
-            />
-          </div>
-        <% }) %>  
+        <% artworks.forEach((artwork) => { %> <% if
+        (artwork.likes.includes(user.sid)) { %>
+        <div class="artwork1">
+          <img src="<%= artwork.image %>" alt="Starry Night" />
+        </div>
+        <% } %> <% }) %>
       </div>
 
       <div class="gallery" id="bookmark">
+        <% artworks.forEach((artwork) => { %> <% if
+        (artwork.bookmarks.includes(user.sid)) { %>
         <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
+          <img src="<%= artwork.image %>" alt="Starry Night" />
         </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
-        </div>
+        <% } %> <% }) %>
       </div>
 
       <div class="gallery" id="insert">

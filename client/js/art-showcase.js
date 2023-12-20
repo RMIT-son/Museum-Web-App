@@ -18,30 +18,68 @@ const bookMarkIcons = document.querySelectorAll(".bookmark-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
 
-heartIcons.forEach((icon, index) => {
-  icon.onclick = function () {
-    const currentlyDisplayedArtwork = document.querySelector(
-      `.artwork:nth-child(${index + 1})`
-    );
-    if (!currentlyDisplayedArtwork) return;
+const handleLike = async (artworkId, index) => {
+  try {
+    const response = await fetch(`/like/${artworkId}`, {
+      method: "POST",
+    });
 
-    icon.classList.toggle("fa-solid");
-    icon.classList.toggle("fa-regular");
+    if (!response.ok) {
+      throw new Error(
+        `Failed to like artwork - ${response.status} ${response.statusText}`
+      );
+    }
 
-  };
-});
+    const heartIcon = heartIcons[index];
+    heartIcon.classList.toggle("fa-solid");
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+};
 
-bookMarkIcons.forEach((icon, index) => {
-  icon.onclick = function () {
-    const currentlyDisplayedArtwork = document.querySelector(
-      `.artwork:nth-child(${index + 1})`
-    );
-    if (!currentlyDisplayedArtwork) return;
+const handleBookmark = async (artworkId, index) => {
+  try {
+    const response = await fetch(`/bookmark/${artworkId}`, {
+      method: "POST",
+    });
 
-    icon.classList.toggle("fa-solid");
-    icon.classList.toggle("fa-regular");
-  };
-});
+    if (!response.ok) {
+      throw new Error(
+        `Failed to bookmark artwork - ${response.status} ${response.statusText}`
+      );
+    }
+
+    const bookMarkIcon = bookMarkIcons[index];
+    bookMarkIcon.classList.toggle("fa-solid");
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+};
+
+fetch("/api/art/get")
+  .then((response) => response.json())
+  .then((data) => {
+    const artworkIds = data.map((artwork) => artwork._id);
+
+    heartIcons.forEach((icon, index) => {
+      icon.dataset.artworkId = artworkIds[index];
+      icon.onclick = function () {
+        const artworkId = this.dataset.artworkId;
+        handleLike(artworkId, index);
+      };
+    });
+
+    bookMarkIcons.forEach((icon, index) => {
+      icon.dataset.artworkId = artworkIds[index];
+      icon.onclick = function () {
+        const artworkId = this.dataset.artworkId;
+        handleBookmark(artworkId, index);
+      };
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching artwork data:", error);
+  });
 
 infoIcons.forEach((icon, index) => {
   icon.onclick = function () {
@@ -200,10 +238,10 @@ function handleDrag(event) {
   if (!isDragging) return;
   imageContainer.classList.add("dragging");
   event.preventDefault();
-  icons.forEach(icon => {
-    icon.classList.add('close');
+  icons.forEach((icon) => {
+    icon.classList.add("close");
   });
-  positionDiff = (event.pageX - prevPageX);
+  positionDiff = event.pageX - prevPageX;
   imageContainer.scrollLeft = prevScrollLeft - positionDiff;
 
   const closestAnchor = event.target.closest("a");
@@ -214,8 +252,8 @@ function handleDrag(event) {
 
 // Drag End
 function handleDragEnd(event) {
-  icons.forEach(icon => {
-    icon.classList.remove('close');
+  icons.forEach((icon) => {
+    icon.classList.remove("close");
   });
   if (isInformationOpen) return;
 
@@ -322,8 +360,8 @@ function handleTouchMove(event) {
   if (!isDragging) return;
   imageContainer.classList.add("dragging");
   event.preventDefault();
-  icons.forEach(icon => {
-    icon.classList.add('close');
+  icons.forEach((icon) => {
+    icon.classList.add("close");
   });
   positionDiff = event.touches[0].pageX - prevPageX;
   imageContainer.scrollLeft = prevScrollLeft - positionDiff;
@@ -338,8 +376,8 @@ function handleTouchMove(event) {
 
 // Touch End
 function handleTouchEnd(event) {
-  icons.forEach(icon => {
-    icon.classList.remove('close');
+  icons.forEach((icon) => {
+    icon.classList.remove("close");
   });
   if (isInformationOpen) return;
 

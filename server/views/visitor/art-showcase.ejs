@@ -17,42 +17,29 @@
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
-          <div class="map-title">
-            <h1>Map</h1>
-          </div>
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
         <div class="grid">
           <a href="/">
-              <div class="mb-4">
-                Main Hall 
-              </div>
+            <div class="mb-4">Main Hall</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Featured Collection 
-            </div>
+            <div class="mb-4">Featured Collection</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
+            <div class="mb-4">Information Desk</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
           <a href="/personal-collection">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
+            <div class="mb-4">Personal Collection</div>
           </a>
         </div>
-      </div>
       </div>
     </div>
 
@@ -62,7 +49,7 @@
         <span></span>
       </div>
     </div>
-    
+
     <div class="content">
       <div class="slide left" onclick="slideLeft()">
         <svg
@@ -101,37 +88,48 @@
       <div class="slider-wrapper" draggable="false">
         <div class="slider">
           <% artworks.forEach((artwork) => { %>
-            <div class="artwork">
-              <a href="" draggable="false">
-                <img
-                  src="<%= artwork.image %>"
-                  alt=""
-                  draggable="false"
-                  loading="lazy"
-                />
-              </a>
-              <div class="information">
-                <div class="information-header">
-                  <div>
-                    <div class="art-name"><%= artwork.title %></div>
-                    <div class="artist"><%= artwork.artist %></div>
-                  </div>
-
-                  <div class="icons">
-                    <i class="fa-solid fa-info info-icon"></i>
-                    <i class="fa-regular fa-heart heart-icon"></i>
-                    <i class="fa-regular fa-bookmark bookmark-icon"></i>
-                    <a href="/collection"><i class="fa-solid fa-box collection-icon"></i></a>
-                  </div>
+          <div class="artwork">
+            <a href="" draggable="false">
+              <img
+                src="<%= artwork.image %>"
+                alt=""
+                draggable="false"
+                loading="lazy"
+              />
+            </a>
+            <div class="information">
+              <div class="information-header">
+                <div>
+                  <div class="art-name"><%= artwork.title %></div>
+                  <div class="artist"><%= artwork.artist %></div>
                 </div>
 
-                <div class="description">
-                  <%= artwork.description %>
+                <div class="icons">
+                  <i class="fa-solid fa-info info-icon"></i>
+
+                  <% if (artwork.likes.includes(user.sid)) { %>
+                    <i class="far fa-heart heart-icon fa-solid"></i>
+                  <% } else { %>
+                    <i class="far fa-heart heart-icon"></i>
+                  <% } %>
+                    
+                  <% if (artwork.bookmarks.includes(user.sid)) { %>
+                    <i class="far fa-bookmark bookmark-icon fa-solid"></i>
+                  <% } else { %>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+                  <% } %>
+                  
+                  
+                  <a href="/collection"
+                    ><i class="fa-solid fa-box collection-icon"></i
+                  ></a>
                 </div>
               </div>
+
+              <div class="description"><%= artwork.description %></div>
             </div>
+          </div>
           <% }) %>
-          
         </div>
       </div>
     </div>

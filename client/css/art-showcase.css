@@ -312,6 +312,7 @@ h5,
 .bookmark-icon,
 .collection-icon {
   color: white;
+  cursor: pointer;
 }
 
 .heart-icon.fa-solid {

@@ -85,3 +85,66 @@ app.listen(PORT, () => {
 app.get("/login", (req, res) => {
   res.redirect("/auth/login");
 });
+app.get("/logout", (req, res) => {
+  res.redirect("/auth/login");
+});
+
+// Like
+app.post("/like/:artworkId", async (req, res) => {
+  try {
+    if (!req.oidc.isAuthenticated()) {
+      return res.redirect("/login");
+    }
+
+    const { artworkId } = req.params;
+    const userId = req.oidc.user.sid;
+
+    const artwork = await artModel.findById(artworkId);
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found" });
+    }
+
+    if (!artwork.likes.includes(userId)) {
+      artwork.likes.push(userId);
+      await artwork.save();
+      return res.status(200).json({ message: "Artwork liked successfully" });
+    } else {
+      artwork.likes.remove(userId);
+      await artwork.save();
+      return res.status(200).json({ message: "Artwork disliked successfully" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Bookmark
+app.post("/bookmark/:artworkId", async (req, res) => {
+  try {
+    if (!req.oidc.isAuthenticated()) {
+      return res.redirect("/login");
+    }
+
+    const { artworkId } = req.params;
+    const userId = req.oidc.user.sid;
+
+    const artwork = await artModel.findById(artworkId);
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found" });
+    }
+
+    if (!artwork.bookmarks.includes(userId)) {
+      artwork.bookmarks.push(userId);
+      await artwork.save();
+      return res.status(200).json({ message: "Artwork bookmark successfully" });
+    } else {
+      artwork.bookmarks.remove(userId);
+      await artwork.save();
+      return res.status(200).json({ message: "Artwork disbookmark successfully" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
