@@ -1,59 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="over.css" />
+    <link rel="stylesheet" href="/css/overall.css" />
     <title>Overall</title>
   </head>
   <body>
-    <!-- artist name & DOB -->
-    <div class="artist-info">
-      <h1>[ARTIST]</h1>
-      <h2>[Birthday - Deathday]</h2>
+    <div class="navbar">
+      <div class="header">
+          <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
+          <div class="manager">MANAGER</div>
+      </div>
+      <div class="toggle_btn">
+          <div class="toggle">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
     </div>
 
-    <!-- artwork collection -->
-    <div class="artwork-heading">
-      <h4>ARTWORK COLLECTION</h4>
+    <div class="overlay"></div>
+    <div class="dropdown-menu">
+      <div class="container">
+          <div class="map-title">
+            <h1>Map</h1>
+          </div>
+        <div class="grid">
+          <a href="../index.html">
+              <div class="mb-4">
+                Main Hall 
+              </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Featured Collection   
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Collection Name 
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Information Desk 
+            </div>
+          </a>
+          <a href="">
+            <div class="mb-4">
+              Collection Name 
+            </div>
+          </a>
+          <a href="../collection/personal_collection.html">
+            <div class="mb-4">
+              Personal Collection 
+            </div>
+          </a>
+        </div>
+      </div>
+      </div>
     </div>
-    <div class="artwork-collection-container">
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
-        </div>
+
+    <div class="content">
+      <!-- artist name & DOB -->
+      <div class="artist-info">
+        <h1>[ARTIST]</h1>
+        <h2>[Birthday - Deathday]</h2>
       </div>
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
-        </div>
+
+      <!-- artwork collection -->
+      <div class="artwork-heading">
+        <h4>ARTWORK COLLECTION</h4>
       </div>
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
+      <div class="artwork-collection-container">
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
         </div>
-      </div>
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
         </div>
-      </div>
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
         </div>
-      </div>
-      <div class="artwork">
-        <img src="img/The-Parasol.png" alt="parasol" />
-        <div class="text">
-          <h3>Artwork name</h3>
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
+        </div>
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
+        </div>
+        <div class="artwork">
+          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <div class="text">
+            <h3>Artwork name</h3>
+          </div>
         </div>
       </div>
     </div>
+    
+    <script src="/js/manager.js"></script>
+    <%- include('../partials/footer.ejs') %>
   </body>
 </html>

@@ -17,42 +17,29 @@
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
-          <div class="map-title">
-            <h1>Map</h1>
-          </div>
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
         <div class="grid">
-          <a href="/homepage">
-              <div class="mb-4">
-                Main Hall 
-              </div>
+          <a href="/">
+            <div class="mb-4">Main Hall</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Featured Collection 
-            </div>
+            <div class="mb-4">Featured Collection</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
+            <div class="mb-4">Information Desk</div>
           </a>
           <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+            <div class="mb-4">Collection Name</div>
           </a>
-          <a href="../collection/personal_collection.html">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
+          <a href="/personal-collection">
+            <div class="mb-4">Personal Collection</div>
           </a>
         </div>
-      </div>
       </div>
     </div>
 
@@ -62,7 +49,7 @@
         <span></span>
       </div>
     </div>
-    
+
     <div class="content">
       <div class="slide left" onclick="slideLeft()">
         <svg
@@ -100,10 +87,11 @@
 
       <div class="slider-wrapper" draggable="false">
         <div class="slider">
+          <% artworks.forEach((artwork) => { %>
           <div class="artwork">
             <a href="" draggable="false">
               <img
-                src="https://i.ebayimg.com/images/g/hQIAAOSw0GNbCUcT/s-l1200.webp"
+                src="<%= artwork.image %>"
                 alt=""
                 draggable="false"
                 loading="lazy"
@@ -112,221 +100,36 @@
             <div class="information">
               <div class="information-header">
                 <div>
-                  <div class="art-name">Starry Night</div>
-                  <div class="artist">Van Gogh</div>
+                  <div class="art-name"><%= artwork.title %></div>
+                  <div class="artist"><%= artwork.artist %></div>
                 </div>
 
                 <div class="icons">
                   <i class="fa-solid fa-info info-icon"></i>
-                  <i class="fa-regular fa-heart heart-icon"></i>
-                  <i class="fa-regular fa-bookmark bookmark-icon"></i>
-                  <a href="/collection"><i class="fa-solid fa-box collection-icon"></i></a>
+
+                  <% if (artwork.likes.includes(user.sid)) { %>
+                    <i class="far fa-heart heart-icon fa-solid"></i>
+                  <% } else { %>
+                    <i class="far fa-heart heart-icon"></i>
+                  <% } %>
+                    
+                  <% if (artwork.bookmarks.includes(user.sid)) { %>
+                    <i class="far fa-bookmark bookmark-icon fa-solid"></i>
+                  <% } else { %>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+                  <% } %>
+                  
+                  
+                  <a href="/collection"
+                    ><i class="fa-solid fa-box collection-icon"></i
+                  ></a>
                 </div>
               </div>
 
-              <div class="description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-              </div>
+              <div class="description"><%= artwork.description %></div>
             </div>
           </div>
-
-          <div class="artwork">
-            <a href="" draggable="false">
-              <img
-                src="https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/2/resurfacing-3-high-resolution-hilary-winfield.jpg"
-                alt=""
-                draggable="false"
-              />
-            </a>
-            <div class="information">
-              <div class="information-header">
-                <div>
-                  <div class="art-name">Em Ruy 2</div>
-                  <div class="artist">Artist</div>
-                </div>
-
-                <div class="icons">
-                  <i class="fa-solid fa-info info-icon"></i>
-                  <i class="fa-regular fa-heart heart-icon"></i>
-                  <i class="fa-regular fa-bookmark bookmark-icon"></i>
-                  <a href="collection.html"><i class="fa-solid fa-box collection-icon"></i></a>
-                </div>
-              </div>
-
-              <div class="description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-              </div>
-            </div>
-          </div>
-
-          <div class="artwork">
-            <a href="" draggable="false">
-              <img
-                src="https://kottke.org/plus/misc/images/art-institute-chi-01.jpg"
-                alt=""
-                draggable="false"
-              />
-            </a>
-            <div class="information">
-              <div class="information-header">
-                <div>
-                  <div class="art-name">Em Ruy 3</div>
-                  <div class="artist">Artist</div>
-                </div>
-                <div class="icons">
-                  <i class="fa-solid fa-info info-icon"></i>
-                  <i class="fa-regular fa-heart heart-icon"></i>
-                  <i class="fa-regular fa-bookmark bookmark-icon"></i>
-                  <a href="collection.html"><i class="fa-solid fa-box collection-icon"></i></a>
-                </div>
-              </div>
-
-              <div class="description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi id debitis magnam vel minima, aliquam officiis dolorem
-                rem! In, ex sint dolorum dicta enim deserunt iste tenetur! Esse,
-              </div>
-            </div>
-          </div>
+          <% }) %>
         </div>
       </div>
     </div>
