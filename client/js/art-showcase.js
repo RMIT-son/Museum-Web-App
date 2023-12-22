@@ -18,6 +18,17 @@ const bookMarkIcons = document.querySelectorAll(".bookmark-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
 
+document.addEventListener("DOMContentLoaded", function () {
+  const page2 = document.getElementById("page2");
+
+  if (page2) {
+    page2.style.animation = "appearIn 1s forwards";
+  }
+  if (firstArtwork) {
+    firstInformationBox.classList.add("fade-in");
+  }
+});
+
 const handleLike = async (artworkId, index) => {
   try {
     const response = await fetch(`/like/${artworkId}`, {

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -13,66 +13,71 @@
       referrerpolicy="no-referrer"
     />
     <title>Home Page</title>
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="dropdown-menu">
-      <div class="container">
+  </head>
+  <body>
+    <div id="loader"></div>
+    <div id="page1">
+      <div class="overlay"></div>
+      <div class="dropdown-menu">
+        <div class="container">
           <div class="map-title">
             <h1>Map</h1>
           </div>
-        <div class="grid">
-          <a href="/">
-              <div class="mb-4">
-                Main Hall 
-              </div>
-          </a>
-          <a href="/login/">
-            <div class="mb-4">
-              Featured Collection 
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
-          </a>
-          <a href="/personal-collection">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
-          </a>
+          <div class="grid">
+            <a href="/">
+              <div class="mb-4">Main Hall</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Featured Collection</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Collection Name</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Information Desk</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Collection Name</div>
+            </a>
+            <a href="/collection">
+              <div class="mb-4">Personal Collection</div>
+            </a>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
 
-    <div class="toggle_btn">
-      <div class="toggle">
-        <span></span>
-        <span></span>
+      <div class="toggle_btn">
+        <div class="toggle">
+          <span></span>
+          <span></span>
+        </div>
       </div>
-    </div>
 
-    <div class="title" id="elementToSlideUp">
+      <div class="title" id="elementToSlideUp">
         <div class="welcome">WELCOME TO</div>
         <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
-        <a href="/art-showcase"><i class="fa-solid fa-arrow-right arrow-icon"></i></a>
-    </div>
+        <a href="/art-showcase" class="page-transition"
+          ><button class="arrow-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="16"
+              width="14"
+              viewBox="0 0 448 512"
+            >
+              <path
+                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+              />
+            </svg></button
+        ></a>
+      </div>
 
-    <div class="background-artwork">
-        <img src="https://blog.artsper.com/wp-content/uploads/2022/02/toulouse-lautrec-2.png" alt="">
+      <div class="background-artwork">
+        <img
+          src="https://blog.artsper.com/wp-content/uploads/2022/02/toulouse-lautrec-2.png"
+          alt=""
+        />
+      </div>
     </div>
     <script src="/js/script.js"></script>
-</body>
+  </body>
 </html>

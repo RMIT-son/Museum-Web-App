@@ -33,6 +33,19 @@ h5,
   overflow: hidden;
 }
 
+#page2 {
+  opacity: 0;
+}
+
+@keyframes appearIn {
+  form {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* over-lay */
 .overlay {
   background-color: rgba(0, 0, 0, 0.6);

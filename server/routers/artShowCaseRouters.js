@@ -8,6 +8,7 @@ router.get("/", async (req, res) => {
     res.render("./visitor/art-showcase", {
       artworks: artworks,
       user: req.oidc.user,
+      isAuthenticated: req.oidc.isAuthenticated(),
     });
   } catch (error) {
     console.error(error);
