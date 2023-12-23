@@ -1,9 +1,11 @@
 let isDragging,
   isInformationOpen = false,
+  isAddToCollection = false,
   prevPageX,
   prevScrollLeft,
   positionDiff;
 let currentIndex = 0;
+const body = document.querySelector("body");
 const imageContainer = document.querySelector(".slider");
 const leftArrow = document.querySelector(".left");
 const rightArrow = document.querySelector(".right");
@@ -15,6 +17,7 @@ const information = document.querySelector(".information");
 const infoIcons = document.querySelectorAll(".info-icon");
 const heartIcons = document.querySelectorAll(".heart-icon");
 const bookMarkIcons = document.querySelectorAll(".bookmark-icon");
+const plusIcons = document.querySelectorAll(".plus-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
 
@@ -94,6 +97,12 @@ fetch("/api/art/get")
 
 infoIcons.forEach((icon, index) => {
   icon.onclick = function () {
+    const addToCollection = document.querySelectorAll(
+      ".information-header .add-to-collection"
+    );
+    addToCollection.forEach((tab) => {
+      tab.classList.remove("open");
+    });
     const currentlyDisplayedArtwork = document.querySelector(
       `.artwork:nth-child(${index + 1})`
     );
@@ -107,6 +116,26 @@ infoIcons.forEach((icon, index) => {
     isInformationOpen = !isInformationOpen;
     icon.classList.toggle("fa-info");
     icon.classList.toggle("fa-times");
+  };
+});
+
+plusIcons.forEach((icon, index) => {
+  icon.onclick = function () {
+    const currentlyDisplayedArtwork = document.querySelector(
+      `.artwork:nth-child(${index + 1})`
+    );
+    if (!currentlyDisplayedArtwork) return;
+
+    const informationBox =
+      currentlyDisplayedArtwork.querySelector(".information");
+    if (!informationBox) return;
+
+    const addToCollection = informationBox.querySelector(
+      ".information-header .add-to-collection"
+    );
+
+    addToCollection.classList.toggle("open");
+    isAddToCollection = !isAddToCollection;
   };
 });
 
@@ -222,13 +251,11 @@ function slideRight() {
 
 document.addEventListener("keydown", function (event) {
   if (event.key === "ArrowLeft" && currentIndex != 0) {
-    console.log(currentIndex);
     slideLeft();
   } else if (
     event.key === "ArrowRight" &&
     currentIndex <= imageContainer.childElementCount - 2
   ) {
-    console.log(currentIndex);
     slideRight();
   }
 });
@@ -236,6 +263,9 @@ document.addEventListener("keydown", function (event) {
 // Drag Start
 function handleDragStart(event) {
   if (isInformationOpen) {
+    return;
+  }
+  if (isAddToCollection) {
     return;
   }
   isDragging = true;
@@ -246,6 +276,9 @@ function handleDragStart(event) {
 // Drag
 function handleDrag(event) {
   if (isInformationOpen) return;
+  if (isAddToCollection) {
+    return;
+  }
   if (!isDragging) return;
   imageContainer.classList.add("dragging");
   event.preventDefault();
@@ -259,6 +292,13 @@ function handleDrag(event) {
   if (closestAnchor) {
     closestAnchor.classList.add("disabled");
   }
+
+  const addToCollection = document.querySelectorAll(
+    ".information-header .add-to-collection"
+  );
+  addToCollection.forEach((tab) => {
+    tab.classList.remove("open");
+  });
 }
 
 // Drag End
@@ -267,6 +307,9 @@ function handleDragEnd(event) {
     icon.classList.remove("close");
   });
   if (isInformationOpen) return;
+  if (isAddToCollection) {
+    return;
+  }
 
   isDragging = false;
   positionDiff = Math.abs(positionDiff);

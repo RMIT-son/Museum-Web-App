@@ -33,7 +33,7 @@ function circleTransition(e) {
   setTimeout(function () {
     page1.style.display = "none";
     window.location.href = targetHref;
-  }, 1300);
+  }, 900);
 }
 
 if (anchor) {

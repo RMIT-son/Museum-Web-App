@@ -109,22 +109,49 @@
                     <i class="fa-solid fa-info info-icon"></i>
 
                     <% if (!isAuthenticated) { %>
-                      <i class="far fa-heart heart-icon"></i>
-                      <i class="far fa-bookmark bookmark-icon"></i>
+                    <i class="far fa-heart heart-icon"></i>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+
+                    <% } else { %> <% if (artwork.likes.includes(user.sid)) { %>
+                    <i class="far fa-heart heart-icon fa-solid"></i>
                     <% } else { %>
-                      <% if (artwork.likes.includes(user.sid)) { %>
-                      <i class="far fa-heart heart-icon fa-solid"></i>
-                      <% } else { %>
-                      <i class="far fa-heart heart-icon"></i>
-                      <% } %> <% if (artwork.bookmarks.includes(user.sid)) { %>
-                      <i class="far fa-bookmark bookmark-icon fa-solid"></i>
-                      <% } else { %>
-                      <i class="far fa-bookmark bookmark-icon"></i>
-                      <% } %>
-                    <% } %>
+                    <i class="far fa-heart heart-icon"></i>
+                    <% } %> <% if (artwork.bookmarks.includes(user.sid)) { %>
+                    <i class="far fa-bookmark bookmark-icon fa-solid"></i>
+                    <% } else { %>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+                    <% } %> <% } %>
+
+                    <i class="fa-solid fa-plus plus-icon"></i>
+
                     <a href="/collection"
                       ><i class="fa-solid fa-box collection-icon"></i
                     ></a>
+                  </div>
+
+                  <div class="add-to-collection">
+                    <div class="choose-collection">
+                      <h3>Choose collection:</h3>
+                      <div class="add-new-collection">
+                        <i class="fa-solid fa-plus add-icon"></i>
+                        <span>Add new collection</span>
+                      </div>
+                      <form action="/add-to-collection" method="post">
+                        <div class="collections">
+                          <div class="collection">
+                            <input type="checkbox" id="checkbox1" />
+                            <label for="checkbox1">Collection 1</label>
+                          </div>
+                          <div class="collection">
+                            <input type="checkbox" id="checkbox2" />
+                            <label for="checkbox2">Collection 2</label>
+                          </div>
+                        </div>
+                        <button type="submit">Save</button>
+                      </form>
+
+                      <div class="triangle"></div>
+                    </div>
                   </div>
                 </div>
 

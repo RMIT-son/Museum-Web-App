@@ -21,7 +21,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-y: hidden;
 }
 
 h1,
@@ -29,7 +28,7 @@ h2,
 h3,
 h4,
 h5,
-.mb-4 {
+.mb-4, body {
   overflow: hidden;
 }
 
@@ -312,7 +311,7 @@ h5,
 .icons {
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: 300px;
   font-size: 25px;
 }
 
@@ -323,9 +322,53 @@ h5,
 .info-icon,
 .heart-icon,
 .bookmark-icon,
+.plus-icon,
 .collection-icon {
   color: white;
   cursor: pointer;
+  padding: 7px;
+}
+
+.add-to-collection {
+  background-color: black;
+  position: absolute;
+  top: -130px;
+  right: 77px;
+  width: 200px;
+  height: 150px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s ease;
+}
+
+.add-to-collection.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.choose-collection {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.collections {
+  width: 100%;
+  height: 80px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.triangle {
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background-color: black;
+  bottom: -40px;
+  right: 0;
+
 }
 
 .heart-icon.fa-solid {

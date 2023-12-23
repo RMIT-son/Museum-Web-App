@@ -261,7 +261,7 @@ h5,
     clip-path: circle(0% at 100% 50%);
   }
   to {
-    clip-path: circle(150%);
+    clip-path: circle(100%);
   }
 }
 
