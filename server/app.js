@@ -16,6 +16,7 @@ const personalCollectionRouter = require("./routers/personalCollectionRoutes");
 const path = require("path");
 const upload = require("./middleware/multer.js");
 const artModel = require("./models/artModel.js");
+const collectionModel = require("./models/collectionModel.js");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -141,10 +142,31 @@ app.post("/bookmark/:artworkId", async (req, res) => {
     } else {
       artwork.bookmarks.remove(userId);
       await artwork.save();
-      return res.status(200).json({ message: "Artwork disbookmark successfully" });
+      return res
+        .status(200)
+        .json({ message: "Artwork disbookmark successfully" });
     }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Add new collection
+app.post("/add-new-collection", async (req, res) => {
+  try {
+    const name = req.body.name;
+    const user = req.oidc.user.sid;
+
+    const newCollection = new collectionModel({
+      name: name,
+      user: user,
+    });
+
+    await newCollection.save();
+    res.redirect('/art-showcase?success=true');
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred while adding the collection");
   }
 });

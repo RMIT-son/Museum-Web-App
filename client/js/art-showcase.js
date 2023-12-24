@@ -21,6 +21,50 @@ const plusIcons = document.querySelectorAll(".plus-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
 
+function addNewCollection() {
+  const currentlyDisplayedArtwork = document.querySelector(
+    `.artwork:nth-child(${currentIndex + 1})`
+  );
+
+  const chooseCollection =
+    currentlyDisplayedArtwork.querySelector(".choose-collection");
+  const newCollectionForm = currentlyDisplayedArtwork.querySelector(
+    ".new-collection-form"
+  );
+
+  chooseCollection.style.display = "none";
+  newCollectionForm.style.display = "block";
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const success = urlParams.get("success");
+
+if (success === "true") {
+  alert("Collection added successfully!");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const artworks = document.querySelectorAll(".artwork");
+
+  artworks.forEach((artwork, index) => {
+    const checkboxes = artwork.querySelectorAll(
+      'input[name="selectedCollections"]'
+    );
+    const submitButton = artwork.querySelector("#submitButton");
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        const atLeastOneChecked = [
+          ...artwork.querySelectorAll('input[name="selectedCollections"]'),
+        ].some((checkbox) => checkbox.checked);
+
+        submitButton.style.pointerEvents = atLeastOneChecked ? "auto" : "none";
+        submitButton.style.color = atLeastOneChecked ? "white" : "#818181";
+      });
+    });
+  });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   const page2 = document.getElementById("page2");
 
@@ -292,13 +336,6 @@ function handleDrag(event) {
   if (closestAnchor) {
     closestAnchor.classList.add("disabled");
   }
-
-  const addToCollection = document.querySelectorAll(
-    ".information-header .add-to-collection"
-  );
-  addToCollection.forEach((tab) => {
-    tab.classList.remove("open");
-  });
 }
 
 // Drag End

@@ -28,8 +28,22 @@ h2,
 h3,
 h4,
 h5,
-.mb-4, body {
+.mb-4,
+body {
   overflow: hidden;
+}
+
+button {
+  border: none;
+  background: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+button:hover {
+  background-color: rgb(255, 255, 255, 0.3);
 }
 
 #page2 {
@@ -334,11 +348,11 @@ h5,
   position: absolute;
   top: -130px;
   right: 77px;
-  width: 200px;
+  width: 250px;
   height: 150px;
   opacity: 0;
   pointer-events: none;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .add-to-collection.open {
@@ -346,11 +360,30 @@ h5,
   pointer-events: auto;
 }
 
+.add-new-collection {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-new-collection:hover {
+  background-color: rgb(255, 255, 255, 0.3);
+}
+
+.new-collection-form {
+  margin: 10px;
+  display: none;
+}
+
+#newCollection {
+  height: 20px;
+  width: 140px;
+}
+
 .choose-collection {
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 0;
+  padding: 10px;
 }
 
 .collections {
@@ -368,7 +401,6 @@ h5,
   background-color: black;
   bottom: -40px;
   right: 0;
-
 }
 
 .heart-icon.fa-solid {
