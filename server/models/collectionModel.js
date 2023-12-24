@@ -3,7 +3,7 @@ const mongoose = require("../services/mongoose");
 const collectionSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   user: {
     type: String,
