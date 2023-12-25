@@ -24,6 +24,7 @@ body.close {
   padding-top: 80px;
   margin: 0 10% 80px 10%;
   overflow-x: hidden;
+  max-width: 1600px;
 }
 
 /* Overlay */
@@ -168,7 +169,7 @@ body.close {
 }
 
 #insert {
-  grid-template-columns: 1fr;
+  grid-template-columns: auto;
   grid-auto-rows: auto;
   place-items: center start;
 }
@@ -188,12 +189,12 @@ body.close {
 
 .artworks {
   display: flex; 
-  overflow-x: scroll;
-  width: 100%;
+  width: 80vw;
+  overflow-x: auto;
 }
 
 .artworks img {
-  width: 100%;
+  width: 300px;
   height: 300px;
 }
 

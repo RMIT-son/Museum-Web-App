@@ -150,7 +150,17 @@
                             action="/add-to-collections/:artworkId"
                             method="POST"
                           >
-                            <% collections.forEach((collection, colIndex) => { %>
+                            <% collections.forEach((collection, colIndex) => {
+                            %> <% if (collection.artwork.includes(artwork._id))
+                            { %>
+
+                            <div
+                              class="collection"
+                              style="pointer-events: none; color: #818181"
+                            >
+                              <%= collection.name %> (added)
+                            </div>
+                            <% } else { %>
                             <div class="collection">
                               <input
                                 type="checkbox"
@@ -164,6 +174,7 @@
                                 <%= collection.name %>
                               </label>
                             </div>
+                            <% } %>
                           </form>
                           <% }) %>
                           <button
@@ -181,12 +192,13 @@
                       <form action="/add-new-collection" method="post">
                         <div style="display: flex; align-items: center">
                           <label for="name">Collection name:</label>
-                          <input type="text" id="name" name="name" />
+                          <input type="text" id="name" name="name" required />
                         </div>
                         <button type="submit">
                           Create and add to collection
                         </button>
                       </form>
+                      <i class="fa-solid fa-arrow-left arrow-left-icon" onclick="goBack()"></i>
                     </div>
                     <div class="triangle"></div>
                   </div>
