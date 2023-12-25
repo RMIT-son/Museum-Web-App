@@ -141,6 +141,7 @@ fetch("/api/art/get")
 
 infoIcons.forEach((icon, index) => {
   icon.onclick = function () {
+    isAddToCollection = false;
     const addToCollection = document.querySelectorAll(
       ".information-header .add-to-collection"
     );
@@ -434,105 +435,3 @@ function easeOutQuart(t) {
 imageContainer.addEventListener("mousedown", handleDragStart);
 imageContainer.addEventListener("mousemove", handleDrag);
 imageContainer.addEventListener("mouseup", handleDragEnd);
-
-// Touch Start
-function handleTouchStart(event) {
-  if (isInformationOpen) {
-    return;
-  }
-  isDragging = true;
-  prevPageX = event.touches[0].pageX;
-  prevScrollLeft = imageContainer.scrollLeft;
-}
-
-// Touch Move
-function handleTouchMove(event) {
-  if (isInformationOpen) return;
-  if (!isDragging) return;
-  imageContainer.classList.add("dragging");
-  event.preventDefault();
-  icons.forEach((icon) => {
-    icon.classList.add("close");
-  });
-  positionDiff = event.touches[0].pageX - prevPageX;
-  imageContainer.scrollLeft = prevScrollLeft - positionDiff;
-
-  const closestAnchor = document
-    .elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
-    .closest("a");
-  if (closestAnchor) {
-    closestAnchor.classList.add("disabled");
-  }
-}
-
-// Touch End
-function handleTouchEnd(event) {
-  icons.forEach((icon) => {
-    icon.classList.remove("close");
-  });
-  if (isInformationOpen) return;
-
-  isDragging = false;
-  positionDiff = Math.abs(positionDiff);
-
-  imageContainer.classList.remove("dragging");
-
-  const anchors = document.querySelectorAll(".disabled");
-  anchors.forEach((anchor) => {
-    anchor.classList.remove("disabled");
-  });
-
-  const scrollThreshold = window.innerWidth / 30;
-
-  if (positionDiff > scrollThreshold) {
-    const currentlyDisplayedArtwork = document.querySelector(
-      `.artwork:nth-child(${currentIndex + 1})`
-    );
-
-    const informationBox =
-      currentlyDisplayedArtwork.querySelector(".information");
-    if (informationBox) {
-      informationBox.classList.remove("fade-in");
-    }
-    if (
-      prevPageX > event.changedTouches[0].pageX &&
-      currentIndex < imageContainer.childElementCount - 1
-    ) {
-      currentIndex++;
-    }
-
-    if (prevPageX < event.changedTouches[0].pageX && currentIndex > 0) {
-      currentIndex--;
-    }
-  }
-
-  const scrollTarget = currentIndex * window.innerWidth;
-  imageContainer.scrollTo({
-    left: scrollTarget,
-    behavior: "smooth",
-  });
-  const displayedArtwork = document.querySelector(
-    `.artwork:nth-child(${currentIndex + 1})`
-  );
-
-  const informationBox2 = displayedArtwork.querySelector(".information");
-  if (informationBox2) {
-    informationBox2.classList.add("fade-in");
-  }
-
-  if (currentIndex == 0) {
-    leftArrow.style.display = "none";
-  } else {
-    leftArrow.style.display = "block";
-  }
-
-  if (currentIndex >= imageContainer.childElementCount - 1) {
-    rightArrow.style.display = "none";
-  } else {
-    rightArrow.style.display = "block";
-  }
-}
-
-imageContainer.addEventListener("touchstart", handleTouchStart);
-imageContainer.addEventListener("touchmove", handleTouchMove);
-imageContainer.addEventListener("touchend", handleTouchEnd);

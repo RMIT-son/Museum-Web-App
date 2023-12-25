@@ -13,7 +13,7 @@ const collectionSchema = new mongoose.Schema({
   artwork: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Artwork",
+      ref: "artwork",
     },
   ],
 });

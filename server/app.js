@@ -5,7 +5,10 @@ const cors = require("cors");
 const userRouter = require("./routers/userRoutes");
 const artRouter = require("./routers/artRoutes");
 const authRouter = require("./routers/authRoutes");
-
+const {
+  Types: { ObjectId },
+} = require("mongoose");
+const mongoose = require("mongoose");
 const homepageRouter = require("./routers/visitorRoutes");
 const artShowCaseRouter = require("./routers/artShowCaseRouters");
 const managerRouter = require("./routers/managerRoutes");
@@ -173,5 +176,42 @@ app.post("/add-new-collection", async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the collection");
+  }
+});
+
+app.post("/add-to-collection/:artworkId", async (req, res) => {
+  const { artworkId } = req.params;
+  let selectedCollectionIds = req.body.selectedCollections;
+
+  if (!Array.isArray(selectedCollectionIds)) {
+    selectedCollectionIds = [selectedCollectionIds]; 
+  }
+
+  selectedCollectionIds = selectedCollectionIds
+    .map((id) => (ObjectId.isValid(id) ? new ObjectId(id) : null))
+    .filter((id) => id !== null);
+
+  try {
+    const artwork = await artModel.findById(artworkId);
+
+    if (!artwork) {
+      return res.status(404).send("Artwork not found");
+    }
+
+    for (const collectionId of selectedCollectionIds) {
+      const collection = await collectionModel.findById(collectionId);
+
+      if (!collection) {
+        continue;
+      }
+
+      collection.artwork.push(artwork);
+      await collection.save();
+    }
+
+    res.redirect("/art-showcase");
+  } catch (error) {
+    console.error("Error adding artwork to collection:", error);
+    res.status(500).send("Server Error");
   }
 });

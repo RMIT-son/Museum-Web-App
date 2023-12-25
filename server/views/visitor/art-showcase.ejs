@@ -88,7 +88,7 @@
 
         <div class="slider-wrapper" draggable="false">
           <div class="slider">
-            <% artworks.forEach((artwork) => { %>
+            <% artworks.forEach((artwork, index) => { %>
             <div class="artwork">
               <a href="" draggable="false">
                 <img
@@ -138,35 +138,42 @@
                         onclick="addNewCollection()"
                       >
                         <i class="fa-solid fa-plus add-icon"></i>
-                        <span>Add new collection</span>
+                        <span>Add new collection </span>
                       </div>
                       <form
-                        action="/add-to-collection"
+                        action="/add-to-collection/<%= artwork._id %>"
                         method="post"
-                        enctype="multipart/form-data"
                         onsubmit="return validateForm()"
                       >
                         <div class="collections">
-                          <% collections.forEach((collection, index) => { %>
-                          <div class="collection">
-                            <input
-                              type="checkbox"
-                              id="checkbox<%= index + 1 %>"
-                              name="selectedCollections"
-                            />
-                            <label for="checkbox<%= index + 1 %>">
-                              <%= collection.name %>
-                            </label>
-                          </div>
+                          <form
+                            action="/add-to-collections/:artworkId"
+                            method="POST"
+                          >
+                            <% collections.forEach((collection, colIndex) => { %>
+                            <div class="collection">
+                              <input
+                                type="checkbox"
+                                id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                                name="selectedCollections"
+                                value="<%= collection._id %>"
+                              />
+                              <label
+                                for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              >
+                                <%= collection.name %>
+                              </label>
+                            </div>
+                          </form>
                           <% }) %>
+                          <button
+                            type="submit"
+                            id="submitButton"
+                            style="pointer-events: none; color: #818181"
+                          >
+                            Save
+                          </button>
                         </div>
-                        <button
-                          type="submit"
-                          id="submitButton"
-                          style="pointer-events: none; color: #818181"
-                        >
-                          Save
-                        </button>
                       </form>
                     </div>
                     <div class="new-collection-form">
