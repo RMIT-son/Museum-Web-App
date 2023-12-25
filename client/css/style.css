@@ -39,6 +39,11 @@ h5,
   overflow: hidden;
 }
 
+#page1 {
+  position: absolute;
+  z-index: 1;
+}
+
 /* over-lay */
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
@@ -98,9 +103,16 @@ h5,
   font-size: larger;
   padding: 25px;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255, 0.6);
+  background-color: rgb(255, 255, 255, 0.7);
   opacity: 0;
   cursor: pointer;
+  border: none;
+  outline: none;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.25s ease-in-out;
 }
 
 @keyframes fadeInIcon {
@@ -231,6 +243,26 @@ h5,
 .background-artwork {
   width: 100vw;
   height: 100vh;
+}
+
+#loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  clip-path: circle(0% at 100% 50%);
+  z-index: 2;
+}
+
+@keyframes circleIn {
+  from {
+    clip-path: circle(0% at 100% 50%);
+  }
+  to {
+    clip-path: circle(100%);
+  }
 }
 
 @media (max-width: 992px) {

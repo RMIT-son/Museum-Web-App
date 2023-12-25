@@ -14,125 +14,193 @@
     <title>Art Showcase</title>
   </head>
   <body>
-    <div class="overlay"></div>
-    <div class="dropdown-menu">
-      <div class="container">
-        <div class="map-title">
-          <h1>Map</h1>
-        </div>
-        <div class="grid">
-          <a href="/">
-            <div class="mb-4">Main Hall</div>
-          </a>
-          <a href="">
-            <div class="mb-4">Featured Collection</div>
-          </a>
-          <a href="">
-            <div class="mb-4">Collection Name</div>
-          </a>
-          <a href="">
-            <div class="mb-4">Information Desk</div>
-          </a>
-          <a href="">
-            <div class="mb-4">Collection Name</div>
-          </a>
-          <a href="/personal-collection">
-            <div class="mb-4">Personal Collection</div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="toggle_btn">
-      <div class="toggle">
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-
-    <div class="content">
-      <div class="slide left" onclick="slideLeft()">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="white"
-          stroke="inherit"
-          transform="rotate(180)"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
-          ></path>
-        </svg>
-      </div>
-      <div class="slide right" onclick="slideRight()">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="white"
-          stroke="inherit"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="slider-wrapper" draggable="false">
-        <div class="slider">
-          <% artworks.forEach((artwork) => { %>
-          <div class="artwork">
-            <a href="" draggable="false">
-              <img
-                src="<%= artwork.image %>"
-                alt=""
-                draggable="false"
-                loading="lazy"
-              />
-            </a>
-            <div class="information">
-              <div class="information-header">
-                <div>
-                  <div class="art-name"><%= artwork.title %></div>
-                  <div class="artist"><%= artwork.artist %></div>
-                </div>
-
-                <div class="icons">
-                  <i class="fa-solid fa-info info-icon"></i>
-
-                  <% if (artwork.likes.includes(user.sid)) { %>
-                    <i class="far fa-heart heart-icon fa-solid"></i>
-                  <% } else { %>
-                    <i class="far fa-heart heart-icon"></i>
-                  <% } %>
-                    
-                  <% if (artwork.bookmarks.includes(user.sid)) { %>
-                    <i class="far fa-bookmark bookmark-icon fa-solid"></i>
-                  <% } else { %>
-                    <i class="far fa-bookmark bookmark-icon"></i>
-                  <% } %>
-                  
-                  
-                  <a href="/collection"
-                    ><i class="fa-solid fa-box collection-icon"></i
-                  ></a>
-                </div>
-              </div>
-
-              <div class="description"><%= artwork.description %></div>
-            </div>
+    <div id="page2">
+      <div class="overlay"></div>
+      <div class="dropdown-menu">
+        <div class="container">
+          <div class="map-title">
+            <h1>Map</h1>
           </div>
-          <% }) %>
+          <div class="grid">
+            <a href="/">
+              <div class="mb-4">Main Hall</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Featured Collection</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Collection Name</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Information Desk</div>
+            </a>
+            <a href="">
+              <div class="mb-4">Collection Name</div>
+            </a>
+            <a href="/personal-collection">
+              <div class="mb-4">Personal Collection</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle_btn">
+        <div class="toggle">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="slide left" onclick="slideLeft()">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="white"
+            stroke="inherit"
+            transform="rotate(180)"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+            ></path>
+          </svg>
+        </div>
+        <div class="slide right" onclick="slideRight()">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="white"
+            stroke="inherit"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+            ></path>
+          </svg>
+        </div>
+
+        <div class="slider-wrapper" draggable="false">
+          <div class="slider">
+            <% artworks.forEach((artwork, index) => { %>
+            <div class="artwork">
+              <a href="" draggable="false">
+                <img
+                  src="<%= artwork.image %>"
+                  alt="Image"
+                  alt=""
+                  draggable="false"
+                  loading="lazy"
+                />
+              </a>
+              <div class="information">
+                <div class="information-header">
+                  <div>
+                    <div class="art-name"><%= artwork.title %></div>
+                    <div class="artist"><%= artwork.artist %></div>
+                  </div>
+
+                  <div class="icons">
+                    <i class="fa-solid fa-info info-icon"></i>
+
+                    <% if (!isAuthenticated) { %>
+                    <i class="far fa-heart heart-icon"></i>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+
+                    <% } else { %> <% if (artwork.likes.includes(user.sid)) { %>
+                    <i class="far fa-heart heart-icon fa-solid"></i>
+                    <% } else { %>
+                    <i class="far fa-heart heart-icon"></i>
+                    <% } %> <% if (artwork.bookmarks.includes(user.sid)) { %>
+                    <i class="far fa-bookmark bookmark-icon fa-solid"></i>
+                    <% } else { %>
+                    <i class="far fa-bookmark bookmark-icon"></i>
+                    <% } %> <% } %>
+
+                    <i class="fa-solid fa-plus plus-icon"></i>
+
+                    <a href="/collection"
+                      ><i class="fa-solid fa-box collection-icon"></i
+                    ></a>
+                  </div>
+
+                  <div class="add-to-collection">
+                    <div class="choose-collection">
+                      <h3>Choose collection:</h3>
+                      <div
+                        class="add-new-collection"
+                        onclick="addNewCollection()"
+                      >
+                        <i class="fa-solid fa-plus add-icon"></i>
+                        <span>Add new collection </span>
+                      </div>
+                      <form
+                        action="/add-to-collection/<%= artwork._id %>"
+                        method="post"
+                        onsubmit="return validateForm()"
+                      >
+                        <div class="collections">
+                          <form
+                            action="/add-to-collections/:artworkId"
+                            method="POST"
+                          >
+                            <% collections.forEach((collection, colIndex) => { %>
+                            <div class="collection">
+                              <input
+                                type="checkbox"
+                                id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                                name="selectedCollections"
+                                value="<%= collection._id %>"
+                              />
+                              <label
+                                for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              >
+                                <%= collection.name %>
+                              </label>
+                            </div>
+                          </form>
+                          <% }) %>
+                          <button
+                            type="submit"
+                            id="submitButton"
+                            style="pointer-events: none; color: #818181"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="new-collection-form">
+                      <h3>Add new collection</h3>
+                      <form action="/add-new-collection" method="post">
+                        <div style="display: flex; align-items: center">
+                          <label for="name">Collection name:</label>
+                          <input type="text" id="name" name="name" />
+                        </div>
+                        <button type="submit">
+                          Create and add to collection
+                        </button>
+                      </form>
+                    </div>
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+
+                <div class="description"><%= artwork.description %></div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
         </div>
       </div>
     </div>
+
     <script src="/js/art-showcase.js" defer></script>
   </body>
 </html>

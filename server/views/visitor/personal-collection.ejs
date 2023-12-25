@@ -53,7 +53,8 @@
     <div class="content">
       <header>
         <!-- <h1><%= JSON.stringify(user,null,2) %></h1> -->
-        <h1><%= user.name %><br /><%= user.email %></h1>
+        <h1><%= user.name %></h1>
+        <a href="/art-showcase">Art Showcase</a>
       </header>
       <div class="tabs">
         <div class="like tablinks active" onclick="showGallery(event, 'like')">
@@ -64,7 +65,7 @@
           <span id="BOOKMARK">Bookmark</span>
         </div>
         <div class="insert tablinks" onclick="showGallery(event, 'insert')">
-          Insert
+          Collection
         </div>
       </div>
       <div class="gallery" id="like">
@@ -86,24 +87,17 @@
       </div>
 
       <div class="gallery" id="insert">
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
+        <% collections.forEach((collection) => { %> <% if
+        (collection.user.toString() === user.sid.toString()) { %>
+        <div class="collection">
+          <h2 class="collection-name"><%= collection.name %></h2>
+          <div class="artworks">
+            <% collection.artwork.forEach((artwork) => { %>
+            <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />
+            <% }) %>
+          </div>
         </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
-        </div>
+        <% } %> <% }) %>
       </div>
     </div>
     <script src="/js/manager.js"></script>
