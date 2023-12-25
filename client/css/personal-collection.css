@@ -187,8 +187,8 @@ body.close {
 }
 
 .artworks {
-  display: flex; /* Use flexbox to create a single row */
-  overflow-x: scroll; /* Enable horizontal scrolling */
+  display: flex; 
+  overflow-x: scroll;
   width: 100%;
 }
 
