@@ -88,7 +88,44 @@
 
         <div class="slider-wrapper" draggable="false">
           <div class="slider">
-            <% artworks.forEach((artwork, index) => { %>
+            <% artworks.forEach((artwork, index) => { %> <% if
+            (!isAuthenticated) { %>
+            <div class="artwork">
+              <a href="" draggable="false">
+                <img
+                  src="<%= artwork.image %>"
+                  alt="Image"
+                  alt=""
+                  draggable="false"
+                  loading="lazy"
+                />
+              </a>
+              <div class="information">
+                <div class="information-header">
+                  <div>
+                    <div class="art-name"><%= artwork.title %></div>
+                    <div class="artist"><%= artwork.artist %></div>
+                  </div>
+
+                  <div class="icons">
+                    <i class="fa-solid fa-info info-icon"></i>
+
+                    <a href="/login"><i class="far fa-heart heart-icon"></i></a>
+                    <a href="/login"><i class="far fa-bookmark bookmark-icon"></i></a>
+
+                    <a href="/login"><i class="fa-solid fa-plus plus-icon"></i></a>
+
+                    <a href="/collection"
+                      ><i class="fa-solid fa-box collection-icon"></i
+                    ></a>
+                  </div>
+                </div>
+
+                <div class="description"><%= artwork.description %></div>
+              </div>
+            </div>
+            <% } else { %>
+
             <div class="artwork">
               <a href="" draggable="false">
                 <img
@@ -198,7 +235,10 @@
                           Create and add to collection
                         </button>
                       </form>
-                      <i class="fa-solid fa-arrow-left arrow-left-icon" onclick="goBack()"></i>
+                      <i
+                        class="fa-solid fa-arrow-left arrow-left-icon"
+                        onclick="goBack()"
+                      ></i>
                     </div>
                     <div class="triangle"></div>
                   </div>
@@ -207,7 +247,7 @@
                 <div class="description"><%= artwork.description %></div>
               </div>
             </div>
-            <% }) %>
+            <% } %> <% }) %>
           </div>
         </div>
       </div>
