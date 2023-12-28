@@ -27,5 +27,16 @@ function showGallery(evt, galleryName) {
   }
 
   document.getElementById(galleryName).style.display = "grid";
-  evt.currentTarget.className += " active"
+  evt.currentTarget.className += " active";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const collectionNames = document.querySelectorAll(".collection-name");
+
+  collectionNames.forEach(function (collectionName, index) {
+    collectionName.addEventListener("click", function () {
+      const artworks = document.querySelectorAll(".artworks");
+      artworks[index].classList.toggle("open");
+    });
+  });
+});

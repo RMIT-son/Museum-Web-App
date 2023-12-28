@@ -90,7 +90,10 @@
         <% collections.forEach((collection) => { %> <% if
         (collection.user.toString() === user.sid.toString()) { %>
         <div class="collection">
-          <h2 class="collection-name"><%= collection.name %></h2>
+          <div class="collection-name">
+            <h2><%= collection.name %></h2>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
           <div class="artworks">
             <% collection.artwork.forEach((artwork) => { %>
             <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />

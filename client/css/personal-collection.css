@@ -25,6 +25,7 @@ body.close {
   margin: 0 10% 80px 10%;
   overflow-x: hidden;
   max-width: 1600px;
+  min-height: 100%;
 }
 
 /* Overlay */
@@ -180,7 +181,16 @@ body.close {
 
 .collection-name {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  transition: all .3s;
+  padding: 10px 20px 10px 10px;
+  width: 100%;
+}
+
+.collection-name:hover {
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, .2);
 }
 
 #like {
@@ -191,6 +201,13 @@ body.close {
   display: flex; 
   width: 80vw;
   overflow-x: auto;
+  height: 0;
+  transition: height .3s;
+  overflow-y: hidden;
+}
+
+.artworks.open {
+  height: 300px;
 }
 
 .artworks img {
