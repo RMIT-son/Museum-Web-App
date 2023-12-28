@@ -53,7 +53,11 @@
     <div class="content">
       <header>
         <!-- <h1><%= JSON.stringify(user,null,2) %></h1> -->
-        <img class="profile-picture" src="<%= user.picture %>" alt="profile picture">
+        <img
+          class="profile-picture"
+          src="<%= user.picture %>"
+          alt="profile picture"
+        />
         <h1><%= user.name %></h1>
         <a href="/art-showcase">Art Showcase</a>
       </header>
@@ -110,7 +114,11 @@
           <div class="artworks">
             <% collection.artwork.forEach((artwork) => { %>
             <div class="artwork1" style="width: 300px; height: 300px">
-              <img src="<%= artwork.image %>" alt="Starry Night" />
+              <img
+                style="width: 300px; height: 300px"
+                src="<%= artwork.image %>"
+                alt="Starry Night"
+              />
               <div class="information">
                 <div class="information-box">
                   <div><%= artwork.title %></div>
