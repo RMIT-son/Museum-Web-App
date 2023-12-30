@@ -14,6 +14,7 @@
     <title>Art Showcase</title>
   </head>
   <body>
+    <div id="messageDisplay"></div>
     <div id="page2">
       <div class="overlay"></div>
       <div class="dropdown-menu">
@@ -111,9 +112,13 @@
                     <i class="fa-solid fa-info info-icon"></i>
 
                     <a href="/login"><i class="far fa-heart heart-icon"></i></a>
-                    <a href="/login"><i class="far fa-bookmark bookmark-icon"></i></a>
+                    <a href="/login"
+                      ><i class="far fa-bookmark bookmark-icon"></i
+                    ></a>
 
-                    <a href="/login"><i class="fa-solid fa-plus plus-icon"></i></a>
+                    <a href="/login"
+                      ><i class="fa-solid fa-plus plus-icon"></i
+                    ></a>
 
                     <a href="/collection"
                       ><i class="fa-solid fa-box collection-icon"></i
@@ -178,42 +183,34 @@
                         <span>Add new collection </span>
                       </div>
                       <form
-                        action="/add-to-collection/<%= artwork._id %>"
-                        method="post"
-                        onsubmit="return validateForm()"
+                        action="/add-to-collections/:artworkId"
+                        method="POST"
                       >
                         <div class="collections">
-                          <form
-                            action="/add-to-collections/:artworkId"
-                            method="POST"
+                          <% collections.forEach((collection, colIndex) => { %>
+                          <% if (collection.artwork.includes(artwork._id)) { %>
+                          <div
+                            class="collection"
+                            style="pointer-events: none; color: #818181"
                           >
-                            <% collections.forEach((collection, colIndex) => {
-                            %> <% if (collection.artwork.includes(artwork._id))
-                            { %>
-
-                            <div
-                              class="collection"
-                              style="pointer-events: none; color: #818181"
+                            <%= collection.name %> (added)
+                          </div>
+                          <% } else { %>
+                          <div class="collection">
+                            <input
+                              type="checkbox"
+                              id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              name="selectedCollections"
+                              value="<%= collection._id %>"
+                            />
+                            <label
+                              style="padding-left: 5px"
+                              for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
                             >
-                              <%= collection.name %> (added)
-                            </div>
-                            <% } else { %>
-                            <div class="collection">
-                              <input
-                                type="checkbox"
-                                id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
-                                name="selectedCollections"
-                                value="<%= collection._id %>"
-                              />
-                              <label
-                                for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
-                              >
-                                <%= collection.name %>
-                              </label>
-                            </div>
-                            <% } %>
-                          </form>
-                          <% }) %>
+                              <%= collection.name %>
+                            </label>
+                          </div>
+                          <% } %> <% }) %>
                           <button
                             type="submit"
                             id="submitButton"
@@ -226,7 +223,11 @@
                     </div>
                     <div class="new-collection-form">
                       <h3>Add new collection</h3>
-                      <form action="/add-new-collection" method="post">
+                      <form
+                        action="/add-new-collection"
+                        method="post"
+                        id="addNewCollectionForm"
+                      >
                         <div style="display: flex; align-items: center">
                           <label for="name">Collection name:</label>
                           <input type="text" id="name" name="name" required />
@@ -252,7 +253,7 @@
         </div>
       </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/art-showcase.js" defer></script>
   </body>
 </html>

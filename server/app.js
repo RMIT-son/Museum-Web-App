@@ -81,7 +81,6 @@ app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
   next();
 });
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
   console.log(`http://localhost:${PORT}`);
 });
 
@@ -170,26 +169,29 @@ app.post("/add-new-collection", async (req, res) => {
     });
 
     await newCollection.save();
-    res.redirect("/art-showcase");
+
+    res.status(200).json({ name: newCollection.name });
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the collection");
   }
 });
 
+
 app.post("/add-to-collection/:artworkId", async (req, res) => {
-  const { artworkId } = req.params;
-  let selectedCollectionIds = req.body.selectedCollections;
-
-  if (!Array.isArray(selectedCollectionIds)) {
-    selectedCollectionIds = [selectedCollectionIds];
-  }
-
-  selectedCollectionIds = selectedCollectionIds
-    .map((id) => (ObjectId.isValid(id) ? new ObjectId(id) : null))
-    .filter((id) => id !== null);
-
   try {
+    const { artworkId } = req.params;
+
+    let selectedCollectionIds = req.body.selectedCollections;
+
+    if (!Array.isArray(selectedCollectionIds)) {
+      selectedCollectionIds = [selectedCollectionIds];
+    }
+
+    selectedCollectionIds = selectedCollectionIds
+      .map((id) => (ObjectId.isValid(id) ? new ObjectId(id) : null))
+      .filter((id) => id !== null);
+
     const artwork = await artModel.findById(artworkId);
 
     if (!artwork) {
@@ -207,7 +209,7 @@ app.post("/add-to-collection/:artworkId", async (req, res) => {
       await collection.save();
     }
 
-    res.redirect("/art-showcase");
+    res.status(200).send("Artwork added to collections successfully");
   } catch (error) {
     console.error("Error adding artwork to collection:", error);
     res.status(500).send("Server Error");
