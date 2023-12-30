@@ -183,9 +183,11 @@
                         <span>Add new collection </span>
                       </div>
                       <form
-                        action="/add-to-collections/:artworkId"
+                        action="/add-to-collection/<%= artwork._id %>"
                         method="POST"
+                        id="addArtworkForm"
                       >
+                      <input type="hidden" id="artworkId" name="artworkId" value="<%= artwork._id %>" />
                         <div class="collections">
                           <% collections.forEach((collection, colIndex) => { %>
                           <% if (collection.artwork.includes(artwork._id)) { %>
@@ -214,7 +216,6 @@
                           <button
                             type="submit"
                             id="submitButton"
-                            style="pointer-events: none; color: #818181"
                           >
                             Save
                           </button>

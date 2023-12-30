@@ -181,7 +181,7 @@ app.post("/add-new-collection", async (req, res) => {
 app.post("/add-to-collection/:artworkId", async (req, res) => {
   try {
     const { artworkId } = req.params;
-
+    console.log(artworkId)
     let selectedCollectionIds = req.body.selectedCollections;
 
     if (!Array.isArray(selectedCollectionIds)) {

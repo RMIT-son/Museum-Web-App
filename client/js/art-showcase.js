@@ -60,25 +60,6 @@ if (success === "true") {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const collectionsDiv = document.querySelector(".collections");
-  const checkboxes = collectionsDiv.querySelectorAll(
-    'input[name="selectedCollections"]'
-  );
-  const submitButton = collectionsDiv.querySelector("#submitButton");
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      const atLeastOneChecked = [...checkboxes].some(
-        (checkbox) => checkbox.checked
-      );
-
-      submitButton.style.pointerEvents = atLeastOneChecked ? "auto" : "none";
-      submitButton.style.color = atLeastOneChecked ? "white" : "#818181";
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
   const page2 = document.getElementById("page2");
 
   if (page2) {
@@ -570,6 +551,17 @@ imageContainer.addEventListener("touchmove", touchMove);
 imageContainer.addEventListener("touchend", touchEnd);
 
 $(document).ready(function () {
+  function addEventListeners() {
+    const collectionsDiv = $(".collections");
+    const checkboxes = collectionsDiv.find('input[name="selectedCollections"]');
+    const submitButton = collectionsDiv.find("#submitButton");
+
+    checkboxes.on("change", function () {
+      const atLeastOneChecked = checkboxes.is(":checked");
+      submitButton.prop("disabled", !atLeastOneChecked);
+      submitButton.css("color", atLeastOneChecked ? "white" : "#818181");
+    });
+  }
   // Ajax for add artworks to collections
   $("#addArtworkForm").submit(function (e) {
     e.preventDefault();
@@ -604,14 +596,15 @@ $(document).ready(function () {
         goBack();
         const newCollection = response;
 
-        const collectionsDiv = $(".collections");
         const newCollectionHTML = `
-        <div class="collection">
-          <input type="checkbox" id="checkbox-${newCollection.name}" name="selectedCollections" value="${newCollection._id}" />
-          <label style="padding-left: 5px;" for="checkbox-${newCollection.name}">${newCollection.name}</label>
-        </div>
-      `;
-        collectionsDiv.append(newCollectionHTML);
+          <div class="collection">
+            <input type="checkbox" id="checkbox-${newCollection.name}" name="selectedCollections" value="${newCollection._id}" />
+            <label style="padding-left: 5px;" for="checkbox-${newCollection.name}">${newCollection.name}</label>
+          </div>
+        `;
+        $(".collections").append(newCollectionHTML);
+
+        addEventListeners();
       },
       error: function (error) {
         console.error("Error creating new collection:", error);
@@ -619,6 +612,8 @@ $(document).ready(function () {
       },
     });
   });
+
+  addEventListeners();
 });
 
 function showMessage(message, type = "success") {
