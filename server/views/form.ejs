@@ -11,6 +11,8 @@
   </head>
   <body>
     <h1>Form</h1>
+    <h2>TEST IMAGE</h2>
+    <img src="uploads/tables.jpg" alt="tables" />
     <form
       id="uploadForm"
       method="post"
@@ -52,4 +54,17 @@
       <input type="submit" value="Send" />
     </form>
   </body>
+  <ul>
+    <% artworks.forEach((artwork) => { %>
+      <li>
+        <h2><%= artwork.title %></h2>
+        <p><%= artwork.description %></p>
+        <p><%= artwork.type %></p>
+        <p><%= artwork.year %></p>
+        <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />
+      </li>
+    <% }); %>
+  </ul>
+
+
 </html>

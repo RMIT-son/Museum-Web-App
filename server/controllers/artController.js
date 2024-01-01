@@ -18,7 +18,8 @@ async function createArt(req, res) {
             title: req.body.title,
             description: req.body.description,
             year: req.body.year,
-            image: req.file.path,
+            artist: req.body.artist,
+            image: 'uploads/' + req.file.filename,
             type: req.body.type,
         });
 
@@ -45,19 +46,29 @@ async function updateArt(req, res) {
             return res.status(404).json('Artwork not found');
         }
 
-        artwork.title = req.body.title;
-        artwork.description = req.body.description;
-        artwork.year = req.body.year;
-        artwork.image = req.body.image;
-        artwork.type = req.body.type;
+        console.log('Received request body:', req.body);
 
+        // Update only the fields that are present and not undefined in the request body
+        if (req.body.title !== undefined) {
+            artwork.title = req.body.title;
+        }
+        // Repeat for other fields...
+
+        console.log('Updated artwork:', artwork);
+
+        // Save the updated artwork
         await artwork.save();
+
+        console.log('Artwork saved successfully.');
 
         res.json('Artwork updated!');
     } catch (err) {
+        console.error('Error updating artwork:', err);
         res.status(400).json(`Error: ${err.message}`);
     }
 }
+
+
 
 module.exports = {getAllArt, getArtById, createArt, deleteArt, updateArt};
 
