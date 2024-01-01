@@ -13,19 +13,22 @@ async function getArtById(req, res) {
 }
 
 async function createArt(req, res) {
-    const newArtwork = new Artwork({
-        title: req.body.title,
-        description: req.body.description,
-        year: req.body.year,
-        image: req.file.path,
-        type: req.body.type,
-    });
+    try {
+        const newArtwork = new Artwork({
+            title: req.body.title,
+            description: req.body.description,
+            year: req.body.year,
+            image: req.file.path,
+            type: req.body.type,
+        });
 
-    await newArtwork
-        .save()
-        .then(() => res.json('Artwork added!'))
-        .catch((err) => res.status(400).json(`Error: ${err}`));
+        await newArtwork.save();
+        res.json('Artwork added!');
+    } catch (err) {
+        res.status(400).json(`Error: ${err.message}`);
+    }
 }
+
 
 
 async function deleteArt(req, res) {
