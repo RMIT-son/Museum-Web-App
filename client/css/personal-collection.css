@@ -25,6 +25,7 @@ body.close {
   margin: 0 10% 80px 10%;
   overflow-x: hidden;
   max-width: 1600px;
+  min-height: 100%;
 }
 
 /* Overlay */
@@ -159,6 +160,10 @@ body.close {
 }
 
 /*Gallery style*/
+.profile-picture {
+  border-radius: 50%;
+}
+
 .gallery {
   width: 100%;
   display: grid;
@@ -180,7 +185,20 @@ body.close {
 
 .collection-name {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s;
+  padding: 10px 20px 10px 10px;
+  width: 100%;
+}
+
+.collection-name:hover {
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.arrow-down-icon.rotate {
+  transform: rotate(-180deg);
 }
 
 #like {
@@ -188,19 +206,48 @@ body.close {
 }
 
 .artworks {
-  display: flex; 
+  display: flex;
   width: 80vw;
   overflow-x: auto;
+  height: 0;
+  transition: height 0.3s;
+  overflow-y: hidden;
 }
 
-.artworks img {
-  width: 300px;
+.artworks.open {
   height: 300px;
 }
 
 .artwork1 {
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.information {
+  bottom: 0;
+  position: absolute;
+  background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(8, 8, 8, 0.6) 30%,
+      rgb(25, 25, 25, 0.8) 70%,
+      #19191c
+    )
+    scroll no-repeat bottom transparent;
+    height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.information.open {
+  height: 80%;
+}
+
+.information-box {
+  position: absolute;
+  top: 45px;
 }
 
 .artwork1 img {
