@@ -39,11 +39,29 @@ button {
   outline: none;
   color: white;
   cursor: pointer;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 button:hover {
   background-color: rgb(255, 255, 255, 0.3);
+}
+
+#messageDisplay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: greenyellow;
+  z-index: 999999999;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  opacity: 0;
+  transition: .3s;
 }
 
 #page2 {
@@ -333,6 +351,11 @@ button:hover {
   pointer-events: none;
 }
 
+.collection {
+  display: flex;
+  align-items: center;
+}
+
 .info-icon,
 .heart-icon,
 .bookmark-icon,
@@ -341,6 +364,12 @@ button:hover {
   color: white;
   cursor: pointer;
   padding: 7px;
+  transition: transform 0.3s ease;
+}
+
+.plus-icon.rotate {
+  transform: rotate(calc(180deg - 45deg)); 
+  transition: transform 0.3s ease;
 }
 
 .add-to-collection {
@@ -409,6 +438,28 @@ button:hover {
 
 .bookmark-icon.fa-solid {
   color: yellow;
+}
+
+.arrow-left-icon {
+  transition: 0.3s ease;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.arrow-left-icon:hover {
+  background-color: rgb(255, 255, 255, 0.3);
+}
+
+#submitButton {
+  position: absolute;
+  padding: 5px;
+  bottom: 10px;
+  right: 10px;
+  color: #818181
 }
 
 @media (max-width: 992px) {

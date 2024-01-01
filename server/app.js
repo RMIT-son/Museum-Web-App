@@ -8,7 +8,6 @@ const authRouter = require("./routers/authRoutes");
 const {
   Types: { ObjectId },
 } = require("mongoose");
-const mongoose = require("mongoose");
 const homepageRouter = require("./routers/visitorRoutes");
 const artShowCaseRouter = require("./routers/artShowCaseRouters");
 const managerRouter = require("./routers/managerRoutes");
@@ -25,7 +24,7 @@ const app = express();
 const PORT = process.env.PORT;
 app.use(cors());
 app.engine("html", require("ejs").renderFile);
-app.use(express.static("client"));
+app.use(express.static("../client"));
 app.use("/server/uploads", express.static("server/uploads"));
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
@@ -44,7 +43,6 @@ app.get("/form", (req, res) => {
 app.post("/form", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
-      // Handle the case when no file is uploaded
       return res.status(400).send("No file uploaded.");
     }
 
@@ -83,7 +81,6 @@ app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
   next();
 });
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
   console.log(`http://localhost:${PORT}`);
 });
 
@@ -172,26 +169,29 @@ app.post("/add-new-collection", async (req, res) => {
     });
 
     await newCollection.save();
-    res.redirect("/art-showcase");
+
+    res.status(200).json({ name: newCollection.name });
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the collection");
   }
 });
 
+
 app.post("/add-to-collection/:artworkId", async (req, res) => {
-  const { artworkId } = req.params;
-  let selectedCollectionIds = req.body.selectedCollections;
-
-  if (!Array.isArray(selectedCollectionIds)) {
-    selectedCollectionIds = [selectedCollectionIds]; 
-  }
-
-  selectedCollectionIds = selectedCollectionIds
-    .map((id) => (ObjectId.isValid(id) ? new ObjectId(id) : null))
-    .filter((id) => id !== null);
-
   try {
+    const { artworkId } = req.params;
+    console.log(artworkId)
+    let selectedCollectionIds = req.body.selectedCollections;
+
+    if (!Array.isArray(selectedCollectionIds)) {
+      selectedCollectionIds = [selectedCollectionIds];
+    }
+
+    selectedCollectionIds = selectedCollectionIds
+      .map((id) => (ObjectId.isValid(id) ? new ObjectId(id) : null))
+      .filter((id) => id !== null);
+
     const artwork = await artModel.findById(artworkId);
 
     if (!artwork) {
@@ -209,7 +209,7 @@ app.post("/add-to-collection/:artworkId", async (req, res) => {
       await collection.save();
     }
 
-    res.redirect("/art-showcase");
+    res.status(200).send("Artwork added to collections successfully");
   } catch (error) {
     console.error("Error adding artwork to collection:", error);
     res.status(500).send("Server Error");
