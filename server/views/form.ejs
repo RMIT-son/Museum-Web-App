@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>PHP</title>
+    <title>Adding Collection</title>
     <style>
       body {
         font-family: Arial, Helvetica, sans-serif;
@@ -10,46 +10,34 @@
     </style>
   </head>
   <body>
-    <h1>Form</h1>
-    <form
-      id="uploadForm"
-      method="post"
-      action="/form"
-      enctype="multipart/form-data"
-    >
-      <label for="title">Title</label>
-      <input
-        type="text"
-        name="title"
-        id="title"
-        placeholder="Enter art title"
-      />
-      <!-- <br />
-      <label for="year">Artist</label>
-      <input
-        type="text"
-        name="artist"
-        id="artist"
-        placeholder="Enter art year"
-      /> -->
-      <br />
-      <label for="description">Description</label>
-      <textarea
-        name="description"
-        id="description"
-        placeholder="Enter art description"
-      ></textarea>
-      <br />
-      <label for="type">Type</label>
-      <input type="text" name="type" id="type" placeholder="Enter art type" />
-      <br />
-      <label for="image">Image</label>
-      <input type="file" name="image" id="image" />
-      <br />
-      <label for="year">Year</label>
-      <input type="text" name="year" id="year" placeholder="Enter art year" />
-      <br />
-      <input type="submit" value="Send" />
+
+    <div id="messageDisplay"></div>
+
+    <form id="addNewCollectionForm">
+      <div style="display: flex; align-items: center">
+        <label for="name">Collection name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <button type="button" onclick="addCollection()">Create and add to collection</button>
     </form>
+
+    <script>
+      function addCollection() {
+        var name = document.getElementById('name').value;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              document.getElementById('messageDisplay').innerHTML = "Collection added successfully!";
+            } else {
+              document.getElementById('messageDisplay').innerHTML = "Failed to add collection";
+            }
+          }
+        };
+        xhr.open('POST', '/add-new-collection', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('name=' + encodeURIComponent(name));
+      }
+    </script>
   </body>
 </html>
