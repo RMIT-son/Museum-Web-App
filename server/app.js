@@ -8,7 +8,6 @@ const authRouter = require("./routers/authRoutes");
 const {
   Types: { ObjectId },
 } = require("mongoose");
-const mongoose = require("mongoose");
 const homepageRouter = require("./routers/visitorRoutes");
 const artShowCaseRouter = require("./routers/artShowCaseRouters");
 const managerRouter = require("./routers/managerRoutes");
@@ -25,7 +24,7 @@ const app = express();
 const PORT = process.env.PORT;
 app.use(cors());
 app.engine("html", require("ejs").renderFile);
-app.use(express.static("client"));
+app.use(express.static("../client"));
 app.use("/server/uploads", express.static("server/uploads"));
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
@@ -44,7 +43,6 @@ app.get("/form", (req, res) => {
 app.post("/form", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
-      // Handle the case when no file is uploaded
       return res.status(400).send("No file uploaded.");
     }
 
@@ -184,7 +182,7 @@ app.post("/add-to-collection/:artworkId", async (req, res) => {
   let selectedCollectionIds = req.body.selectedCollections;
 
   if (!Array.isArray(selectedCollectionIds)) {
-    selectedCollectionIds = [selectedCollectionIds]; 
+    selectedCollectionIds = [selectedCollectionIds];
   }
 
   selectedCollectionIds = selectedCollectionIds

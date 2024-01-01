@@ -13,19 +13,22 @@ async function getArtById(req, res) {
 }
 
 async function createArt(req, res) {
-    const newArtwork = new Artwork({
-        title: req.body.title,
-        description: req.body.description,
-        price: req.body.price,
-        image: req.file.path,
-        type: req.body.type,
-    });
+    try {
+        const newArtwork = new Artwork({
+            title: req.body.title,
+            description: req.body.description,
+            year: req.body.year,
+            image: req.file.path,
+            type: req.body.type,
+        });
 
-    newArtwork
-        .save()
-        .then(() => res.json('Artwork added!'))
-        .catch((err) => res.status(400).json(`Error: ${err}`));
+        await newArtwork.save();
+        res.json('Artwork added!');
+    } catch (err) {
+        res.status(400).json(`Error: ${err.message}`);
+    }
 }
+
 
 
 async function deleteArt(req, res) {
@@ -35,19 +38,25 @@ async function deleteArt(req, res) {
 }
 
 async function updateArt(req, res) {
-    Artwork.findById(req.params.id)
-        .then((artwork) => {
-            artwork.title = req.body.title;
-            artwork.description = req.body.description;
-            artwork.price = req.body.price;
-            artwork.image = req.body.image;
-            artwork.type = req.body.type;
-            artwork
-                .save()
-                .then(() => res.json('Artwork updated!'))
-                .catch((err) => res.status(400).json(`Error: ${err}`));
-        })
-        .catch((err) => res.status(400).json(`Error: ${err}`));
+    try {
+        const artwork = await Artwork.findById(req.params.id);
+
+        if (!artwork) {
+            return res.status(404).json('Artwork not found');
+        }
+
+        artwork.title = req.body.title;
+        artwork.description = req.body.description;
+        artwork.year = req.body.year;
+        artwork.image = req.body.image;
+        artwork.type = req.body.type;
+
+        await artwork.save();
+
+        res.json('Artwork updated!');
+    } catch (err) {
+        res.status(400).json(`Error: ${err.message}`);
+    }
 }
 
 module.exports = {getAllArt, getArtById, createArt, deleteArt, updateArt};

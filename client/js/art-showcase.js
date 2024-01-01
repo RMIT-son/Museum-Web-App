@@ -18,8 +18,24 @@ const infoIcons = document.querySelectorAll(".info-icon");
 const heartIcons = document.querySelectorAll(".heart-icon");
 const bookMarkIcons = document.querySelectorAll(".bookmark-icon");
 const plusIcons = document.querySelectorAll(".plus-icon");
+const leftArrowIcon = document.querySelectorAll(".arrow-left-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
+
+function goBack() {
+  const currentlyDisplayedArtwork = document.querySelector(
+    `.artwork:nth-child(${currentIndex + 1})`
+  );
+
+  const chooseCollection =
+    currentlyDisplayedArtwork.querySelector(".choose-collection");
+  const newCollectionForm = currentlyDisplayedArtwork.querySelector(
+    ".new-collection-form"
+  );
+
+  chooseCollection.style.display = "block";
+  newCollectionForm.style.display = "none";
+}
 
 function addNewCollection() {
   const currentlyDisplayedArtwork = document.querySelector(
@@ -166,6 +182,7 @@ infoIcons.forEach((icon, index) => {
 
 plusIcons.forEach((icon, index) => {
   icon.onclick = function () {
+    icon.classList.toggle('rotate');
     const currentlyDisplayedArtwork = document.querySelector(
       `.artwork:nth-child(${index + 1})`
     );
@@ -435,3 +452,122 @@ function easeOutQuart(t) {
 imageContainer.addEventListener("mousedown", handleDragStart);
 imageContainer.addEventListener("mousemove", handleDrag);
 imageContainer.addEventListener("mouseup", handleDragEnd);
+
+// Touch Start
+function touchStart(event) {
+  if (isInformationOpen) {
+    return;
+  }
+  if (isAddToCollection) {
+    return;
+  }
+  isDragging = true;
+
+  const firstTouch = event.touches[0];
+  if (firstTouch) {
+    prevPageX = firstTouch.pageX;
+  }
+
+  prevScrollLeft = imageContainer.scrollLeft;
+}
+
+// Touch Move
+function touchMove(event) {
+  if (isInformationOpen || isAddToCollection || !isDragging) return;
+
+  imageContainer.classList.add("dragging");
+  event.preventDefault();
+
+  const touch = event.touches[0];
+  if (touch) {
+    const touchX = touch.pageX;
+    const positionDiff = touchX - prevPageX;
+    imageContainer.scrollLeft = prevScrollLeft - positionDiff;
+  }
+
+  icons.forEach((icon) => {
+    icon.classList.add("close");
+  });
+
+  const closestAnchor = event.target.closest("a");
+  if (closestAnchor) {
+    closestAnchor.classList.add("disabled");
+  }
+}
+
+// Touch End
+function touchEnd(event) {
+  icons.forEach((icon) => {
+    icon.classList.remove("close");
+  });
+  if (isInformationOpen) return;
+  if (isAddToCollection) {
+    return;
+  }
+
+  isDragging = false;
+
+  imageContainer.classList.remove("dragging");
+
+  const anchors = document.querySelectorAll(".disabled");
+  anchors.forEach((anchor) => {
+    anchor.classList.remove("disabled");
+  });
+
+  const touch = event.changedTouches[0];
+  if (touch) {
+    const touchX = touch.pageX;
+    let positionDiff = touchX - prevPageX;
+    positionDiff = Math.abs(positionDiff);
+    const scrollThreshold = window.innerWidth / 30;
+    if (positionDiff > scrollThreshold) {
+      const currentlyDisplayedArtwork = document.querySelector(
+        `.artwork:nth-child(${currentIndex + 1})`
+      );
+
+      const informationBox =
+        currentlyDisplayedArtwork.querySelector(".information");
+      if (informationBox) {
+        informationBox.classList.remove("fade-in");
+      }
+      if (
+        prevPageX > touch.pageX &&
+        currentIndex < imageContainer.childElementCount - 1
+      ) {
+        currentIndex++;
+      }
+
+      if (prevPageX < touch.pageX && currentIndex > 0) {
+        currentIndex--;
+      }
+    }
+
+    const scrollTarget = currentIndex * window.innerWidth;
+    smoothScroll(imageContainer, scrollTarget, 10);
+
+    const displayedArtwork = document.querySelector(
+      `.artwork:nth-child(${currentIndex + 1})`
+    );
+
+    const informationBox2 = displayedArtwork.querySelector(".information");
+    if (informationBox2) {
+      informationBox2.classList.add("fade-in");
+    }
+
+    if (currentIndex === 0) {
+      leftArrow.style.display = "none";
+    } else {
+      leftArrow.style.display = "block";
+    }
+
+    if (currentIndex >= imageContainer.childElementCount - 1) {
+      rightArrow.style.display = "none";
+    } else {
+      rightArrow.style.display = "block";
+    }
+  }
+}
+
+imageContainer.addEventListener("touchstart", touchStart);
+imageContainer.addEventListener("touchmove", touchMove);
+imageContainer.addEventListener("touchend", touchEnd);
