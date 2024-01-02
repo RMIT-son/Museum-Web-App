@@ -30,8 +30,6 @@ async function createArt(req, res) {
     }
 }
 
-
-
 async function deleteArt(req, res) {
     Artwork.findByIdAndDelete(req.params.id)
         .then(() => res.json('Artwork deleted.'))
@@ -48,11 +46,24 @@ async function updateArt(req, res) {
 
         console.log('Received request body:', req.body);
 
-        // Update only the fields that are present and not undefined in the request body
         if (req.body.title !== undefined) {
             artwork.title = req.body.title;
         }
-        // Repeat for other fields...
+        if (req.body.description !== undefined) {
+            artwork.description = req.body.description;
+        }
+        if (req.body.year !== undefined) {
+            artwork.year = req.body.year;
+        }
+        if (req.body.artist !== undefined) {
+            artwork.artist = req.body.artist;
+        }
+        if (req.file !== undefined && req.file.filename !== undefined) {
+            artwork.image = 'uploads/' + req.file.filename;
+        }
+        if (req.body.type !== undefined) {
+            artwork.type = req.body.type;
+        }
 
         console.log('Updated artwork:', artwork);
 

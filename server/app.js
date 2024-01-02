@@ -40,7 +40,8 @@ app.use("/", homepageRouter);
 
 app.get("/form", async (req, res) => {
   try {
-    const artworks = await artModel.find();
+    let artworks = await fetch("http://localhost:3000/api/art/get")
+    artworks = await artworks.json()
     res.render("form", {artworks: artworks});
   } catch (error) {
     console.error('Error fetching artworks:', error.message);
@@ -56,7 +57,7 @@ app.post("/form", upload.single("image"), async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const type = req.body.type;
-    // const artist = req.body.artist;
+    const artist = req.body.artist;
     const year = req.body.year;
     const imagePath = 'uploads/' + req.file.filename;
 
@@ -64,6 +65,7 @@ app.post("/form", upload.single("image"), async (req, res) => {
       title: title,
       description: description,
       image: imagePath,
+      artist: artist,
       type: type,
       year: year,
     });
