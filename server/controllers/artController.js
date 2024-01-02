@@ -1,4 +1,5 @@
 const Artwork = require('../models/artModel');
+const {saveArtwork, deleteArtwork} = require('../services/algolia');
 
 async function getAllArt(req, res) {
     Artwork.find()
@@ -24,6 +25,7 @@ async function createArt(req, res) {
         });
 
         await newArtwork.save();
+        await saveArtwork(newArtwork);
         res.json('Artwork added!');
     } catch (err) {
         res.status(400).json(`Error: ${err.message}`);
@@ -31,6 +33,7 @@ async function createArt(req, res) {
 }
 
 async function deleteArt(req, res) {
+    await deleteArtwork(req.params.id);
     Artwork.findByIdAndDelete(req.params.id)
         .then(() => res.json('Artwork deleted.'))
         .catch((err) => res.status(400).json(`Error: ${err}`));
