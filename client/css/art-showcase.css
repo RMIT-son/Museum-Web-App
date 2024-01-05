@@ -46,6 +46,24 @@ button:hover {
   background-color: rgb(255, 255, 255, 0.3);
 }
 
+#messageDisplay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: greenyellow;
+  z-index: 999999999;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  opacity: 0;
+  transition: .3s;
+}
+
 #page2 {
   opacity: 0;
 }
@@ -333,6 +351,11 @@ button:hover {
   pointer-events: none;
 }
 
+.collection {
+  display: flex;
+  align-items: center;
+}
+
 .info-icon,
 .heart-icon,
 .bookmark-icon,
@@ -436,6 +459,7 @@ button:hover {
   padding: 5px;
   bottom: 10px;
   right: 10px;
+  color: #818181
 }
 
 @media (max-width: 992px) {

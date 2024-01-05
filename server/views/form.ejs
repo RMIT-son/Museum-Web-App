@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>PHP</title>
+    <title>FORM TEST</title>
     <style>
       body {
         font-family: Arial, Helvetica, sans-serif;
@@ -24,14 +24,14 @@
         id="title"
         placeholder="Enter art title"
       />
-      <!-- <br />
-      <label for="year">Artist</label>
+      <br />
+      <label for="artist">Artist</label>
       <input
         type="text"
         name="artist"
         id="artist"
-        placeholder="Enter art year"
-      /> -->
+        placeholder="Enter artist name"
+      />
       <br />
       <label for="description">Description</label>
       <textarea
@@ -52,4 +52,17 @@
       <input type="submit" value="Send" />
     </form>
   </body>
+  <ul>
+    <% artworks.forEach((artwork) => { %>
+      <li>
+        <h2><%= artwork.title %></h2>
+        <p><%= artwork.description %></p>
+        <p><%= artwork.type %></p>
+        <p><%= artwork.year %></p>
+        <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />
+      </li>
+    <% }); %>
+  </ul>
+
+
 </html>
