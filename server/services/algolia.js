@@ -1,9 +1,9 @@
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config({path: '../../.env'});
 const AlgoliaSearch = require('algoliasearch');
 const {get} = require("axios");
 
 const app_id = process.env.ALGOLIA_APP_ID;
-const api_key = process.env.ALGOLIA_API_KEY;
+const api_key = process.env.ALGOLIA_ADMIN_KEY;
 const client = AlgoliaSearch(app_id, api_key);
 const index = client.initIndex('artwork');
 
@@ -130,4 +130,8 @@ module.exports = {
     saveArtworks,
     deleteArtwork,
     fetchArtworks,
+    searchArtworksByArtist,
+    searchArtworksByTitle,
+    searchArtworksByYear,
+    searchArtworksByType
 };

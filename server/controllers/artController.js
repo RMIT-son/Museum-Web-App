@@ -47,8 +47,6 @@ async function updateArt(req, res) {
             return res.status(404).json('Artwork not found');
         }
 
-        console.log('Received request body:', req.body);
-
         if (req.body.title !== undefined) {
             artwork.title = req.body.title;
         }
@@ -68,12 +66,8 @@ async function updateArt(req, res) {
             artwork.type = req.body.type;
         }
 
-        console.log('Updated artwork:', artwork);
-
         // Save the updated artwork
         await artwork.save();
-
-        console.log('Artwork saved successfully.');
 
         res.json('Artwork updated!');
     } catch (err) {

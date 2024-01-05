@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/multer');
-const {getAllArt, getArtById, createArt, deleteArt, updateArt} = require('../controllers/artController');
-const {search} = require('../controllers/searchController');
+const { getAllArt, getArtById, createArt, deleteArt, updateArt } = require('../controllers/artController');
+const { search } = require('../controllers/searchController');
 
 router.get('/api/art/get', (req, res) => getAllArt(req, res));
 router.get('/api/art/get/:id', (req, res) => getArtById(req, res));
