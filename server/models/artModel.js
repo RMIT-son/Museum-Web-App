@@ -2,8 +2,8 @@ const mongoose = require("../services/mongoose");
 
 const artSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
+    title: { type: String},
+    description: { type: String},
     image: { type: String },
     type: {
       type: String,
@@ -12,7 +12,7 @@ const artSchema = new mongoose.Schema(
       default: "painting",
     },
     artist: { type: String },
-    year: { type: Number, required: true },
+    year: { type: Number},
     likes: [{ type: String, ref: 'User' }],
     bookmarks: [{ type: String, ref: 'User' }],
   },
