@@ -651,52 +651,57 @@ $(document).ready(function () {
       url: url,
       data: form.serialize(),
       success: function (data) {
-        goBack();
-        showMessage(data.message);
-        $(".artwork").each(function (index) {
-          var newCollectionDiv = `
+        if (data && data._id && data.name) {
+          goBack();
+          showMessage(data.message);
+          $(".artwork").each(function (index) {
+            var newCollectionDiv = `
             <div class="collection">
               <input
                 type="checkbox"
-                id="checkbox${data.collection._id}-${index}"
+                id="checkbox${data._id}-${index}"
                 name="selectedCollections"
-                value="${data.collection._id}"
+                value="${data._id}"
               />
               <label
                 style="padding-left: 5px"
-                for="checkbox${data.collection._id}-${index}"
+                for="checkbox${data._id}-${index}"
               >
-                ${data.collection.name}
+                ${data.name}
               </label>
             </div>
           `;
 
-          var collectionsDiv = $(this).find(".collections");
-          collectionsDiv.append(newCollectionDiv);
+            var collectionsDiv = $(this).find(".collections");
+            collectionsDiv.append(newCollectionDiv);
 
-          var checkbox = collectionsDiv.find(
-            `#checkbox${data.collection._id}-${index}`
-          );
-          checkbox.on("change", function () {
-            var submitButton = $(this)
-              .closest(".artwork")
-              .find(".submitButton");
-            var atLeastOneChecked =
-              $(this)
-                .closest(".collections")
-                .find('input[name="selectedCollections"]:checked').length > 0;
-            submitButton.css("color", atLeastOneChecked ? "white" : "#818181");
-            submitButton.css(
-              "pointerEvents",
-              atLeastOneChecked ? "auto" : "none"
-            );
+            var checkbox = collectionsDiv.find(`#checkbox${data._id}-${index}`);
+            checkbox.on("change", function () {
+              var submitButton = $(this)
+                .closest(".artwork")
+                .find(".submitButton");
+              var atLeastOneChecked =
+                $(this)
+                  .closest(".collections")
+                  .find('input[name="selectedCollections"]:checked').length > 0;
+              submitButton.css(
+                "color",
+                atLeastOneChecked ? "white" : "#818181"
+              );
+              submitButton.css(
+                "pointerEvents",
+                atLeastOneChecked ? "auto" : "none"
+              );
+            });
           });
-        });
+        } else {
+          console.error("Unexpected data format:", data);
+        }
       },
     });
   });
 
-  $("#addAllButton").click(function () {
+  $(".addAllButton").click(function () {
     $('.collections input[type="checkbox"]').prop("checked", true);
 
     $(".submitButton").css({

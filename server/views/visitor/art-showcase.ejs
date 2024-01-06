@@ -225,13 +225,13 @@
                           <div class="collection">
                             <input
                               type="checkbox"
-                              id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              id="checkbox<%= collection._id %>-<%= index %>"
                               name="selectedCollections"
                               value="<%= collection._id %>"
                             />
                             <label
                               style="padding-left: 5px"
-                              for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              for="checkbox<%= collection._id %>-<%= index %>"
                             >
                               <%= collection.name %>
                             </label>
@@ -239,7 +239,7 @@
                           <% } %> <% }) %>
                           <button
                             type="submit"
-                            id="submitButton"
+                            class="submitButton"
                           >
                             Save
                           </button>
@@ -251,13 +251,13 @@
                       <form
                         action="/add-new-collection"
                         method="post"
-                        id="addNewCollectionForm"
+                        class="addNewCollectionForm"
                       >
                         <div style="display: flex; align-items: center">
                           <label for="name">Collection name:</label>
                           <input type="text" id="name" name="name" required />
                         </div>
-                        <button type="submit">
+                        <button type="submit" >
                           Create and add to collection
                         </button>
                       </form>

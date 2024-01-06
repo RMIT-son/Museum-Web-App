@@ -199,13 +199,26 @@ body.close {
   padding-bottom: 15px;
 }
 
+.collection-name {
+  transition: .3s;
+}
+
+.collection-name:hover {
+  background-color: rgb(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
 .fa-angle-down {
   transition: 0.3s;
   transform: rotate(90deg);
 }
 
+.arrow-down-icon{
+  pointer-events: none;
+}
+
 .arrow-down-icon.rotate {
-  transform: rotate(-180deg);
+  transform: rotate(0);
 }
 
 #like {
@@ -218,6 +231,7 @@ body.close {
   overflow-x: auto;
   transition: 0.3s;
   overflow-y: hidden;
+  height: 0;
 }
 
 .artworks.open {

@@ -11,7 +11,7 @@ const artSchema = new mongoose.Schema(
       enum: ["painting", "sculpture", "photography", "other"],
       default: "painting",
     },
-    artist: { type: mongoose.Schema.Types.ObjectId, ref: "artist" },
+    artist: { type: String },
     year: { type: Number, required: true },
     likes: [{ type: String, ref: 'User' }],
     bookmarks: [{ type: String, ref: 'User' }],

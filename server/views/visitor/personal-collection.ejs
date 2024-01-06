@@ -106,32 +106,79 @@
       <div class="gallery" id="insert">
         <% collections.forEach((collection) => { %> <% if
         (collection.user.toString() === user.sid.toString()) { %>
-        <div class="collection">
-          <div class="collection-name">
-            <h2><%= collection.name %></h2>
-            <i class="fa-solid fa-angle-down arrow-down-icon"></i>
-          </div>
-          <div class="artworks">
-            <% collection.artwork.forEach((artwork) => { %>
-            <div class="artwork1" style="width: 300px; height: 300px">
-              <img
-                style="width: 300px; height: 300px"
-                src="<%= artwork.image %>"
-                alt="Starry Night"
-              />
-              <div class="information">
-                <div class="information-box">
-                  <div><%= artwork.title %></div>
-                  <div><%= artwork.description %></div>
-                </div>
+        <form
+          action="remove/<%= collection._id %>"
+          method="post"
+          class="remove-collection-form"
+          data-collection-id="<%= collection._id %>"
+        >
+          <input
+            type="hidden"
+            value="<%= collection._id %>"
+            name="collectionId"
+            id="collectionId"
+          />
+          <div class="collection">
+            <div
+              class="collection-name"
+              onclick="toggleCollection(event)"
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+              "
+            >
+              <h2><%= collection.name %></h2>
+              <div
+                style="display: flex; align-items: center; margin-right: 10px"
+              >
+                <i class="fa-solid fa-angle-down arrow-down-icon" ></i>
+                <button
+                  class="remove"
+                  onclick="hideCollection(event)"
+                  style="
+                    color: white;
+                    border: none;
+                    background: none;
+                    outline: none;
+                    padding: 0px;
+                    position: relative;
+                    display: flex;
+                    -webkit-box-align: center;
+                    align-items: center;
+                    cursor: pointer;
+                    flex-direction: column;
+                    margin-left: 10px;
+                  "
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
               </div>
             </div>
-            <% }) %>
+            <div class="artworks">
+              <% collection.artwork.forEach((artwork) => { %>
+              <div class="artwork1" style="width: 300px; height: 300px">
+                <img
+                  style="width: 300px; height: 300px"
+                  src="uploads/toulouse-lautrec-2.png"
+                  alt="Starry Night"
+                />
+                <div class="information">
+                  <div class="information-box">
+                    <div><%= artwork.title %></div>
+                    <div><%= artwork.description %></div>
+                  </div>
+                </div>
+              </div>
+              <% }) %>
+            </div>
           </div>
-        </div>
+        </form>
         <% } %> <% }) %>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/manager.js"></script>
     <%- include('../partials/footer.ejs') %>
   </body>
