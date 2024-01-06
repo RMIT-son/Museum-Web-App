@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path: '../../.env'});
 const express = require('express');
 const { auth } = require('express-openid-connect');
 const router = express.Router();

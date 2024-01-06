@@ -1,5 +1,4 @@
-// server/index.js
-require("dotenv").config();
+require("dotenv").config({path: '../.env'});
 const express = require("express");
 const cors = require("cors");
 const userRouter = require("./routers/userRoutes");
@@ -19,13 +18,15 @@ const path = require("path");
 const upload = require("./middleware/multer.js");
 const artModel = require("./models/artModel.js");
 const collectionModel = require("./models/collectionModel.js");
+const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT;
 app.use(cors());
 app.engine("html", require("ejs").renderFile);
-app.use(express.static("./client"));
-app.use("/server/uploads", express.static("server/uploads"));
+app.use("/css",express.static("../client/css"));
+app.use("/js",express.static("../client/js"));
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -36,10 +37,16 @@ app.use("/", userRouter);
 app.use("/", artRouter);
 app.use("/", homepageRouter);
 
-app.get("/form", (req, res) => {
-  res.render("./form");
+app.get("/form", async (req, res) => {
+  try {
+    let artworks = await fetch("http://localhost:3000/api/art/get")
+    artworks = await artworks.json()
+    res.render("form", {artworks: artworks});
+  } catch (error) {
+    console.error('Error fetching artworks:', error.message);
+    res.status(500).send('Internal Server Error');
+  }
 });
-
 app.post("/form", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
@@ -49,20 +56,22 @@ app.post("/form", upload.single("image"), async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const type = req.body.type;
-    // const artist = req.body.artist;
+    const artist = req.body.artist;
     const year = req.body.year;
-    const image = req.file.path;
+    const imagePath = 'uploads/' + req.file.filename;
 
     const newArtwork = new artModel({
       title: title,
       description: description,
-      image: image,
+      image: imagePath,
+      artist: artist,
       type: type,
       year: year,
     });
 
     await newArtwork.save();
-    res.status(500).send("Upload successfully");
+    res.status(200);
+    res.redirect("/form")
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the product");
