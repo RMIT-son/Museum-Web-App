@@ -1,9 +1,9 @@
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config({path: '../../.env'});
 const AlgoliaSearch = require('algoliasearch');
 const {get} = require("axios");
 
 const app_id = process.env.ALGOLIA_APP_ID;
-const api_key = process.env.ALGOLIA_API_KEY;
+const api_key = process.env.ALGOLIA_ADMIN_KEY;
 const client = AlgoliaSearch(app_id, api_key);
 const index = client.initIndex('artwork');
 
@@ -15,6 +15,64 @@ async function searchArtworks(query) {
     } catch (error) {
         console.error('Error searching artworks:', error);
         throw error;
+    }
+}
+
+async function searchArtworksByArtist(query) {
+    try {
+        const { hits } = await index.search(query, {
+            filters: 'artist: ' + query,
+        });
+        return hits;
+    } catch (error) {
+        console.error('Error searching artworks:', error);
+        throw error;
+    }
+}
+
+async function searchArtworksByYear(query) {
+    try {
+        const { hits } = await index.search(query, {
+            filters: 'year: ' + query,
+        });
+        return hits;
+    } catch (error) {
+        console.error('Error searching artworks:', error);
+        throw error;
+    }
+}
+
+async function searchArtworksByTitle(query) {
+    try {
+        const { hits } = await index.search(query, {
+            filters: 'title: ' + query,
+        });
+        return hits;
+    } catch (error) {
+        console.error('Error searching artworks:', error);
+        throw error;
+    }
+}
+
+async function searchArtworksByType(query) {
+    try {
+        const { hits } = await index.search(query, {
+            filters: 'type: ' + query,
+        });
+        return hits;
+    } catch (error) {
+        console.error('Error searching artworks:', error);
+        throw error;
+    }
+}
+
+async function saveArtwork(artwork) {
+    try {
+        const object = await transformForAlgolia(artwork);
+        const { objectIDs } = await index.saveObject(object);
+        console.log('Object saved with ID:', objectIDs);
+    } catch (error) {
+        console.error('Error saving artwork:', error);
     }
 }
 
@@ -72,4 +130,8 @@ module.exports = {
     saveArtworks,
     deleteArtwork,
     fetchArtworks,
+    searchArtworksByArtist,
+    searchArtworksByTitle,
+    searchArtworksByYear,
+    searchArtworksByType
 };

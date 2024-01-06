@@ -1,4 +1,5 @@
 const Artwork = require('../models/artModel');
+const {saveArtwork, deleteArtwork} = require('../services/algolia');
 
 async function getAllArt(req, res) {
     Artwork.find()
@@ -24,6 +25,7 @@ async function createArt(req, res) {
         });
 
         await newArtwork.save();
+        await saveArtwork(newArtwork);
         res.json('Artwork added!');
     } catch (err) {
         res.status(400).json(`Error: ${err.message}`);
@@ -31,6 +33,7 @@ async function createArt(req, res) {
 }
 
 async function deleteArt(req, res) {
+    await deleteArtwork(req.params.id);
     Artwork.findByIdAndDelete(req.params.id)
         .then(() => res.json('Artwork deleted.'))
         .catch((err) => res.status(400).json(`Error: ${err}`));
@@ -43,8 +46,6 @@ async function updateArt(req, res) {
         if (!artwork) {
             return res.status(404).json('Artwork not found');
         }
-
-        console.log('Received request body:', req.body);
 
         if (req.body.title !== undefined) {
             artwork.title = req.body.title;
@@ -65,12 +66,8 @@ async function updateArt(req, res) {
             artwork.type = req.body.type;
         }
 
-        console.log('Updated artwork:', artwork);
-
         // Save the updated artwork
         await artwork.save();
-
-        console.log('Artwork saved successfully.');
 
         res.json('Artwork updated!');
     } catch (err) {
