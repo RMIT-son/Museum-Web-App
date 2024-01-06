@@ -24,7 +24,7 @@ const app = express();
 const PORT = process.env.PORT;
 app.use(cors());
 app.engine("html", require("ejs").renderFile);
-app.use(express.static("../client"));
+app.use(express.static("./client"));
 app.use("/server/uploads", express.static("server/uploads"));
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");

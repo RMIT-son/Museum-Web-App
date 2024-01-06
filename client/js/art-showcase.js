@@ -699,7 +699,6 @@ $(document).ready(function () {
   $("#addAllButton").click(function () {
     $('.collections input[type="checkbox"]').prop("checked", true);
 
-    // Change the properties of the save button
     $(".submitButton").css({
       "pointer-events": "auto",
       color: "#FFFFFF",
