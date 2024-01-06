@@ -57,3 +57,47 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   })
 });
+
+    var form = $(this);
+
+    $.ajax({
+      url: form.attr("action"),
+      method: "POST",
+      data: form.serialize(),
+      success: function (response) {
+        console.log(response.message);
+        setTimeout(function() {
+          form.remove();
+        }, 500);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error deleting collection:", error);
+      },
+    });
+
+
+  $(".remove").on("click", function () {
+    event.stopPropagation();
+
+    $(this).closest(".remove-collection-form").submit();
+  });
+
+
+function hideCollection(event) {
+  event.stopPropagation(); 
+
+  var collectionDiv = $(event.target).closest("form");
+
+  collectionDiv.animate({ opacity: 0, height: 0 }, 500, function () {
+    collectionDiv.css("display", "none");
+  });
+}
+
+function openArtwork(event) {
+  const title = event.target.closest(".title");
+  const artworks = title.nextElementSibling;
+  const icon = title.querySelector(".fa-angle-down");
+
+  artworks.classList.toggle("open");
+  icon.classList.toggle("open");
+}
