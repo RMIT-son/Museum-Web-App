@@ -73,7 +73,7 @@ app.post("/form", upload.single("image"), async (req, res) => {
 
     await newArtwork.save();
     res.status(200);
-    res.redirect("/form");
+    res.redirect("/manager");
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the product");
@@ -221,12 +221,10 @@ app.post("/add-new-collection", async (req, res) => {
 
     await newCollection.save();
 
-    res
-      .status(200)
-      .json({
-        _id: newCollection._id,
-        name: newCollection.name,
-      });
+    res.status(200).json({
+      _id: newCollection._id,
+      name: newCollection.name,
+    });
   } catch (e) {
     console.error(e);
     res
@@ -246,9 +244,65 @@ app.post("/remove/:collectionId", async (req, res) => {
       return res.status(404).send("Collection not found");
     }
 
-    res.status(200).send("Collections removed successfully");
+    res.status(200).send("Collection removed successfully");
   } catch (error) {
     console.error("Error removing collection:", error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Remove artwork
+app.post("/delete-artwork/:artworkId", async (req, res) => {
+  try {
+    const { artworkId } = req.params;
+
+    const artwork = await artModel.findByIdAndDelete(artworkId);
+
+    if (!artwork) {
+      return res.status(404).send("Artwork not found");
+    }
+
+    res.redirect("/manager");
+  } catch (e) {
+    console.error("Error removing artwrok:", error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Update artwork
+app.post("/update-artwork/:artworkId", async (req, res) => {
+  try {
+    const { artworkId } = req.params;
+    const { title, artist, type, year, description } = req.body;
+
+    const updatedArtwork = await updateArtwork(
+      artworkId,
+      title,
+      artist,
+      type,
+      year,
+      description
+    );
+    async function updateArtwork(
+      artworkId,
+      title,
+      artist,
+      type,
+      year,
+      description
+    ) {
+      const artwork = await artModel.findById(artworkId);
+      artwork.title = title;
+      artwork.artist = artist;
+      artwork.type = type;
+      artwork.year = year;
+      artwork.description = description;
+      await artwork.save();
+      return artwork;
+    }
+    res.json(updatedArtwork);
+  } catch (error) {
+    console.error("Error updating artwork:", error);
     res.status(500).send("Server Error");
   }
 });

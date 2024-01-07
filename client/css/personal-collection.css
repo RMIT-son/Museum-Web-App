@@ -6,12 +6,12 @@
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888; 
-  border-radius: 10px; 
+  background-color: #888;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -22,6 +22,24 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+#messageDisplay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: red;
+  z-index: 999999999;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 body {
@@ -200,7 +218,7 @@ body.close {
 }
 
 .collection-name {
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .collection-name:hover {
@@ -213,7 +231,7 @@ body.close {
   transform: rotate(90deg);
 }
 
-.arrow-down-icon{
+.arrow-down-icon {
   pointer-events: none;
 }
 

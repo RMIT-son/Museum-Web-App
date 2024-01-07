@@ -47,6 +47,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 $(".remove-collection-form").on("submit", function (e) {
+  function showMessage(message) {
+    var messageDiv = $("#messageDisplay");
+
+    messageDiv.text(message);
+    messageDiv.css("opacity", 0);
+    messageDiv.animate({ opacity: 1.2 }, 500, function () {
+      $(this).animate({ opacity: 0 }, 2000);
+    });
+  }
   var form = $(this);
 
   e.preventDefault();
@@ -56,6 +65,7 @@ $(".remove-collection-form").on("submit", function (e) {
     method: "POST",
     data: form.serialize(),
     success: function (response) {
+      showMessage("Collection removed")
       setTimeout(function () {
         form.remove();
       }, 500);
@@ -63,13 +73,6 @@ $(".remove-collection-form").on("submit", function (e) {
     error: function (xhr, status, error) {
       console.error("Error deleting collection:", error);
     },
-  });
-
-  $(".remove").on("click", function (event) {
-    event.stopPropagation();
-
-    var collectionId = $(this).closest("form").data("collection-id");
-    $('form[data-collection-id="' + collectionId + '"]').submit();
   });
 });
 
