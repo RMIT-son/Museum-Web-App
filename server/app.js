@@ -16,11 +16,11 @@ const overallRouter = require("./routers/overallRoutes");
 const collectionListRouter = require("./routers/collectionListRoutes");
 const collectionRouter = require("./routers/collectionRoutes");
 const personalCollectionRouter = require("./routers/personalCollectionRoutes");
+const artShowCaseIndiRouter = require("./routers/artShowCaseIndiRouter");
 const path = require("path");
 const upload = require("./middleware/multer.js");
 const artModel = require("./models/artModel.js");
 const collectionModel = require("./models/collectionModel.js");
-const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -87,6 +87,7 @@ app.use("/manager", managerRouter);
 app.use("/overall", overallRouter);
 app.use("/collection-list", collectionListRouter);
 app.use("/collection", collectionRouter);
+app.use("/art-showcase-indi", artShowCaseIndiRouter);
 app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
   if (!req.oidc.isAuthenticated()) {
     return res.redirect("/login");

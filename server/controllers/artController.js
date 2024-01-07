@@ -1,5 +1,5 @@
 const Artwork = require('../models/artModel');
-const {saveArtwork, deleteArtwork} = require('../services/algolia');
+const {saveArtwork, deleteArtwork, updateArtwork} = require('../services/algolia');
 
 async function getAllArt(req, res) {
     Artwork.find()
@@ -68,6 +68,7 @@ async function updateArt(req, res) {
 
         // Save the updated artwork
         await artwork.save();
+        await updateArtwork(artwork);
 
         res.json('Artwork updated!');
     } catch (err) {
