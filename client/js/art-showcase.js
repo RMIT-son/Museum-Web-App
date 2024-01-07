@@ -21,6 +21,36 @@ const plusIcons = document.querySelectorAll(".plus-icon");
 const leftArrowIcon = document.querySelectorAll(".arrow-left-icon");
 const firstArtwork = document.querySelector(".artwork:nth-child(1)");
 const firstInformationBox = firstArtwork.querySelector(".information");
+const collectionsDiv = document.querySelector(".collections");
+
+document.addEventListener("DOMContentLoaded", function () {
+  function addEventListeners() {
+    const artworks = document.querySelectorAll(".artwork");
+
+    artworks.forEach(function (artwork) {
+      const checkboxes = artwork.querySelectorAll(
+        'input[name="selectedCollections"]'
+      );
+      const submitButton = artwork.querySelector(".submitButton");
+
+      checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+          const atLeastOneChecked = Array.from(checkboxes).some(function (
+            checkbox
+          ) {
+            return checkbox.checked;
+          });
+          submitButton.style.pointerEvents = atLeastOneChecked
+            ? "auto"
+            : "none";
+          submitButton.style.color = atLeastOneChecked ? "white" : "#818181";
+        });
+      });
+    });
+  }
+
+  addEventListeners();
+});
 
 function goBack() {
   const currentlyDisplayedArtwork = document.querySelector(
@@ -551,78 +581,153 @@ imageContainer.addEventListener("touchmove", touchMove);
 imageContainer.addEventListener("touchend", touchEnd);
 
 $(document).ready(function () {
-  function addEventListeners() {
-    const collectionsDiv = $(".collections");
-    const checkboxes = collectionsDiv.find('input[name="selectedCollections"]');
-    const submitButton = collectionsDiv.find("#submitButton");
+  function showMessage(message) {
+    var messageDiv = $("#messageDisplay");
 
-    checkboxes.on("change", function () {
-      const atLeastOneChecked = checkboxes.is(":checked");
-      submitButton.prop("disabled", !atLeastOneChecked);
-      submitButton.css("color", atLeastOneChecked ? "white" : "#818181");
+    messageDiv.text(message);
+    messageDiv.css("opacity", 0);
+    messageDiv.animate({ opacity: 1 }, 500, function () {
+      $(this).animate({ opacity: 0 }, 2000);
     });
   }
-  // Ajax for add artworks to collections
-  $("#addArtworkForm").submit(function (e) {
+
+  $('input[type="checkbox"]').on("change", function () {
+    handleCheckboxChange(this);
+  });
+
+  function handleCheckboxChange(event) {
+    const checkbox = event.target;
+    if (
+      checkbox &&
+      checkbox.tagName === "INPUT" &&
+      checkbox.type === "checkbox" &&
+      checkbox.checked
+    ) {
+      const parentDiv = checkbox.parentElement;
+      parentDiv.style.pointerEvents = "none";
+      parentDiv.style.color = "#818181";
+      parentDiv.innerHTML = `${
+        checkbox.parentElement.querySelector("label").innerText
+      } (added)`;
+    }
+  }
+
+  $(".addArtworkForm").on("submit", function (e) {
     e.preventDefault();
-    var formData = $(this).serialize();
-    const artworkId = $("#artworkId").val();
+
+    var form = $(this);
+    var url = form.attr("action");
 
     $.ajax({
       type: "POST",
-      url: `/add-to-collection/${artworkId}`,
-      data: formData,
-      success: function (response) {
-        showMessage("Artwork added to collection successfully!");
-      },
-      error: function (error) {
-        console.error("Error adding artwork:", error);
-        showMessage("Error adding artwork to collection", "error");
+      url: url,
+      data: form.serialize(),
+      success: function (data) {
+        showMessage(data.message);
+        $('input[name="selectedCollections"]:checked').each(function () {
+          var checkbox = $(this);
+          var parentDiv = checkbox.parent();
+
+          parentDiv.css("pointer-events", "none");
+          parentDiv.css("color", "#818181");
+          parentDiv.html(parentDiv.find("label").text() + " (added)");
+        });
+        $(".submitButton").css({
+          "pointer-events": "none",
+          color: "#818181",
+        });
       },
     });
   });
 
-  // Ajax for adding new collections
-  $("#addNewCollectionForm").submit(function (e) {
+  $(".addNewCollectionForm").on("submit", function (e) {
     e.preventDefault();
-    var formData = $(this).serialize();
+
+    var form = $(this);
+    var url = form.attr("action");
 
     $.ajax({
       type: "POST",
-      url: `/add-new-collection`,
-      data: formData,
-      success: function (response) {
-        showMessage("New collection created!");
-        goBack();
-        const newCollection = response;
+      url: url,
+      data: form.serialize(),
+      success: function (data) {
+        if (data && data._id && data.name) {
+          goBack();
+          showMessage(data.message);
+          $(".artwork").each(function (index) {
+            var newCollectionDiv = `
+            <div class="collection">
+              <input
+                type="checkbox"
+                id="checkbox${data._id}-${index}"
+                name="selectedCollections"
+                value="${data._id}"
+              />
+              <label
+                style="padding-left: 5px"
+                for="checkbox${data._id}-${index}"
+              >
+                ${data.name}
+              </label>
+            </div>
+          `;
 
-        const newCollectionHTML = `
-          <div class="collection">
-            <input type="checkbox" id="checkbox-${newCollection.name}" name="selectedCollections" value="${newCollection._id}" />
-            <label style="padding-left: 5px;" for="checkbox-${newCollection.name}">${newCollection.name}</label>
-          </div>
-        `;
-        $(".collections").append(newCollectionHTML);
+            var collectionsDiv = $(this).find(".collections");
+            collectionsDiv.append(newCollectionDiv);
 
-        addEventListeners();
-      },
-      error: function (error) {
-        console.error("Error creating new collection:", error);
-        showMessage("Error creating new collection", "error");
+            var checkbox = collectionsDiv.find(`#checkbox${data._id}-${index}`);
+            checkbox.on("change", function () {
+              var submitButton = $(this)
+                .closest(".artwork")
+                .find(".submitButton");
+              var atLeastOneChecked =
+                $(this)
+                  .closest(".collections")
+                  .find('input[name="selectedCollections"]:checked').length > 0;
+              submitButton.css(
+                "color",
+                atLeastOneChecked ? "white" : "#818181"
+              );
+              submitButton.css(
+                "pointerEvents",
+                atLeastOneChecked ? "auto" : "none"
+              );
+            });
+          });
+        } else {
+          console.error("Unexpected data format:", data);
+        }
       },
     });
   });
 
-  addEventListeners();
+  $(".addAllButton").click(function () {
+    $('.collections input[type="checkbox"]').prop("checked", true);
+
+    $(".submitButton").css({
+      "pointer-events": "auto",
+      color: "#FFFFFF",
+    });
+  });
 });
 
-function showMessage(message, type = "success") {
-  const messageDisplay = $("#messageDisplay");
-  messageDisplay
-    .html(`<div class="${type}">${message}</div>`)
-    .css("opacity", 1);
+var addAllButtons = document.getElementsByClassName("addAllButton");
+for (var i = 0; i < addAllButtons.length; i++) {
+  addAllButtons[i].addEventListener("click", function () {
+    var formId = this.getAttribute("data-form-id");
+    var form = document.getElementById(formId);
+    var checkboxes = form.querySelectorAll(
+      '.collections input[type="checkbox"]'
+    );
 
-  setTimeout(() => {
-    messageDisplay.css("opacity", 0);
-  }, 1000);
+    if (checkboxes.length > 0) {
+      checkboxes.forEach(function (checkbox) {
+        checkbox.checked = true;
+      });
+
+      var saveButton = form.querySelector(".submitButton");
+      saveButton.style.pointerEvents = "auto";
+      saveButton.style.color = "#FFFFFF";
+    }
+  });
 }

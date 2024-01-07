@@ -35,8 +35,8 @@
             <a href="">
               <div class="mb-4">Information Desk</div>
             </a>
-            <a href="">
-              <div class="mb-4">Collection Name</div>
+            <a href="/vangogh">
+              <div class="mb-4">Vincent van Gogh</div>
             </a>
             <a href="/personal-collection">
               <div class="mb-4">Personal Collection</div>
@@ -111,8 +111,10 @@
                   <div class="icons">
                     <i class="fa-solid fa-info info-icon"></i>
 
-                    <a href="/login"><i class="far fa-heart heart-icon"></i></a>
-                    <a href="/login"
+                    <a href="/login/"
+                      ><i class="far fa-heart heart-icon"></i
+                    ></a>
+                    <a href="/login/"
                       ><i class="far fa-bookmark bookmark-icon"></i
                     ></a>
 
@@ -132,7 +134,7 @@
             <% } else { %>
 
             <div class="artwork">
-              <a href="" draggable="false">
+              <a href="#" draggable="false">
                 <img
                   src="<%= artwork.image %>"
                   alt="Image"
@@ -174,7 +176,23 @@
 
                   <div class="add-to-collection">
                     <div class="choose-collection">
-                      <h3>Choose collection:</h3>
+                      <h3
+                        style="
+                          display: flex;
+                          justify-content: space-between;
+                          align-items: center;
+                        "
+                      >
+                        Choose collection:<button
+                          style="margin-top: 5px"
+                          type="button"
+                          class="addAllButton"
+                          data-form-id="addArtworkForm_<%= artwork._id %>"
+                        >
+                          Add All
+                        </button>
+                      </h3>
+
                       <div
                         class="add-new-collection"
                         onclick="addNewCollection()"
@@ -185,9 +203,15 @@
                       <form
                         action="/add-to-collection/<%= artwork._id %>"
                         method="POST"
-                        id="addArtworkForm"
+                        class="addArtworkForm"
+                        id="addArtworkForm_<%= artwork._id %>"
                       >
-                      <input type="hidden" id="artworkId" name="artworkId" value="<%= artwork._id %>" />
+                        <input
+                          type="hidden"
+                          id="artworkId"
+                          name="artworkId"
+                          value="<%= artwork._id %>"
+                        />
                         <div class="collections">
                           <% collections.forEach((collection, colIndex) => { %>
                           <% if (collection.artwork.includes(artwork._id)) { %>
@@ -201,13 +225,13 @@
                           <div class="collection">
                             <input
                               type="checkbox"
-                              id="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              id="checkbox<%= collection._id %>-<%= index %>"
                               name="selectedCollections"
                               value="<%= collection._id %>"
                             />
                             <label
                               style="padding-left: 5px"
-                              for="checkbox<%= index + 1 %>-<%= colIndex + 1 %>"
+                              for="checkbox<%= collection._id %>-<%= index %>"
                             >
                               <%= collection.name %>
                             </label>
@@ -215,7 +239,7 @@
                           <% } %> <% }) %>
                           <button
                             type="submit"
-                            id="submitButton"
+                            class="submitButton"
                           >
                             Save
                           </button>
@@ -227,13 +251,13 @@
                       <form
                         action="/add-new-collection"
                         method="post"
-                        id="addNewCollectionForm"
+                        class="addNewCollectionForm"
                       >
                         <div style="display: flex; align-items: center">
                           <label for="name">Collection name:</label>
                           <input type="text" id="name" name="name" required />
                         </div>
-                        <button type="submit">
+                        <button type="submit" >
                           Create and add to collection
                         </button>
                       </form>

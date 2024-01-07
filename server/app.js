@@ -162,35 +162,10 @@ app.post("/bookmark/:artworkId", async (req, res) => {
   }
 });
 
-// Add new collection
-app.post("/add-new-collection", async (req, res) => {
-  try {
-    const name = req.body.name;
-    const user = req.oidc.user.sid;
-
-    if (!name) {
-      return res.status(400).send("Collection name is required");
-    }
-
-    const newCollection = new collectionModel({
-      name: name,
-      user: user,
-    });
-
-    await newCollection.save();
-
-    res.status(200).json({ name: newCollection.name });
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("An error occurred while adding the collection");
-  }
-});
-
-
+// Add collection
 app.post("/add-to-collection/:artworkId", async (req, res) => {
   try {
     const { artworkId } = req.params;
-    console.log(artworkId)
     let selectedCollectionIds = req.body.selectedCollections;
 
     if (!Array.isArray(selectedCollectionIds)) {
@@ -221,6 +196,51 @@ app.post("/add-to-collection/:artworkId", async (req, res) => {
     res.status(200).send("Artwork added to collections successfully");
   } catch (error) {
     console.error("Error adding artwork to collection:", error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Add new collection
+app.post("/add-new-collection", async (req, res) => {
+  try {
+    const name = req.body.name;
+    const user = req.oidc.user.sid;
+
+    if (!name || !user) {
+      return res.status(400).send("Collection name and user are required");
+    }
+
+    const newCollection = new collectionModel({
+      name: name,
+      user: user,
+    });
+
+    await newCollection.save();
+
+    res.status(200).json({ _id: newCollection._id, name: newCollection.name });
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send(`An error occurred while adding the collection: ${e.message}`);
+  }
+});
+
+// Remove collection
+app.post("/remove/:collectionId", async (req, res) => {
+  try {
+    const { collectionId } = req.params;
+    console.log(collectionId)
+
+    const collection = await collectionModel.findByIdAndDelete(collectionId);
+
+    if (!collection) {
+      return res.status(404).send("Collection not found");
+    }
+
+    res.status(200).send("Collections removed successfully");
+  } catch (error) {
+    console.error("Error removing collection:", error);
     res.status(500).send("Server Error");
   }
 });
