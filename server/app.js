@@ -14,11 +14,11 @@ const overallRouter = require("./routers/overallRoutes");
 const collectionListRouter = require("./routers/collectionListRoutes");
 const collectionRouter = require("./routers/collectionRoutes");
 const personalCollectionRouter = require("./routers/personalCollectionRoutes");
+const artShowCaseIndiRouter = require("./routers/artShowCaseIndiRouter");
 const path = require("path");
 const upload = require("./middleware/multer.js");
 const artModel = require("./models/artModel.js");
 const collectionModel = require("./models/collectionModel.js");
-const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -83,6 +83,7 @@ app.use("/manager", managerRouter);
 app.use("/overall", overallRouter);
 app.use("/collection-list", collectionListRouter);
 app.use("/collection", collectionRouter);
+app.use("/art-showcase-indi", artShowCaseIndiRouter);
 app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
   if (!req.oidc.isAuthenticated()) {
     return res.redirect("/login");
@@ -162,35 +163,10 @@ app.post("/bookmark/:artworkId", async (req, res) => {
   }
 });
 
-// Add new collection
-app.post("/add-new-collection", async (req, res) => {
-  try {
-    const name = req.body.name;
-    const user = req.oidc.user.sid;
-
-    if (!name) {
-      return res.status(400).send("Collection name is required");
-    }
-
-    const newCollection = new collectionModel({
-      name: name,
-      user: user,
-    });
-
-    await newCollection.save();
-
-    res.status(200).json({ name: newCollection.name });
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("An error occurred while adding the collection");
-  }
-});
-
-
+// Add collection
 app.post("/add-to-collection/:artworkId", async (req, res) => {
   try {
     const { artworkId } = req.params;
-    console.log(artworkId)
     let selectedCollectionIds = req.body.selectedCollections;
 
     if (!Array.isArray(selectedCollectionIds)) {
@@ -221,6 +197,51 @@ app.post("/add-to-collection/:artworkId", async (req, res) => {
     res.status(200).send("Artwork added to collections successfully");
   } catch (error) {
     console.error("Error adding artwork to collection:", error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Add new collection
+app.post("/add-new-collection", async (req, res) => {
+  try {
+    const name = req.body.name;
+    const user = req.oidc.user.sid;
+
+    if (!name || !user) {
+      return res.status(400).send("Collection name and user are required");
+    }
+
+    const newCollection = new collectionModel({
+      name: name,
+      user: user,
+    });
+
+    await newCollection.save();
+
+    res.status(200).json({ _id: newCollection._id, name: newCollection.name });
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send(`An error occurred while adding the collection: ${e.message}`);
+  }
+});
+
+// Remove collection
+app.post("/remove/:collectionId", async (req, res) => {
+  try {
+    const { collectionId } = req.params;
+    console.log(collectionId)
+
+    const collection = await collectionModel.findByIdAndDelete(collectionId);
+
+    if (!collection) {
+      return res.status(404).send("Collection not found");
+    }
+
+    res.status(200).send("Collections removed successfully");
+  } catch (error) {
+    console.error("Error removing collection:", error);
     res.status(500).send("Server Error");
   }
 });

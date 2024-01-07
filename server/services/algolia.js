@@ -6,60 +6,44 @@ const app_id = process.env.ALGOLIA_APP_ID;
 const api_key = process.env.ALGOLIA_ADMIN_KEY;
 const client = AlgoliaSearch(app_id, api_key);
 const index = client.initIndex('artwork');
-
-
-async function searchArtworks(query) {
-    try {
-        const { hits } = await index.search(query);
-        return hits;
-    } catch (error) {
-        console.error('Error searching artworks:', error);
-        throw error;
+index.setSettings(
+    {
+        searchableAttributes: [
+            'title',
+            'artist',
+            'year',
+            'type',
+            'objectID'
+        ],
+        attributesForFaceting: [
+            'artist',
+            'year',
+            'type',
+        ],
+    },
+    (err, content) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log(content);
     }
-}
+)
 
-async function searchArtworksByArtist(query) {
-    try {
-        const { hits } = await index.search(query, {
-            filters: 'artist: ' + query,
-        });
-        return hits;
-    } catch (error) {
-        console.error('Error searching artworks:', error);
-        throw error;
-    }
-}
 
-async function searchArtworksByYear(query) {
+async function searchArtworks(query, filter) {
     try {
-        const { hits } = await index.search(query, {
-            filters: 'year: ' + query,
-        });
+        if (filter === '' || filter === undefined || filter === null || filter === 'all') {
+            const { hits } = await index.search(query);
+            return hits;
+        }
+        else {
+        const { hits } = await index.search(query,
+            {
+                restrictSearchableAttributes: [filter],
+                advancedSyntax: true,
+            });
         return hits;
-    } catch (error) {
-        console.error('Error searching artworks:', error);
-        throw error;
-    }
-}
-
-async function searchArtworksByTitle(query) {
-    try {
-        const { hits } = await index.search(query, {
-            filters: 'title: ' + query,
-        });
-        return hits;
-    } catch (error) {
-        console.error('Error searching artworks:', error);
-        throw error;
-    }
-}
-
-async function searchArtworksByType(query) {
-    try {
-        const { hits } = await index.search(query, {
-            filters: 'type: ' + query,
-        });
-        return hits;
+        }
     } catch (error) {
         console.error('Error searching artworks:', error);
         throw error;
@@ -115,7 +99,7 @@ async function transformForAlgolia(documents) {
 
 async function fetchArtworks() {
     try {
-        const response = await get('http://localhost:3000/api/art/get');
+        const response = await get('/api/art/get');
         console.log(response);
         return await response.data;
     } catch (error) {
@@ -124,14 +108,22 @@ async function fetchArtworks() {
     }
 }
 
+async function updateArtwork(artwork) {
+    try {
+        const object = await transformForAlgolia(artwork);
+        const { objectIDs } = await index.partialUpdateObject(object);
+        console.log('Object updated with ID:', objectIDs);
+    } catch (error) {
+        console.error('Error updating artwork:', error);
+    }
+}
+
 module.exports = {
     searchArtworks,
-    deleteArtworks,
-    saveArtworks,
+    saveArtwork,
     deleteArtwork,
-    fetchArtworks,
-    searchArtworksByArtist,
-    searchArtworksByTitle,
-    searchArtworksByYear,
-    searchArtworksByType
+    updateArtwork
 };
+
+// deleteArtworks().then(r => console.log(r));
+// saveArtworks().then(r => console.log(r));

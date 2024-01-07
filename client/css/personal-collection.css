@@ -3,6 +3,21 @@
   --z-index: 999;
 }
 
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background-color: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -169,7 +184,7 @@ body.close {
   display: grid;
   grid-template-columns: 33% 33% auto;
   place-items: center;
-  gap: 15px;
+  column-gap: 15px;
   display: none;
 }
 
@@ -181,24 +196,29 @@ body.close {
 
 .collection {
   width: 100%;
+  padding-bottom: 15px;
 }
 
 .collection-name {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.3s;
-  padding: 10px 20px 10px 10px;
-  width: 100%;
+  transition: .3s;
 }
 
 .collection-name:hover {
+  background-color: rgb(255, 255, 255, 0.3);
   cursor: pointer;
-  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.fa-angle-down {
+  transition: 0.3s;
+  transform: rotate(90deg);
+}
+
+.arrow-down-icon{
+  pointer-events: none;
 }
 
 .arrow-down-icon.rotate {
-  transform: rotate(-180deg);
+  transform: rotate(0);
 }
 
 #like {
@@ -209,6 +229,13 @@ body.close {
   display: flex;
   width: 80vw;
   overflow-x: auto;
+  transition: 0.3s;
+  overflow-y: hidden;
+  height: 0;
+}
+
+.artworks.open {
+  height: 300px;
   height: 0;
   transition: height 0.3s;
   overflow-y: hidden;
@@ -220,7 +247,8 @@ body.close {
 
 .artwork1 {
   width: 100%;
-  height: 100%;
+  height: 350px;
+  margin-bottom: 15px;
   position: relative;
 }
 
@@ -235,10 +263,10 @@ body.close {
       #19191c
     )
     scroll no-repeat bottom transparent;
-    height: 0;
-    width: 100%;
-    overflow: hidden;
-    transition: 0.5s;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.5s;
 }
 
 .information.open {
@@ -295,6 +323,25 @@ body.close {
 .tablinks.active {
   color: white;
   border-bottom: 1px solid snow;
+}
+
+.title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+  transition: 0.3s;
+  padding: 10px;
+}
+
+.title:hover {
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.remove {
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 /* Footer */
