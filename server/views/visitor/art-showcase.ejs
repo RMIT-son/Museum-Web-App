@@ -214,7 +214,7 @@
                         />
                         <div class="collections">
                           <% collections.forEach((collection, colIndex) => { if
-                          (collection._id === user.sid) { %> <% if
+                          (collection.user === user.sid) { %> <% if
                           (collection.artwork.includes(artwork._id)) { %>
                           <div
                             class="collection"
