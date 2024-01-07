@@ -78,17 +78,18 @@
       <% if (artworks && artworks.length > 0) { %>
         <% artworks.forEach(artwork => { %>
         <div class="artwork1">
-          <h3>
-              <%= artwork.title %> by <%= artwork.artist %>
-          </h3>
-          <p>
-              <%= artwork.image %>
-              <%= artwork.objectID %>
-          </p>
-          <img
-            src="<%= artwork.image %>"
-            alt="<%= artwork.title %>"
-          />
+            <h3>
+                <%= artwork.title %>
+            </h3>
+            <h4>
+                By <%= artwork.artist %>
+            </h4>
+          <a href="/art-showcase-indi/<%= artwork.objectID %>">
+            <img
+              src="<%= artwork.image %>"
+              alt="<%= artwork.title %>"
+            />
+            </a>
         </div>
         <% }) %>
         <% } else { %>

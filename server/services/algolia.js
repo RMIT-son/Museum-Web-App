@@ -1,6 +1,7 @@
 require('dotenv').config({path: '../../.env'});
 const AlgoliaSearch = require('algoliasearch');
 const {get} = require("axios");
+const { getAllArt } = require('../controllers/artController');
 
 const app_id = process.env.ALGOLIA_APP_ID;
 const api_key = process.env.ALGOLIA_ADMIN_KEY;
@@ -71,7 +72,8 @@ async function deleteArtworks() {
 
 async function saveArtworks() {
     try {
-        const artworks_array = await fetchArtworks();
+        let artworks_array = await fetch("http://localhost:3000/api/art/get");
+        artworks_array = await artworks_array.json();
         const objects = await transformForAlgolia(artworks_array);
         const { objectIDs } = await index.saveObjects(objects);
         console.log('Objects saved with IDs:', objectIDs);
@@ -97,16 +99,6 @@ async function transformForAlgolia(documents) {
     }));
 }
 
-async function fetchArtworks() {
-    try {
-        const response = await get('/api/art/get');
-        console.log(response);
-        return await response.data;
-    } catch (error) {
-        console.error('Error fetching artworks:', error);
-        throw error;
-    }
-}
 
 async function updateArtwork(artwork) {
     try {
@@ -122,8 +114,9 @@ module.exports = {
     searchArtworks,
     saveArtwork,
     deleteArtwork,
-    updateArtwork
+    updateArtwork,
+    saveArtworks,
+    deleteArtworks,
 };
 
-// deleteArtworks().then(r => console.log(r));
-// saveArtworks().then(r => console.log(r));
+deleteArtworks().then(() => saveArtworks());

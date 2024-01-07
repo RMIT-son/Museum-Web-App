@@ -20,7 +20,7 @@ async function createArt(req, res) {
             description: req.body.description,
             year: req.body.year,
             artist: req.body.artist,
-            image: 'uploads/' + req.file.filename,
+            image: '/uploads/' + req.file.filename,
             type: req.body.type,
         });
 
