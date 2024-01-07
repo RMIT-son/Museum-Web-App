@@ -31,21 +31,9 @@ function showGallery(evt, galleryName) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const collectionNames = document.querySelectorAll(".collection-name");
-
-  collectionNames.forEach(function (collectionName, index) {
-    collectionName.addEventListener("click", function () {
-      const arrowDownIcon = document.querySelectorAll(".arrow-down-icon");
-      const artworks = document.querySelectorAll(".artworks");
-      artworks[index].classList.toggle("open");
-      arrowDownIcon[index].classList.toggle("rotate");
-    });
-  });
-
   const artwork1s = document.querySelectorAll(".artwork1");
-  
 
-  artwork1s.forEach(function(artwork1, i) {
+  artwork1s.forEach(function (artwork1, i) {
     artwork1.addEventListener("mouseenter", function () {
       const information = document.querySelectorAll(".information");
       information[i].classList.add("open");
@@ -55,5 +43,61 @@ document.addEventListener("DOMContentLoaded", function () {
       const information = document.querySelectorAll(".information");
       information[i].classList.remove("open");
     });
-  })
+  });
 });
+
+$(".remove-collection-form").on("submit", function (e) {
+  var form = $(this);
+
+  e.preventDefault();
+
+  $.ajax({
+    url: form.attr("action"),
+    method: "POST",
+    data: form.serialize(),
+    success: function (response) {
+      setTimeout(function () {
+        form.remove();
+      }, 500);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error deleting collection:", error);
+    },
+  });
+
+  $(".remove").on("click", function (event) {
+    event.stopPropagation();
+
+    var collectionId = $(this).closest("form").data("collection-id");
+    $('form[data-collection-id="' + collectionId + '"]').submit();
+  });
+});
+
+function hideCollection(event) {
+  event.stopPropagation();
+
+  var collectionDiv = $(event.target).closest("form");
+
+  collectionDiv.animate({ opacity: 0, height: 0 }, 500, function () {
+    collectionDiv.css("display", "none");
+  });
+}
+
+function openArtwork(event) {
+  const title = event.target.closest(".title");
+  const artworks = title.nextElementSibling;
+  const icon = title.querySelector(".fa-angle-down");
+
+  artworks.classList.toggle("open");
+  icon.classList.toggle("open");
+}
+
+function toggleCollection(event) {
+  const collectionDiv = event.target.parentElement.parentElement;
+
+  const artworksDiv = collectionDiv.querySelector(".artworks");
+  artworksDiv.classList.toggle("open");
+
+  const arrowIcon = collectionDiv.querySelector(".arrow-down-icon");
+  arrowIcon.classList.toggle("rotate");
+}
