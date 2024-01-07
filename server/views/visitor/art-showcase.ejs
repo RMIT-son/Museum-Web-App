@@ -213,8 +213,9 @@
                           value="<%= artwork._id %>"
                         />
                         <div class="collections">
-                          <% collections.forEach((collection, colIndex) => { %>
-                          <% if (collection.artwork.includes(artwork._id)) { %>
+                          <% collections.forEach((collection, colIndex) => { if
+                          (collection._id === user.sid) { %> <% if
+                          (collection.artwork.includes(artwork._id)) { %>
                           <div
                             class="collection"
                             style="pointer-events: none; color: #818181"
@@ -236,7 +237,7 @@
                               <%= collection.name %>
                             </label>
                           </div>
-                          <% } %> <% }) %>
+                          <% } %> <% } %> <% }) %>
                           <button type="submit" class="submitButton">
                             Save
                           </button>
