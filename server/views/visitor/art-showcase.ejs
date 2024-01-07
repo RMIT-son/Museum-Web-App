@@ -26,17 +26,17 @@
             <a href="/">
               <div class="mb-4">Main Hall</div>
             </a>
-            <a href="">
+            <a href="/art-showcase">
               <div class="mb-4">Featured Collection</div>
             </a>
-            <a href="">
-              <div class="mb-4">Collection Name</div>
-            </a>
-            <a href="">
-              <div class="mb-4">Information Desk</div>
-            </a>
             <a href="/vangogh">
-              <div class="mb-4">Vincent van Gogh</div>
+              <div class="mb-4">Van Gogh</div>
+            </a>
+            <a href="/login">
+              <div class="mb-4">Login</div>
+            </a>
+            <a href="/picasso">
+              <div class="mb-4">Picasso</div>
             </a>
             <a href="/personal-collection">
               <div class="mb-4">Personal Collection</div>
@@ -96,7 +96,7 @@
                 <img
                   src="<%= artwork.image %>"
                   alt="Image"
-                  alt=""
+                  alt="<%= artwork.title %>"
                   draggable="false"
                   loading="lazy"
                 />
@@ -237,10 +237,7 @@
                             </label>
                           </div>
                           <% } %> <% }) %>
-                          <button
-                            type="submit"
-                            class="submitButton"
-                          >
+                          <button type="submit" class="submitButton">
                             Save
                           </button>
                         </div>
@@ -257,7 +254,7 @@
                           <label for="name">Collection name:</label>
                           <input type="text" id="name" name="name" required />
                         </div>
-                        <button type="submit" >
+                        <button type="submit">
                           Create and add to collection
                         </button>
                       </form>
