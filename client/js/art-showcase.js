@@ -586,7 +586,7 @@ $(document).ready(function () {
 
     messageDiv.text(message);
     messageDiv.css("opacity", 0);
-    messageDiv.animate({ opacity: 1 }, 500, function () {
+    messageDiv.animate({ opacity: 1.2 }, 500, function () {
       $(this).animate({ opacity: 0 }, 2000);
     });
   }

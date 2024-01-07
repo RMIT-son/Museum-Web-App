@@ -122,11 +122,13 @@
           >
             <tr data-artwork-id="<%= artwork._id %>">
               <th scope="row"><%= index + 1 %></th>
-              <td class="title-cell"><%= artwork.title %></td>
-              <td class="artist-cell"><%= artwork.artist %></td>
-              <td class="type-cell"><%= artwork.type %></td>
-              <td class="description-cell"><%= artwork.description %></td>
-              <td class="year-cell"><%= artwork.year %></td>
+              <td class="title-cell limited-width"><%= artwork.title %></td>
+              <td class="artist-cell limited-width"><%= artwork.artist %></td>
+              <td class="type-cell limited-width"><%= artwork.type %></td>
+              <td class="description-cell limited-width">
+                <%= artwork.description %>
+              </td>
+              <td class="year-cell limited-width"><%= artwork.year %></td>
               <td>
                 <button
                   type="button"
@@ -253,4 +255,11 @@
       }
     </script>
   </body>
+  <style>
+    .limited-width {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
 </html>
