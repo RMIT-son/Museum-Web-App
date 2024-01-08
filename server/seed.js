@@ -130,6 +130,6 @@ Artwork.collection
     .catch((err) => console.error(err));
 
 // Initialize Algolia with some art data
-// deleteArtworks().then(r => console.log(r));
-// saveArtworks().then(r => console.log(r));
+deleteArtworks().then(r => console.log(r));
+saveArtworks().then(r => console.log(r));
 

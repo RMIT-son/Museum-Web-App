@@ -25,7 +25,7 @@ async function createArt(req, res) {
         });
 
         await newArtwork.save();
-        await saveArtwork(newArtwork);
+        await saveArtwork(newArtwork._id);
         res.json('Artwork added!');
     } catch (err) {
         res.status(400).json(`Error: ${err.message}`);
@@ -68,8 +68,7 @@ async function updateArt(req, res) {
 
         // Save the updated artwork
         await artwork.save();
-        await updateArtwork(artwork);
-
+        await saveArtwork(req.params.id);
         res.json('Artwork updated!');
     } catch (err) {
         console.error('Error updating artwork:', err);
