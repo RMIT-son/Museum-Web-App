@@ -230,7 +230,7 @@
 
         $.ajax({
           url: "/api/art/update/" + artworkId,
-          method: "POST",
+          method: "PUT",
           data: JSON.stringify(updatedArtwork),
           headers: {
             "Content-Type": "application/json",
