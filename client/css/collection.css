@@ -168,9 +168,10 @@ header {
 }
 
 .artwork1 {
-  width: 350px;
-  height: 300px;
+  width: 450px;
+  height: 400px;
   position: relative;
+  overflow: hidden;
 }
 
 .artwork1 img {

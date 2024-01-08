@@ -103,19 +103,14 @@ document.addEventListener("DOMContentLoaded", function () {
 fetch("/api/art/get")
   .then((response) => response.json())
   .then((data) => {
-    const artworkId = data[0]._id;
-
-    // Handle like clicks
     document
       .querySelector(".heart-icon")
       .addEventListener("click", function () {
         const artworkContainer = this.closest(".artwork");
         const artworkId = artworkContainer.dataset.artworkId;
         handleLike(artworkId);
-        console.log(artworkId);
       });
 
-    // Handle bookmark clicks
     document
       .querySelector(".bookmark-icon")
       .addEventListener("click", function () {

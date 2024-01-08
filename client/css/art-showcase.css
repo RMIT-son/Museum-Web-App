@@ -61,7 +61,7 @@ button:hover {
   transform: translateX(-50%);
   top: 30px;
   opacity: 0;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 #page2 {
@@ -254,7 +254,8 @@ button:hover {
   height: 100%;
   display: block;
   user-select: none;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: rgb(130, 130, 130);
 }
 
 .content .slide {
@@ -368,7 +369,7 @@ button:hover {
 }
 
 .plus-icon.rotate {
-  transform: rotate(calc(180deg - 45deg)); 
+  transform: rotate(calc(180deg - 45deg));
   transition: transform 0.3s ease;
 }
 
@@ -459,7 +460,7 @@ button:hover {
   padding: 5px;
   bottom: 10px;
   right: 10px;
-  color: #818181
+  color: #818181;
 }
 
 @media (max-width: 992px) {

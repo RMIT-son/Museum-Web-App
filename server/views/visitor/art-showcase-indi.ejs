@@ -56,7 +56,7 @@
         <div class="slider-wrapper" draggable="false">
           <div class="slider">
             <% if (!isAuthenticated) { %>
-            <div class="artwork" data-artwork-id="<%= artwork._id %>">
+            <div class="artwork">
               <a href="" draggable="false">
                 <img
                   src="<%= artwork.image %>"
@@ -98,7 +98,7 @@
             </div>
             <% } else { %>
 
-            <div class="artwork">
+            <div class="artwork" data-artwork-id="<%= artwork._id %>">
               <a href="#" draggable="false">
                 <img
                   src="<%= artwork.image %>"

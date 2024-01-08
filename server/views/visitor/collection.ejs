@@ -61,7 +61,7 @@
     <div class="content">
       <header>
         <h1>Collection Search</h1>
-        <form action="/collection" method="GET">
+        <form action="/collection" method="GET">  
           <label for="query">Search</label>
           <input
             id="query"
@@ -90,7 +90,7 @@
             <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />
             <div class="information">
               <div class="information-box">
-                <div style="color: white"><%= artwork.title %><%= artwork._id %></div>
+                <div style="color: white; font-size: 1.75rem;"><%= artwork.title %></div>
                 <div style="color: white"><%= artwork.description %></div>
               </div>
             </div>
@@ -102,8 +102,6 @@
         <% } %>
       </div>
     </div>
-    <!--    <script src="/js/manager.js"></script>-->
-    <!-- Bootstrap JS remove when done -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -114,6 +112,7 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/manager.js"></script>
     <%- include('../partials/footer.ejs') %>
   </body>

@@ -27,6 +27,7 @@ async function createArt(req, res) {
         await newArtwork.save();
         await saveArtwork(newArtwork);
         res.json('Artwork added!');
+        res.redirect("/add-artwork")
     } catch (err) {
         res.status(400).json(`Error: ${err.message}`);
     }

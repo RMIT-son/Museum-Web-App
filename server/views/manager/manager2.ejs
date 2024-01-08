@@ -28,7 +28,7 @@
         class="border border-secondary-subtle rounded p-3 my-2"
         id="uploadForm"
         method="post"
-        action="/form"
+        action="/api/art/create"
         enctype="multipart/form-data"
       >
         <div class="mb-3">
@@ -117,7 +117,7 @@
           <% artworks.forEach((artwork, index)=> { %>
           <form
             class="remove-artwork-form"
-            action="/delete-artwork/<%= artwork._id %>"
+            action="/api/art/delete/<%= artwork._id %>"
             method="post"
           >
             <tr data-artwork-id="<%= artwork._id %>">
@@ -229,7 +229,7 @@
         row.querySelector(".description-cell").innerHTML = description;
 
         $.ajax({
-          url: "/update-artwork/" + artworkId,
+          url: "/api/art/update/" + artworkId,
           method: "POST",
           data: JSON.stringify(updatedArtwork),
           headers: {
