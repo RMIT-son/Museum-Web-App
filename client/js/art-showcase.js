@@ -623,7 +623,7 @@ $(document).ready(function () {
       url: url,
       data: form.serialize(),
       success: function (data) {
-        showMessage(data.message);
+        showMessage("Artwork added successfully");
         $('input[name="selectedCollections"]:checked').each(function () {
           var checkbox = $(this);
           var parentDiv = checkbox.parent();
@@ -653,7 +653,7 @@ $(document).ready(function () {
       success: function (data) {
         if (data && data._id && data.name) {
           goBack();
-          showMessage(data.message);
+          showMessage("Collection created successfully");
           $(".artwork").each(function (index) {
             var newCollectionDiv = `
             <div class="collection">

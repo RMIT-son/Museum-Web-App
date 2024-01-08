@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stat</title>
-  <link rel="stylesheet" href="/client/css/manager.css">
+  <link rel="stylesheet" href="/css/manager.css">
 </head>
 
 <body>
@@ -69,13 +69,111 @@
 
   <div class="main">
     <div class="content">
-      <div class="graph">GRAPH</div>
-      <div class="graph">GRAPH</div>
-      <div class="graph">GRAPH</div>
-      <div class="graph">GRAPH</div>
+      <div class="graph">
+        <canvas id="myChart"></canvas>
+      </div>
+      <div class="graph">
+        <canvas id="myChart2"></canvas>
+      </div>
+      <div class="graph">
+        <canvas id="myChart3"></canvas>
+      </div>
+      <div class="graph">
+        <canvas id="myChart4"></canvas>
+      </div>
     </div>
   </div>
   <script src="/js/manager.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    const ctx2 = document.getElementById('myChart2');
+
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    const ctx3 = document.getElementById('myChart3');
+    console.log(ctx3);
+    new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    const ctx4 = document.getElementById('myChart4');
+    console.log(ctx4);
+    new Chart(ctx4, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
   <%- include('../partials/footer.ejs') %>
 </body>
 

@@ -20,6 +20,28 @@ const app_id = '77YVM2ITEQ';
 const api_key = 'c1ccefb35119a91df62dec09c553ba8f';
 const client = AlgoliaSearch(app_id, api_key);
 const index = client.initIndex('artwork');
+index.setSettings(
+    {
+        searchableAttributes: [
+            'title',
+            'artist',
+            'year',
+            'type',
+        ],
+        attributesForFaceting: [
+            'artist',
+            'year',
+            'type',
+        ],
+    },
+    (err, content) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log(content);
+    }
+)
+
 
 async function fetchArtworks() {
     try {
@@ -52,10 +74,28 @@ async function saveArtworks() {
     }
 }
 
-async function searchArtworks(query) {
+async function searchArtworks(query, filter) {
     try {
-        const { hits } = await index.search(query);
-        return hits;
+        if (filter !== '' ) {
+            console.log('is filtered');
+            console.log(query);
+            console.log(filter);
+            console.log(index)
+            const {hits} = await index.search(query,{
+                restrictSearchableAttributes: [`${filter}`]
+            });
+            console.log(hits);
+            return hits;
+        }
+        else {
+            console.log('not filtered');
+            console.log(query);
+            console.log(filter);
+            console.log(index)
+            const { hits } = await index.search(query);
+            console.log(hits);
+            return hits;
+        }
     } catch (error) {
         console.error('Error searching artworks:', error);
         throw error;
@@ -65,8 +105,10 @@ async function searchArtworks(query) {
 
 app.get("/search", (req, res) => {
     const query = req.query.query;
-    searchArtworks(query).then(artworks => {
-        res.render("search", { artworks, query });
+    const filter = req.query.filter;
+
+    searchArtworks(query, filter).then(artworks => {
+        res.render("search", { artworks, query, filter });
         console.log(artworks);
     });
 });

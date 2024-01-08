@@ -8,51 +8,45 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <!-- Bootstrap CSS remove when done -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User</title>
+    <title>Artworks</title>
     <link rel="stylesheet" href="/css/collection.css" />
   </head>
   <body>
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
-          <div class="map-title">
-            <h1>Map</h1>
-          </div>
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
         <div class="grid">
           <a href="/">
-              <div class="mb-4">
-                Main Hall 
-              </div>
+            <div class="mb-4">Main Hall</div>
           </a>
-          <a href="">
-            <div class="mb-4">
-              Featured Collection 
-            </div>
+          <a href="/art-showcase">
+            <div class="mb-4">Featured Collection</div>
           </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+          <a href="/vangogh">
+            <div class="mb-4">Van Gogh</div>
           </a>
-          <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
+          <a href="/login">
+            <div class="mb-4">Login</div>
           </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
+          <a href="/picasso">
+            <div class="mb-4">Picasso</div>
           </a>
           <a href="/personal-collection">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
+            <div class="mb-4">Personal Collection</div>
           </a>
         </div>
-      </div>
       </div>
     </div>
 
@@ -65,66 +59,56 @@
 
     <div class="content">
       <header>
-        <h1>[COLLECTION NAME]</h1>
+        <h1>Collection Search</h1>
+        <form action="/collection" method="GET">
+          <label for="query">Search</label>
+          <input id="query" name="query" type="text" class="form-control" placeholder="Search">
+          <label for="filter">Filter</label>
+          <select id="filter" name="filter" class="form-select">
+            <option value="all">All</option>
+            <option value="artist">Artist</option>
+            <option value="title">Title</option>
+            <option value="year">Year</option>
+            <option value="type">Type</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </header>
       <div class="gallery">
+      <% if (artworks && artworks.length > 0) { %>
+        <% artworks.forEach(artwork => { %>
         <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
+            <h3>
+                <%= artwork.title %>
+            </h3>
+            <h4>
+                By <%= artwork.artist %>
+            </h4>
+          <a href="/art-showcase-indi/<%= artwork.objectID %>">
+            <img
+              src="<%= artwork.image %>"
+              alt="<%= artwork.title %>"
+            />
+            </a>
         </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.zcToYrmhQ4AmoKMlMYnMggHaF-?rs=1&pid=ImgDetMain"
-            alt="Starry Night"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/OIP.nT-t_xEAS0lEnWSdEXGJzgHaGJ?w=238&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="Almond Blossoms"
-          />
-        </div>
-        <div class="artwork1">
-          <img
-            src="https://th.bing.com/th/id/R.18536d93af045d7c189433f2b874db06?rik=QdEqLOg5u8f7PQ&pid=ImgRaw&r=0"
-            alt="Sunflowers"
-          />
-        </div>
+        <% }) %>
+        <% } else { %>
+        <h3>
+            No artworks found
+        </h3>
+        <% } %>
       </div>
     </div>
-    <script src="/js/manager.js"></script>
+<!--    <script src="/js/manager.js"></script>-->
+    <!-- Bootstrap JS remove when done -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous">
+    </script>
     <%- include('../partials/footer.ejs') %>
   </body>
 </html>
