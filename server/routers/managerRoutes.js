@@ -31,5 +31,6 @@ router.get("/overall", async (req, res) => {
     console.error("Error fetching artworks:", error.message);
     res.status(500).send("Internal Server Error");
   }
+});
 
 module.exports = router;
