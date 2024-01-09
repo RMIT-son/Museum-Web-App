@@ -36,7 +36,6 @@ async function createArt(req, res) {
     }
 }
 
-
 async function deleteArt(req, res) {
   await deleteArtwork(req.params.id);
   Artwork.findByIdAndDelete(req.params.id)

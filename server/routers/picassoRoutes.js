@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render("./visitor/picasso");
+    const isAuthenticated = req.oidc.isAuthenticated();
+    res.render("./visitor/picasso", {isAuthenticated: isAuthenticated});
 });
 
 module.exports = router;

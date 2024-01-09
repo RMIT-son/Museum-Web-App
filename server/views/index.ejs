@@ -33,9 +33,16 @@
             <a href="/vangogh">
               <div class="mb-4">Van Gogh</div>
             </a>
+            <% if (!isAuthenticated) { %>
+
             <a href="/login">
               <div class="mb-4">Login</div>
             </a>
+            <% } else {%>
+            <a href="/logout">
+              <div class="mb-4">Logout</div>
+            </a>
+            <% } %>
             <a href="/picasso">
               <div class="mb-4">Picasso</div>
             </a>
