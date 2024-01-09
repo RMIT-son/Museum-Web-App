@@ -1,19 +1,19 @@
-const {Manager, Visitor } = require('../models/userModel');
+const { Manager, Visitor, User } = require('../models/userModel');
 
 async function getAllUsers(req, res) {
-    Manager.find()
+    User.find()
         .then((users) => res.json(users))
         .catch((err) => res.status(400).json(`Error: ${err}`));
 }
 
 async function getUserById(req, res) {
-    Manager.findById(req.params.id)
+    User.findById(req.params.id)
         .then((user) => res.json(user))
         .catch((err) => res.status(400).json(`Error: ${err}`));
 }
 
 async function createUser(req, res) {
-    const newUser = new Manager(req.body);
+    const newUser = new User(req.body);
     newUser
         .save()
         .then(() => res.json('User added!'))
@@ -21,13 +21,13 @@ async function createUser(req, res) {
 }
 
 async function deleteUser(req, res) {
-    Manager.findByIdAndDelete(req.params.id)
+    User.findByIdAndDelete(req.params.id)
         .then(() => res.json('User deleted.'))
         .catch((err) => res.status(400).json(`Error: ${err}`));
 }
 
 async function updateUser(req, res) {
-    Manager.findById(req.params.id)
+    User.findById(req.params.id)
         .then((user) => {
             user.name = req.body.name;
             user.password = req.body.password;
@@ -43,5 +43,3 @@ async function updateUser(req, res) {
 }
 
 module.exports = {getAllUsers, getUserById, createUser, deleteUser, updateUser};
-
-

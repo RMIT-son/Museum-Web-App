@@ -2,7 +2,6 @@ const Artwork = require("../models/artModel");
 const {
   saveArtwork,
   deleteArtwork,
-  updateArtwork,
 } = require("../services/algolia");
 
 async function getAllArt(req, res) {
@@ -18,23 +17,24 @@ async function getArtById(req, res) {
 }
 
 async function createArt(req, res) {
-  try {
-    const newArtwork = new Artwork({
-      title: req.body.title,
-      description: req.body.description,
-      year: req.body.year,
-      artist: req.body.artist,
-      image: "/uploads/" + req.file.filename,
-      type: req.body.type,
-    });
+    try {
+        const newArtwork = new Artwork({
+            title: req.body.title,
+            description: req.body.description,
+            year: req.body.year,
+            artist: req.body.artist,
+            image: "/uploads/" + req.file.filename,
+            type: req.body.type,
+        });
 
-    await newArtwork.save();
-    await saveArtwork(newArtwork._id);
-    // res.json("Artwork added!");
-    res.redirect("/add-artwork");
-  } catch (err) {
-    res.status(400).json(`Error: ${err.message}`);
-  }
+        await newArtwork.save();
+        await saveArtwork(newArtwork._id);
+        // res.json("Artwork added!");
+        res.redirect("/add-artwork");
+    } catch (err) {
+        res.status(400).json(`Error: ${err.message}`);
+    }
+}
 
 
 async function deleteArt(req, res) {
@@ -53,60 +53,32 @@ async function updateArt(req, res) {
         }
 
         if (req.body.title !== undefined) {
-            artwork.title = req.body.title;
+          artwork.title = req.body.title;
         }
         if (req.body.description !== undefined) {
-            artwork.description = req.body.description;
+          artwork.description = req.body.description;
         }
         if (req.body.year !== undefined) {
-            artwork.year = req.body.year;
+          artwork.year = req.body.year;
         }
         if (req.body.artist !== undefined) {
-            artwork.artist = req.body.artist;
+          artwork.artist = req.body.artist;
         }
         if (req.file !== undefined && req.file.filename !== undefined) {
-            artwork.image = 'uploads/' + req.file.filename;
+          artwork.image = "uploads/" + req.file.filename;
         }
         if (req.body.type !== undefined) {
-            artwork.type = req.body.type;
+          artwork.type = req.body.type;
         }
 
         // Save the updated artwork
         await artwork.save();
         await saveArtwork(req.params.id);
-        res.json('Artwork updated!');
-    } catch (err) {
-        console.error('Error updating artwork:', err);
+        res.json("Artwork updated!");
+      } catch (err) {
+        console.error("Error updating artwork:", err);
         res.status(400).json(`Error: ${err.message}`);
-    }
-
-    if (req.body.title !== undefined) {
-      artwork.title = req.body.title;
-    }
-    if (req.body.description !== undefined) {
-      artwork.description = req.body.description;
-    }
-    if (req.body.year !== undefined) {
-      artwork.year = req.body.year;
-    }
-    if (req.body.artist !== undefined) {
-      artwork.artist = req.body.artist;
-    }
-    if (req.file !== undefined && req.file.filename !== undefined) {
-      artwork.image = "uploads/" + req.file.filename;
-    }
-    if (req.body.type !== undefined) {
-      artwork.type = req.body.type;
-    }
-
-    // Save the updated artwork
-    await artwork.save();
-    await saveArtwork(req.params.id);
-    res.json("Artwork updated!");
-  } catch (err) {
-    console.error("Error updating artwork:", err);
-    res.status(400).json(`Error: ${err.message}`);
-  }
+      }
 }
 
 module.exports = { getAllArt, getArtById, createArt, deleteArt, updateArt };
