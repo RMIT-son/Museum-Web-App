@@ -44,14 +44,28 @@
           </div>
         </div>
       </div>
-
-      <div class="toggle_btn">
-        <div class="toggle">
-          <span></span>
-          <span></span>
-        </div>
+      <div class="grid">
+        <a href="/">
+          <div class="mb-4">Main Hall</div>
+        </a>
+        <a href="/art-showcase">
+          <div class="mb-4">Featured Collection</div>
+        </a>
+        <a href="/vangogh">
+          <div class="mb-4">Van Gogh</div>
+        </a>
+        <a href="/login">
+          <div class="mb-4">Login</div>
+        </a>
+        <a href="/picasso">
+          <div class="mb-4">Picasso</div>
+        </a>
+        <a href="/personal-collection">
+          <div class="mb-4">Personal Collection</div>
+        </a>
       </div>
-
+    </div>
+  </div>
       <div class="content">
         <div class="slider-wrapper" draggable="false">
           <div class="slider">
@@ -72,10 +86,8 @@
                     <div class="art-name"><%= artwork.title %></div>
                     <div class="artist"><%= artwork.artist %></div>
                   </div>
-
-                  <div class="icons">
-                    <i class="fa-solid fa-info info-icon"></i>
-
+                <div class="icons">
+                  <i class="fa-solid fa-info info-icon"></i>
                     <a href="/login/"
                       ><i class="far fa-heart heart-icon"></i
                     ></a>
@@ -83,18 +95,17 @@
                       ><i class="far fa-bookmark bookmark-icon"></i
                     ></a>
 
-                    <a href="/login"
-                      ><i class="fa-solid fa-plus plus-icon"></i
+                  <a href="/login"
+                  ><i class="fa-solid fa-plus plus-icon"></i
                     ></a>
 
-                    <a href="/collection"
-                      ><i class="fa-solid fa-box collection-icon"></i
+                  <a href="/collection"
+                  ><i class="fa-solid fa-box collection-icon"></i
                     ></a>
-                  </div>
                 </div>
-
-                <div class="description"><%= artwork.description %></div>
               </div>
+
+              <div class="description"><%= artwork.description %></div>
             </div>
             <% } else { %>
 
@@ -114,31 +125,29 @@
                     <div class="art-name"><%= artwork.title %></div>
                     <div class="artist"><%= artwork.artist %></div>
                   </div>
+                <div class="icons">
+                  <i class="fa-solid fa-info info-icon"></i>
 
-                  <div class="icons">
-                    <i class="fa-solid fa-info info-icon"></i>
-
-                    <% if (!isAuthenticated) { %>
+                  <% if (!isAuthenticated) { %>
                     <i class="far fa-heart heart-icon"></i>
                     <i class="far fa-bookmark bookmark-icon"></i>
 
-                    <% } else { %> <% if (artwork.likes.includes(user.sid)) { %>
+                  <% } else { %> <% if (artwork.likes.includes(user.sid)) { %>
                     <i class="far fa-heart heart-icon fa-solid"></i>
-                    <% } else { %>
+                  <% } else { %>
                     <i class="far fa-heart heart-icon"></i>
-                    <% } %> <% if (artwork.bookmarks.includes(user.sid)) { %>
+                  <% } %> <% if (artwork.bookmarks.includes(user.sid)) { %>
                     <i class="far fa-bookmark bookmark-icon fa-solid"></i>
-                    <% } else { %>
+                  <% } else { %>
                     <i class="far fa-bookmark bookmark-icon"></i>
-                    <% } %> <% } %>
+                  <% } %> <% } %>
 
-                    <i class="fa-solid fa-plus plus-icon"></i>
+                  <i class="fa-solid fa-plus plus-icon"></i>
 
-                    <a href="/collection"
-                      ><i class="fa-solid fa-box collection-icon"></i
+                  <a href="/collection"
+                  ><i class="fa-solid fa-box collection-icon"></i
                     ></a>
-                  </div>
-
+                </div>
                   <div class="add-to-collection">
                     <div class="choose-collection">
                       <h3
@@ -223,22 +232,39 @@
                         <button type="submit">
                           Create and add to collection
                         </button>
-                      </form>
-                      <i
-                        class="fa-solid fa-arrow-left arrow-left-icon"
-                        onclick="goBack()"
-                      ></i>
-                    </div>
-                    <div class="triangle"></div>
+                      </div>
+                    </form>
                   </div>
+                  <div class="new-collection-form">
+                    <h3>Add new collection</h3>
+                    <form
+                            action="/add-new-collection"
+                            method="post"
+                            class="addNewCollectionForm"
+                    >
+                      <div style="display: flex; align-items: center">
+                        <label for="name">Collection name:</label>
+                        <input type="text" id="name" name="name" required />
+                      </div>
+                      <button type="submit">
+                        Create and add to collection
+                      </button>
+                    </form>
+                    <i
+                            class="fa-solid fa-arrow-left arrow-left-icon"
+                            onclick="goBack()"
+                    ></i>
+                  </div>
+                  <div class="triangle"></div>
                 </div>
 
                 <div class="description"><%= artwork.description %></div>
               </div>
+
+              <div class="description"><%= artwork.description %></div>
             </div>
-            <% } %>
           </div>
-        </div>
+        <% } %>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

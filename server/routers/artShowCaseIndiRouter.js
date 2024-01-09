@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const collectionModel = require('../models/collectionModel.js');
+const axios = require('axios');
 const { getArtById } = require('../controllers/artController');
 
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id.trim();
         const isAuthenticated = req.oidc.isAuthenticated();
+        const instance = axios.create({ baseURL: `${req.protocol}://${req.get('host')}` });
+        let artwork = await instance(`/api/art/get/${id}`);
+        artwork = await artwork.data;
         if (isAuthenticated) {
-            let artwork = await fetch(`http://localhost:3000/api/art/get/${id}`)
-            artwork = await artwork.json();
             console.log(artwork);
             const collections = await collectionModel.find({});
             res.render('./visitor/art-showcase-indi', {
@@ -19,8 +21,6 @@ router.get('/:id', async (req, res) => {
                 collections: collections,
             });
         } else {
-            let artwork = await fetch(`http://localhost:3000/api/art/get/${id}`);
-            artwork = await artwork.json();
             console.log(artwork);
             res.render('./visitor/art-showcase-indi', {
                 artwork: artwork,
