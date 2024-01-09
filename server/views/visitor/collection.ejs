@@ -38,9 +38,16 @@
           <a href="/vangogh">
             <div class="mb-4">Van Gogh</div>
           </a>
+          <% if (!isAuthenticated) { %>
+
           <a href="/login">
             <div class="mb-4">Login</div>
           </a>
+          <% } else {%>
+          <a href="/logout">
+            <div class="mb-4">Logout</div>
+          </a>
+          <% } %>
           <a href="/picasso">
             <div class="mb-4">Picasso</div>
           </a>
@@ -61,7 +68,7 @@
     <div class="content">
       <header>
         <h1>Collection Search</h1>
-        <form action="/collection" method="GET">  
+        <form action="/collection" method="GET">
           <label for="query">Search</label>
           <input
             id="query"
@@ -90,7 +97,9 @@
             <img src="<%= artwork.image %>" alt="<%= artwork.title %>" />
             <div class="information">
               <div class="information-box">
-                <div style="color: white; font-size: 1.75rem;"><%= artwork.title %></div>
+                <div style="color: white; font-size: 1.75rem">
+                  <%= artwork.title %>
+                </div>
                 <div style="color: white"><%= artwork.description %></div>
               </div>
             </div>
