@@ -94,8 +94,7 @@
 
         <div class="slider-wrapper" draggable="false">
           <div class="slider">
-            <% artworks.forEach((artwork, index) => { %> <% if
-            (!isAuthenticated) { %>
+            <% if (!isAuthenticated) { %>
             <div class="artwork">
               <a href="" draggable="false">
                 <img
@@ -276,7 +275,7 @@
                 <div class="description"><%= artwork.description %></div>
               </div>
             </div>
-            <% } %> <% }) %>
+            <% } %>
           </div>
         </div>
       </div>
