@@ -12,7 +12,6 @@ router.get('/:id', async (req, res) => {
         let artwork = await instance(`/api/art/get/${id}`);
         artwork = await artwork.data;
         if (isAuthenticated) {
-            console.log(artwork);
             const collections = await collectionModel.find({});
             res.render('./visitor/art-showcase-indi', {
                 artwork: artwork,
@@ -21,7 +20,6 @@ router.get('/:id', async (req, res) => {
                 collections: collections,
             });
         } else {
-            console.log(artwork);
             res.render('./visitor/art-showcase-indi', {
                 artwork: artwork,
                 isAuthenticated: isAuthenticated,

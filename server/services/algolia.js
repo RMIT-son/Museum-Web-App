@@ -44,19 +44,20 @@ async function searchArtworks(query, filter) {
 }
 
 async function saveArtwork(id) {
-  try {
-    // Use await to properly retrieve the artwork from MongoDB
-    const artwork = await Artwork.findById(id).lean();
-    if (artwork) {
-      const object = await transformSingleForAlgolia(artwork);
-      const { objectIDs } = await index.saveObject(object);
-      console.log("Object saved with ID:", objectIDs);
-    } else {
-      console.error("Artwork not found with ID:", id);
+    try {
+        // Use await to properly retrieve the artwork from MongoDB
+        const artwork = await Artwork.findById(id).lean();
+        console.log(artwork);
+        if (artwork) {
+            const object = await transformSingleForAlgolia(artwork);
+            const { objectIDs } = await index.saveObject(object);
+            console.log('Object saved with ID:', objectIDs);
+        } else {
+            console.error('Artwork not found with ID:', id);
+        }
+    } catch (error) {
+        console.error('Error saving artwork:', error);
     }
-  } catch (error) {
-    console.error("Error saving artwork:", error);
-  }
 }
 
 async function deleteArtworks() {
