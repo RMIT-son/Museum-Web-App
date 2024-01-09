@@ -6,56 +6,47 @@ const Artwork = require('../models/artModel.js');
 const app_id = process.env.ALGOLIA_APP_ID;
 const api_key = process.env.ALGOLIA_ADMIN_KEY;
 const client = AlgoliaSearch(app_id, api_key);
-const index = client.initIndex('artwork');
+const index = client.initIndex("artwork");
 index.setSettings(
-    {
-        searchableAttributes: [
-            'title',
-            'artist',
-            'year',
-            'type',
-            'objectID'
-        ],
-        attributesForFaceting: [
-            'artist',
-            'year',
-            'type',
-        ],
-    },
-    (err, content) => {
-        if (err) {
-            console.error(err);
-        }
-        console.log(content);
+  {
+    searchableAttributes: ["title", "artist", "year", "type", "objectID"],
+    attributesForFaceting: ["artist", "year", "type"],
+  },
+  (err, content) => {
+    if (err) {
+      console.error(err);
     }
-)
-
+    console.log(content);
+  }
+);
 
 async function searchArtworks(query, filter) {
-    try {
-        if (filter === '' || filter === undefined || filter === null || filter === 'all') {
-            const { hits } = await index.search(query);
-            return hits;
-        }
-        else {
-        const { hits } = await index.search(query,
-            {
-                restrictSearchableAttributes: [filter],
-                advancedSyntax: true,
-            });
-        return hits;
-        }
-    } catch (error) {
-        console.error('Error searching artworks:', error);
-        throw error;
+  try {
+    if (
+      filter === "" ||
+      filter === undefined ||
+      filter === null ||
+      filter === "all"
+    ) {
+      const { hits } = await index.search(query);
+      return hits;
+    } else {
+      const { hits } = await index.search(query, {
+        restrictSearchableAttributes: [filter],
+        advancedSyntax: true,
+      });
+      return hits;
     }
+  } catch (error) {
+    console.error("Error searching artworks:", error);
+    throw error;
+  }
 }
 
 async function saveArtwork(id) {
     try {
         // Use await to properly retrieve the artwork from MongoDB
         const artwork = await Artwork.findById(id).lean();
-        console.log(artwork);
         if (artwork) {
             const object = await transformSingleForAlgolia(artwork);
             const { objectIDs } = await index.saveObject(object);
@@ -66,16 +57,19 @@ async function saveArtwork(id) {
     } catch (error) {
         console.error('Error saving artwork:', error);
     }
+  } catch (error) {
+    console.error("Error saving artwork:", error);
+  }
 }
 
 
 async function deleteArtworks() {
-    try {
-        const { objectIDs } = await index.clearObjects();
-        console.log('Objects deleted with IDs:', objectIDs);
-    } catch (error) {
-        console.error('Error deleting artworks:', error);
-    }
+  try {
+    const { objectIDs } = await index.clearObjects();
+    console.log("Objects deleted with IDs:", objectIDs);
+  } catch (error) {
+    console.error("Error deleting artworks:", error);
+  }
 }
 
 async function saveArtworks() {
@@ -100,11 +94,11 @@ async function deleteArtwork(id) {
 }
 
 async function transformForAlgolia(documents) {
-    return documents.map(document => ({
-        ...document,
-        objectID: String(document._id), // Convert MongoDB _id to string for Algolia objectID
-        _id: undefined, // Remove the original _id field
-    }));
+  return documents.map((document) => ({
+    ...document,
+    objectID: String(document._id), // Convert MongoDB _id to string for Algolia objectID
+    _id: undefined, // Remove the original _id field
+  }));
 }
 
 async function transformSingleForAlgolia(document) {

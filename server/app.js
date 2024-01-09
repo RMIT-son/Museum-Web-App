@@ -11,6 +11,7 @@ const homepageRouter = require("./routers/visitorRoutes");
 const vanGoghRouter = require("./routers/vanGoghRoutes");
 const picassoRouter = require("./routers/picassoRoutes");
 const artShowCaseRouter = require("./routers/artShowCaseRouters");
+const addArtworkRouter = require("./routers/addArtworkRoutes");
 const managerRouter = require("./routers/managerRoutes");
 const overallRouter = require("./routers/overallRoutes");
 const collectionListRouter = require("./routers/collectionListRoutes");
@@ -49,6 +50,7 @@ app.get("/form", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 app.post("/form", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
@@ -73,7 +75,7 @@ app.post("/form", upload.single("image"), async (req, res) => {
 
     await newArtwork.save();
     res.status(200);
-    res.redirect("/manager");
+    res.redirect("/add-artwork");
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred while adding the product");
@@ -88,6 +90,7 @@ app.use("/overall", overallRouter);
 app.use("/collection-list", collectionListRouter);
 app.use("/collection", collectionRouter);
 app.use("/art-showcase-indi", artShowCaseIndiRouter);
+app.use("/add-artwork", addArtworkRouter);
 app.use("/personal-collection", personalCollectionRouter, (req, res, next) => {
   if (!req.oidc.isAuthenticated()) {
     return res.redirect("/login");
@@ -248,62 +251,6 @@ app.post("/remove/:collectionId", async (req, res) => {
     res.status(200).send("Collection removed successfully");
   } catch (error) {
     console.error("Error removing collection:", error);
-    res.status(500).send("Server Error");
-  }
-});
-
-// Remove artwork
-app.post("/delete-artwork/:artworkId", async (req, res) => {
-  try {
-    const { artworkId } = req.params;
-
-    const artwork = await artModel.findByIdAndDelete(artworkId);
-
-    if (!artwork) {
-      return res.status(404).send("Artwork not found");
-    }
-
-    res.redirect("/manager");
-  } catch (e) {
-    console.error("Error removing artwrok:", error);
-    res.status(500).send("Server Error");
-  }
-});
-
-// Update artwork
-app.post("/update-artwork/:artworkId", async (req, res) => {
-  try {
-    const { artworkId } = req.params;
-    const { title, artist, type, year, description } = req.body;
-
-    const updatedArtwork = await updateArtwork(
-      artworkId,
-      title,
-      artist,
-      type,
-      year,
-      description
-    );
-    async function updateArtwork(
-      artworkId,
-      title,
-      artist,
-      type,
-      year,
-      description
-    ) {
-      const artwork = await artModel.findById(artworkId);
-      artwork.title = title;
-      artwork.artist = artist;
-      artwork.type = type;
-      artwork.year = year;
-      artwork.description = description;
-      await artwork.save();
-      return artwork;
-    }
-    res.json(updatedArtwork);
-  } catch (error) {
-    console.error("Error updating artwork:", error);
     res.status(500).send("Server Error");
   }
 });

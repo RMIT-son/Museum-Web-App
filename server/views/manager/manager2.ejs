@@ -28,7 +28,7 @@
         class="border border-secondary-subtle rounded p-3 my-2"
         id="uploadForm"
         method="post"
-        action="/form"
+        action="/api/art/create"
         enctype="multipart/form-data"
       >
         <div class="mb-3">
@@ -117,16 +117,18 @@
           <% artworks.forEach((artwork, index)=> { %>
           <form
             class="remove-artwork-form"
-            action="/delete-artwork/<%= artwork._id %>"
+            action="/api/art/delete/<%= artwork._id %>"
             method="post"
           >
             <tr data-artwork-id="<%= artwork._id %>">
               <th scope="row"><%= index + 1 %></th>
-              <td class="title-cell"><%= artwork.title %></td>
-              <td class="artist-cell"><%= artwork.artist %></td>
-              <td class="type-cell"><%= artwork.type %></td>
-              <td class="description-cell"><%= artwork.description %></td>
-              <td class="year-cell"><%= artwork.year %></td>
+              <td class="title-cell limited-width"><%= artwork.title %></td>
+              <td class="artist-cell limited-width"><%= artwork.artist %></td>
+              <td class="type-cell limited-width"><%= artwork.type %></td>
+              <td class="description-cell limited-width">
+                <%= artwork.description %>
+              </td>
+              <td class="year-cell limited-width"><%= artwork.year %></td>
               <td>
                 <button
                   type="button"
@@ -227,8 +229,8 @@
         row.querySelector(".description-cell").innerHTML = description;
 
         $.ajax({
-          url: "/update-artwork/" + artworkId,
-          method: "POST",
+          url: "/api/art/update/" + artworkId,
+          method: "PUT",
           data: JSON.stringify(updatedArtwork),
           headers: {
             "Content-Type": "application/json",
@@ -253,4 +255,11 @@
       }
     </script>
   </body>
+  <style>
+    .limited-width {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
 </html>

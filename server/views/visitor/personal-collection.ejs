@@ -80,7 +80,7 @@
           <img src="<%= artwork.image %>" alt="Starry Night" />
           <div class="information">
             <div class="information-box">
-              <div><%= artwork.title %></div>
+              <div style="font-size: 1.75rem;"><%= artwork.title %></div>
               <div><%= artwork.description %></div>
             </div>
           </div>
@@ -95,7 +95,7 @@
           <img src="<%= artwork.image %>" alt="Starry Night" />
           <div class="information">
             <div class="information-box">
-              <div><%= artwork.title %></div>
+              <div style="font-size: 1.75rem;"><%= artwork.title %></div>
               <div><%= artwork.description %></div>
             </div>
           </div>
@@ -158,15 +158,15 @@
             </div>
             <div class="artworks">
               <% collection.artwork.forEach((artwork) => { %>
-              <div class="artwork1" style="width: 300px; height: 300px">
+              <div class="artwork1" style="width: auto; height: 300px">
                 <img
-                  style="width: 300px; height: 300px"
+                  style="width: auto; height: 300px"
                   src="<%= artwork.image %>"
                   alt="Starry Night"
                 />
                 <div class="information">
                   <div class="information-box">
-                    <div><%= artwork.title %></div>
+                    <div style="font-size: 1.75rem;"><%= artwork.title %></div>
                     <div><%= artwork.description %></div>
                   </div>
                 </div>
