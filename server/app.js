@@ -307,3 +307,4 @@ app.post("/update-artwork/:artworkId", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
