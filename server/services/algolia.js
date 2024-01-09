@@ -1,7 +1,7 @@
 require('dotenv').config({path: '../../.env'});
 const AlgoliaSearch = require('algoliasearch');
-const {get} = require("axios");
-const { getAllArt } = require('../controllers/artController');
+const { get} = require("axios");
+const Artwork = require('../models/artModel.js');
 
 const app_id = process.env.ALGOLIA_APP_ID;
 const api_key = process.env.ALGOLIA_ADMIN_KEY;
@@ -51,15 +51,23 @@ async function searchArtworks(query, filter) {
     }
 }
 
-async function saveArtwork(artwork) {
+async function saveArtwork(id) {
     try {
-        const object = await transformForAlgolia(artwork);
-        const { objectIDs } = await index.saveObject(object);
-        console.log('Object saved with ID:', objectIDs);
+        // Use await to properly retrieve the artwork from MongoDB
+        const artwork = await Artwork.findById(id).lean();
+        console.log(artwork);
+        if (artwork) {
+            const object = await transformSingleForAlgolia(artwork);
+            const { objectIDs } = await index.saveObject(object);
+            console.log('Object saved with ID:', objectIDs);
+        } else {
+            console.error('Artwork not found with ID:', id);
+        }
     } catch (error) {
         console.error('Error saving artwork:', error);
     }
 }
+
 
 async function deleteArtworks() {
     try {
@@ -85,7 +93,7 @@ async function saveArtworks() {
 async function deleteArtwork(id) {
     try {
         const { objectIDs } = await index.deleteObject(id);
-        console.log('Object deleted with ID:', objectIDs);
+        console.log('Object deleted with ID:', id);
     } catch (error) {
         console.error('Error deleting artwork:', error);
     }
@@ -99,12 +107,22 @@ async function transformForAlgolia(documents) {
     }));
 }
 
+async function transformSingleForAlgolia(document) {
+    return {
+        ...document,
+        objectID: String(document._id), // Convert MongoDB _id to string for Algolia objectID
+        _id: undefined, // Remove the original _id field
+    };
+}
 
-async function updateArtwork(artwork) {
+
+async function updateArtwork(id) {
     try {
-        const object = await transformForAlgolia(artwork);
+        const artwork = await Artwork.findById(id).lean();
+        console.log(artwork);
+        const object = await transformSingleForAlgolia(artwork);
         const { objectIDs } = await index.partialUpdateObject(object);
-        console.log('Object updated with ID:', objectIDs);
+        console.log('Object updated with ID:', id);
     } catch (error) {
         console.error('Error updating artwork:', error);
     }
@@ -119,4 +137,4 @@ module.exports = {
     deleteArtworks,
 };
 
-deleteArtworks().then(() => saveArtworks());
+// deleteArtworks().then(() => saveArtworks());
