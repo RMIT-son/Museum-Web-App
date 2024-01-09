@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const artModel = require("../models/artModel.js");
 
-router.get('/', (req, res) => {
-    res.render("./manager/overall");
+router.get('/', async (req, res) => {
+    try {
+        const artworks = await artModel.find({});
+        res.render("./manager/overall", {artworks: artworks,});
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 module.exports = router;

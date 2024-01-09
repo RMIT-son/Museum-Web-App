@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         artworks = await artworks.json()
         if (req.oidc.isAuthenticated()) {
             if (req.oidc.user.email === "admin@museum.com") {
-                res.render("./manager/manager2", { artworks: artworks });
+                res.render("./manager/manager", { artworks: artworks });
             }
             res.status(401).send('Unauthorized access');
         } else {

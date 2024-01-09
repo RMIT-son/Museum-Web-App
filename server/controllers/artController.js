@@ -35,7 +35,7 @@ async function createArt(req, res) {
   } catch (err) {
     res.status(400).json(`Error: ${err.message}`);
   }
-
+}
 
 async function deleteArt(req, res) {
   await deleteArtwork(req.params.id);
@@ -45,39 +45,11 @@ async function deleteArt(req, res) {
 }
 
 async function updateArt(req, res) {
-    try {
-        const artwork = await Artwork.findById(req.params.id);
+  try {
+    const artwork = await Artwork.findById(req.params.id);
 
-        if (!artwork) {
-            return res.status(404).json('Artwork not found');
-        }
-
-        if (req.body.title !== undefined) {
-            artwork.title = req.body.title;
-        }
-        if (req.body.description !== undefined) {
-            artwork.description = req.body.description;
-        }
-        if (req.body.year !== undefined) {
-            artwork.year = req.body.year;
-        }
-        if (req.body.artist !== undefined) {
-            artwork.artist = req.body.artist;
-        }
-        if (req.file !== undefined && req.file.filename !== undefined) {
-            artwork.image = 'uploads/' + req.file.filename;
-        }
-        if (req.body.type !== undefined) {
-            artwork.type = req.body.type;
-        }
-
-        // Save the updated artwork
-        await artwork.save();
-        await saveArtwork(req.params.id);
-        res.json('Artwork updated!');
-    } catch (err) {
-        console.error('Error updating artwork:', err);
-        res.status(400).json(`Error: ${err.message}`);
+    if (!artwork) {
+      return res.status(404).json("Artwork not found");
     }
 
     if (req.body.title !== undefined) {

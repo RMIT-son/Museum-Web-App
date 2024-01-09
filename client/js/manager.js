@@ -33,15 +33,15 @@ function showGallery(evt, galleryName) {
 document.addEventListener("DOMContentLoaded", function () {
   const artwork1s = document.querySelectorAll(".artwork1");
 
-  artwork1s.forEach(function (artwork1, i) {
+  artwork1s.forEach(function (artwork1) {
     artwork1.addEventListener("mouseenter", function () {
-      const information = document.querySelectorAll(".information");
-      information[i].classList.add("open");
+      const information = artwork1.querySelector(".information");
+      information.classList.add("open");
     });
 
     artwork1.addEventListener("mouseleave", function () {
-      const information = document.querySelectorAll(".information");
-      information[i].classList.remove("open");
+      const information = artwork1.querySelector(".information");
+      information.classList.remove("open");
     });
   });
 });
@@ -65,7 +65,7 @@ $(".remove-collection-form").on("submit", function (e) {
     method: "POST",
     data: form.serialize(),
     success: function (response) {
-      showMessage("Collection removed")
+      showMessage("Collection removed");
       setTimeout(function () {
         form.remove();
       }, 500);

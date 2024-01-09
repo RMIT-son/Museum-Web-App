@@ -16,110 +16,55 @@
   <body>
     <div class="navbar">
       <div class="header">
-          <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
-          <div class="manager">MANAGER</div>
+        <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
+        <div class="manager">MANAGER</div>
       </div>
       <div class="toggle_btn">
-          <div class="toggle">
-            <span></span>
-            <span></span>
-          </div>
+        <div class="toggle">
+          <span></span>
+          <span></span>
         </div>
+      </div>
     </div>
 
     <div class="overlay"></div>
     <div class="dropdown-menu">
       <div class="container">
-          <div class="map-title">
-            <h1>Map</h1>
-          </div>
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
         <div class="grid">
-          <a href="../index.html">
-              <div class="mb-4">
-                Main Hall 
-              </div>
+          <a href="/manager">
+            <div class="mb-4">Main Hall</div>
           </a>
-          <a href="">
-            <div class="mb-4">
-              Featured Collection   
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Information Desk 
-            </div>
-          </a>
-          <a href="">
-            <div class="mb-4">
-              Collection Name 
-            </div>
-          </a>
-          <a href="../collection/personal_collection.html">
-            <div class="mb-4">
-              Personal Collection 
-            </div>
+          <a href="/overall">
+            <div class="mb-4">Featured Collection</div>
           </a>
         </div>
-      </div>
       </div>
     </div>
 
     <div class="content">
       <!-- artist name & DOB -->
       <div class="artist-info">
-        <h1>[ARTIST]</h1>
-        <h2>[Birthday - Deathday]</h2>
+        <h1>Featured Collection</h1>
       </div>
-
       <!-- artwork collection -->
-      <div class="artwork-heading">
-        <h4>ARTWORK COLLECTION</h4>
-      </div>
       <div class="artwork-collection-container">
+        <% artworks.forEach((artwork) => { %>
         <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
+          <img
+            src="<%= artwork.image %>"
+            alt="<%= artwork.title %>"
+          />
           <div class="text">
-            <h3>Artwork name</h3>
+            <h3><%= artwork.title %></h3>
           </div>
         </div>
-        <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
-          <div class="text">
-            <h3>Artwork name</h3>
-          </div>
-        </div>
-        <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
-          <div class="text">
-            <h3>Artwork name</h3>
-          </div>
-        </div>
-        <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
-          <div class="text">
-            <h3>Artwork name</h3>
-          </div>
-        </div>
-        <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
-          <div class="text">
-            <h3>Artwork name</h3>
-          </div>
-        </div>
-        <div class="artwork">
-          <img src="https://th.bing.com/th/id/R.29c59cbd4d4432816b593537ee83c3f8?rik=XotUKjF2ewQMDA&pid=ImgRaw&r=0" alt="parasol" />
-          <div class="text">
-            <h3>Artwork name</h3>
-          </div>
-        </div>
+        <% }) %>
       </div>
     </div>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/manager.js"></script>
     <%- include('../partials/footer.ejs') %>
   </body>
