@@ -1,7 +1,7 @@
-require('dotenv').config({path: '../../.env'});
-const AlgoliaSearch = require('algoliasearch');
-const { get} = require("axios");
-const Artwork = require('../models/artModel.js');
+require("dotenv").config({ path: "../../.env" });
+const AlgoliaSearch = require("algoliasearch");
+const { get } = require("axios");
+const Artwork = require("../models/artModel.js");
 
 const app_id = process.env.ALGOLIA_APP_ID;
 const api_key = process.env.ALGOLIA_ADMIN_KEY;
@@ -60,7 +60,6 @@ async function saveArtwork(id) {
     }
 }
 
-
 async function deleteArtworks() {
   try {
     const { objectIDs } = await index.clearObjects();
@@ -71,24 +70,24 @@ async function deleteArtworks() {
 }
 
 async function saveArtworks() {
-    try {
-        let artworks_array = await fetch("http://localhost:3000/api/art/get");
-        artworks_array = await artworks_array.json();
-        const objects = await transformForAlgolia(artworks_array);
-        const { objectIDs } = await index.saveObjects(objects);
-        console.log('Objects saved with IDs:', objectIDs);
-    } catch (error) {
-        console.error('Error saving artworks:', error);
-    }
+  try {
+    let artworks_array = await fetch("http://localhost:3000/api/art/get");
+    artworks_array = await artworks_array.json();
+    const objects = await transformForAlgolia(artworks_array);
+    const { objectIDs } = await index.saveObjects(objects);
+    console.log("Objects saved with IDs:", objectIDs);
+  } catch (error) {
+    console.error("Error saving artworks:", error);
+  }
 }
 
 async function deleteArtwork(id) {
-    try {
-        const { objectIDs } = await index.deleteObject(id);
-        console.log('Object deleted with ID:', id);
-    } catch (error) {
-        console.error('Error deleting artwork:', error);
-    }
+  try {
+    const { objectIDs } = await index.deleteObject(id);
+    console.log("Object deleted with ID:", id);
+  } catch (error) {
+    console.error("Error deleting artwork:", error);
+  }
 }
 
 async function transformForAlgolia(documents) {
@@ -100,33 +99,32 @@ async function transformForAlgolia(documents) {
 }
 
 async function transformSingleForAlgolia(document) {
-    return {
-        ...document,
-        objectID: String(document._id), // Convert MongoDB _id to string for Algolia objectID
-        _id: undefined, // Remove the original _id field
-    };
+  return {
+    ...document,
+    objectID: String(document._id), // Convert MongoDB _id to string for Algolia objectID
+    _id: undefined, // Remove the original _id field
+  };
 }
 
-
 async function updateArtwork(id) {
-    try {
-        const artwork = await Artwork.findById(id).lean();
-        console.log(artwork);
-        const object = await transformSingleForAlgolia(artwork);
-        const { objectIDs } = await index.partialUpdateObject(object);
-        console.log('Object updated with ID:', id);
-    } catch (error) {
-        console.error('Error updating artwork:', error);
-    }
+  try {
+    const artwork = await Artwork.findById(id).lean();
+    console.log(artwork);
+    const object = await transformSingleForAlgolia(artwork);
+    const { objectIDs } = await index.partialUpdateObject(object);
+    console.log("Object updated with ID:", id);
+  } catch (error) {
+    console.error("Error updating artwork:", error);
+  }
 }
 
 module.exports = {
-    searchArtworks,
-    saveArtwork,
-    deleteArtwork,
-    updateArtwork,
-    saveArtworks,
-    deleteArtworks,
+  searchArtworks,
+  saveArtwork,
+  deleteArtwork,
+  updateArtwork,
+  saveArtworks,
+  deleteArtworks,
 };
 
 // deleteArtworks().then(() => saveArtworks());
