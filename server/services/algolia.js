@@ -47,7 +47,6 @@ async function saveArtwork(id) {
     try {
         // Use await to properly retrieve the artwork from MongoDB
         const artwork = await Artwork.findById(id).lean();
-        console.log(artwork);
         if (artwork) {
             const object = await transformSingleForAlgolia(artwork);
             const { objectIDs } = await index.saveObject(object);
@@ -109,7 +108,6 @@ async function transformSingleForAlgolia(document) {
 async function updateArtwork(id) {
   try {
     const artwork = await Artwork.findById(id).lean();
-    console.log(artwork);
     const object = await transformSingleForAlgolia(artwork);
     const { objectIDs } = await index.partialUpdateObject(object);
     console.log("Object updated with ID:", id);

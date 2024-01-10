@@ -1,14 +1,20 @@
 require("dotenv").config({ path: "../../.env" });
 const express = require("express");
 const { UnauthorizedError } = require("express-oauth2-jwt-bearer");
+const axios = require("axios");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    if (req.oidc.isAuthenticated()) {
-      if (req.oidc.user.email === "admin@museum.com") {
-        res.render("./manager/manager", { user: req.oidc.user });
-      }
+    let instance = axios.create({
+        baseURL: `${req.protocol}://${req.get("host")}`,
+    });
+    let artworks = await instance("/api/art/get");
+    artworks = await artworks.data;
+    if ((req.oidc.isAuthenticated) && (req.oidc.user.email === "admin@museum.com")) {
+        res.render("./manager/manager", {artworks: artworks, user: req.oidc.user });
+    } else {
+        res.send("You are not authorized to view this page.");
     }
   } catch (error) {
     console.error("Error fetching artworks:", error.message);
