@@ -101,14 +101,12 @@
         </div>
         <div class="mb-3">
           <label for="type" class="form-label">Type</label>
-          <input
-            type="text"
-            name="type"
-            id="type"
-            placeholder="Enter art type"
-            class="form-control"
-            required
-          />
+          <select name="type" id="type" class="form-select" required>
+            <option value="painting">Painting</option>
+            <option value="sculpture">Sculpture</option>
+            <option value="photography">Photography</option>
+            <option value="other">Other</option>
+          </select>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image</label>

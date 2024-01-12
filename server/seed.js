@@ -127,9 +127,10 @@ Artwork.collection
         return Artwork.insertMany(artData);
     })
     .then(() => console.log("Art collection seeded"))
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
+    .then(() => deleteArtworks())
+    .then(() => saveArtworks())
 
 // Initialize Algolia with some art data
-deleteArtworks().then(r => console.log(r));
-saveArtworks().then(r => console.log(r));
+
 
