@@ -51,7 +51,7 @@
       <h1>Manager Dashboard</h1>
       <div class="content">
         <div class="graph" style="height: 300px">
-          <canvas id="likesChart" width="400" height="200"></canvas>
+          <canvas id="likesChart"></canvas>
         </div>
         <div class="graph">
           <canvas id="typeChart"></canvas>
@@ -365,6 +365,7 @@
       padding: 0;
       margin: 0;
       box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     body.close {
@@ -532,14 +533,17 @@
       align-items: center;
       flex-direction: column;
       height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
     }
 
     .content {
       display: grid;
-      width: 70%;
+      width: 100%;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 2rem;
       margin-top: 50px;
+      place-items: center;
     }
 
     .graph {
@@ -548,7 +552,7 @@
       align-items: center;
       background-color: #ffffff;
       height: 250px;
-      width: 100%;
+      width: 80%;
       text-align: center;
       border: 1px solid black;
     }
