@@ -177,9 +177,9 @@ body.close {
 
 .content {
   display: grid;
-  width: 70%;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
+  padding-right: 100px;
 }
 
 .graph {
