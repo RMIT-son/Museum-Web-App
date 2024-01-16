@@ -1,711 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stat</title>
+  </head>
 
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stat</title>
-</head>
-
-<body>
-  <div class="navbar">
-    <div class="header">
-      <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
-      <div class="manager" style="padding-left: 10px;">
-        <%= user.name %>
+  <body>
+    <div class="navbar">
+      <div class="header">
+        <div class="museum-name">A HYPOTHETICAL MUSEUM</div>
+        <div class="manager" style="padding-left: 10px;"><%= user.name %></div>
+      </div>
+      <div class="toggle_btn">
+        <div class="toggle">
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
-    <div class="toggle_btn">
-      <div class="toggle">
-        <span></span>
-        <span></span>
+
+    <div class="overlay"></div>
+    <div class="dropdown-menu">
+      <div class="container">
+        <div class="map-title">
+          <h1>Map</h1>
+        </div>
+        <div class="grid">
+          <a href="/manager">
+            <div class="mb-4">Main Hall</div>
+          </a>
+          <a href="/overall">
+            <div class="mb-4">Featured Collection</div>
+          </a>
+          <a href="/logout/">
+            <div class="mb-4">Log out</div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="overlay"></div>
-  <div class="dropdown-menu">
-    <div class="container">
-      <div class="map-title">
-        <h1>Map</h1>
-      </div>
-      <div class="grid">
-        <a href="/manager">
-          <div class="mb-4">Main Hall</div>
-        </a>
-        <a href="/overall">
-          <div class="mb-4">Featured Collection</div>
-        </a>
-        <a href="/logout/">
-          <div class="mb-4">Log out</div>
-        </a>
+    <div class="main">
+      <h1>Manager Dashboard</h1>
+      <div class="content">
+        <div class="graph" style="height: 300px">
+          <canvas id="likesChart"></canvas>
+        </div>
+        <div class="graph">
+          <canvas id="typeChart"></canvas>
+        </div>
+        <div class="graph">
+          <canvas id="artworksByYearChart"></canvas>
+        </div>
+        <div class="graph">
+          <canvas id="usersChart"></canvas>
+        </div>
       </div>
     </div>
-  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const toggleBtn = document.querySelector(".toggle_btn");
+      const dropDownMenu = document.querySelector(".dropdown-menu");
+      const overlay = document.querySelector(".overlay");
+      const body = document.querySelector("body");
 
-  <div class="main">
-    <h1>Manager Dashboard</h1>
-    <div class="content">
-      <div class="graph" style="height: 300px">
-        <canvas id="likesChart" width="400" height="200"></canvas>
-      </div>
-      <div class="graph">
-        <canvas id="typeChart"></canvas>
-      </div>
-      <div class="graph">
-        <canvas id="artworksByYearChart"></canvas>
-      </div>
-      <div class="graph">
-        <canvas id="usersChart"></canvas>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const toggleBtn = document.querySelector(".toggle_btn");
-    const dropDownMenu = document.querySelector(".dropdown-menu");
-    const overlay = document.querySelector(".overlay");
-    const body = document.querySelector("body");
+      toggleBtn.onclick = function () {
+        dropDownMenu.classList.toggle("open");
+        overlay.classList.toggle("open");
+        body.classList.toggle("close");
+      };
 
-    toggleBtn.onclick = function () {
-      dropDownMenu.classList.toggle("open");
-      overlay.classList.toggle("open");
-      body.classList.toggle("close");
-    };
+      let menutoggle = document.querySelector(".toggle");
+      menutoggle.onclick = function () {
+        menutoggle.classList.toggle("active");
+      };
 
-    let menutoggle = document.querySelector(".toggle");
-    menutoggle.onclick = function () {
-      menutoggle.classList.toggle("active");
-    };
-
-    function showGallery(evt, galleryName) {
-      var i, gallery, tablinks;
-      gallery = document.getElementsByClassName("gallery");
-      for (i = 0; i < gallery.length; i++) {
-        gallery[i].style.display = "none";
-      }
-
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-
-      document.getElementById(galleryName).style.display = "grid";
-      evt.currentTarget.className += " active";
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const artwork1s = document.querySelectorAll(".artwork1");
-
-      artwork1s.forEach(function (artwork1) {
-        artwork1.addEventListener("mouseenter", function () {
-          const information = artwork1.querySelector(".information");
-          information.classList.add("open");
-        });
-
-        artwork1.addEventListener("mouseleave", function () {
-          const information = artwork1.querySelector(".information");
-          information.classList.remove("open");
-        });
-      });
-    });
-
-    $(".remove-collection-form").on("submit", function (e) {
-      function showMessage(message) {
-        var messageDiv = $("#messageDisplay");
-
-        messageDiv.text(message);
-        messageDiv.css("opacity", 0);
-        messageDiv.animate({ opacity: 1.2 }, 500, function () {
-          $(this).animate({ opacity: 0 }, 2000);
-        });
-      }
-      var form = $(this);
-
-      e.preventDefault();
-
-      $.ajax({
-        url: form.attr("action"),
-        method: "POST",
-        data: form.serialize(),
-        success: function (response) {
-          showMessage("Collection removed");
-          setTimeout(function () {
-            form.remove();
-          }, 500);
-        },
-        error: function (xhr, status, error) {
-          console.error("Error deleting collection:", error);
-        },
-      });
-    });
-
-    function hideCollection(event) {
-      event.stopPropagation();
-
-      var collectionDiv = $(event.target).closest("form");
-
-      collectionDiv.animate({ opacity: 0, height: 0 }, 500, function () {
-        collectionDiv.css("display", "none");
-      });
-    }
-
-    function openArtwork(event) {
-      const title = event.target.closest(".title");
-      const artworks = title.nextElementSibling;
-      const icon = title.querySelector(".fa-angle-down");
-
-      artworks.classList.toggle("open");
-      icon.classList.toggle("open");
-    }
-
-    function toggleCollection(event) {
-      const collectionDiv = event.target.parentElement.parentElement;
-
-      const artworksDiv = collectionDiv.querySelector(".artworks");
-      artworksDiv.classList.toggle("open");
-
-      const arrowIcon = collectionDiv.querySelector(".arrow-down-icon");
-      arrowIcon.classList.toggle("rotate");
-    }
-  </script>
-
-
-  <script>
-    const artworks = <% - JSON.stringify(artworks) %>;
-
-    // Extracting relevant data for charts
-    const likesData = artworks.map(artwork => artwork.likes.length);
-    const typeData = artworks.reduce((acc, artwork) => {
-      acc[artwork.type] = (acc[artwork.type] || 0) + 1;
-      return acc;
-    }, {});
-
-    // Creating a bar chart for likes
-    const likesCtx = document.getElementById('likesChart').getContext('2d');
-    const likesChart = new Chart(likesCtx, {
-      type: 'bar',
-      data: {
-        labels: artworks.map(artwork => artwork.title),
-        datasets: [{
-          label: 'Likes',
-          data: likesData,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Likes by Artwork'
-          }
+      function showGallery(evt, galleryName) {
+        var i, gallery, tablinks;
+        gallery = document.getElementsByClassName("gallery");
+        for (i = 0; i < gallery.length; i++) {
+          gallery[i].style.display = "none";
         }
-      }
-    });
 
-    // Creating a pie chart for artwork types
-    const typeCtx = document.getElementById('typeChart').getContext('2d');
-    const typeChart = new Chart(typeCtx, {
-      type: 'pie',
-      data: {
-        labels: Object.keys(typeData),
-        datasets: [{
-          data: Object.values(typeData),
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(255, 206, 86, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 159, 64, 0.7)',
-            'rgba(233, 30, 99, 0.7)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(233, 30, 99, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: 'Artworks by Type'
-          }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+
+        document.getElementById(galleryName).style.display = "grid";
+        evt.currentTarget.className += " active";
       }
-    });
 
-    const artworksByYear = artworks.reduce((acc, artwork) => {
-      const year = artwork.year || 'Unknown';
-      acc[year] = (acc[year] || 0) + 1;
-      return acc;
-    }, {});
+      document.addEventListener("DOMContentLoaded", function () {
+        const artwork1s = document.querySelectorAll(".artwork1");
 
-    const artworksByYearCtx = document.getElementById('artworksByYearChart').getContext('2d');
-    const artworksByYearChart = new Chart(artworksByYearCtx, {
-      type: 'bubble',
-      data: {
-        labels: Object.keys(artworksByYear),
-        datasets: [{
-          label: 'Number of Artworks',
-          data: Object.values(artworksByYear),
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          fill: false
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            type: 'linear',
-            position: 'bottom'
+        artwork1s.forEach(function (artwork1) {
+          artwork1.addEventListener("mouseenter", function () {
+            const information = artwork1.querySelector(".information");
+            information.classList.add("open");
+          });
+
+          artwork1.addEventListener("mouseleave", function () {
+            const information = artwork1.querySelector(".information");
+            information.classList.remove("open");
+          });
+        });
+      });
+
+      $(".remove-collection-form").on("submit", function (e) {
+        function showMessage(message) {
+          var messageDiv = $("#messageDisplay");
+
+          messageDiv.text(message);
+          messageDiv.css("opacity", 0);
+          messageDiv.animate({ opacity: 1.2 }, 500, function () {
+            $(this).animate({ opacity: 0 }, 2000);
+          });
+        }
+        var form = $(this);
+
+        e.preventDefault();
+
+        $.ajax({
+          url: form.attr("action"),
+          method: "POST",
+          data: form.serialize(),
+          success: function (response) {
+            showMessage("Collection removed");
+            setTimeout(function () {
+              form.remove();
+            }, 500);
           },
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Artworks by Year'
-          }
-        }
+          error: function (xhr, status, error) {
+            console.error("Error deleting collection:", error);
+          },
+        });
+      });
+
+      function hideCollection(event) {
+        event.stopPropagation();
+
+        var collectionDiv = $(event.target).closest("form");
+
+        collectionDiv.animate({ opacity: 0, height: 0 }, 500, function () {
+          collectionDiv.css("display", "none");
+        });
       }
-    });
 
-  </script>
+      function openArtwork(event) {
+        const title = event.target.closest(".title");
+        const artworks = title.nextElementSibling;
+        const icon = title.querySelector(".fa-angle-down");
 
-  <script>
-    // Sample users data
-    const users = [
-      { name: 'Dat', age: 25, likes: 10 },
-      { name: 'Duy', age: 30, likes: 15 },
-      { name: 'Son', age: 28, likes: 8 },
-      { name: 'admin', age: 35, likes: 20 }
-      // Add more user data as needed
-    ];
+        artworks.classList.toggle("open");
+        icon.classList.toggle("open");
+      }
 
-    // Function to create the users chart
-    function createUsersChart(usersData) {
-      const ctx = document.getElementById('usersChart').getContext('2d');
-      const usersChart = new Chart(ctx, {
+      function toggleCollection(event) {
+        const collectionDiv = event.target.parentElement.parentElement;
+
+        const artworksDiv = collectionDiv.querySelector(".artworks");
+        artworksDiv.classList.toggle("open");
+
+        const arrowIcon = collectionDiv.querySelector(".arrow-down-icon");
+        arrowIcon.classList.toggle("rotate");
+      }
+    </script>
+
+
+    <script>
+       const artworks = <%- JSON.stringify(artworks) %>;
+
+      // Extracting relevant data for charts
+      const likesData = artworks.map(artwork => artwork.likes.length);
+      const typeData = artworks.reduce((acc, artwork) => {
+        acc[artwork.type] = (acc[artwork.type] || 0) + 1;
+        return acc;
+      }, {});
+
+      // Creating a bar chart for likes
+      const likesCtx = document.getElementById('likesChart').getContext('2d');
+      const likesChart = new Chart(likesCtx, {
         type: 'bar',
         data: {
-          labels: usersData.map(user => user.name),
-          datasets: [
-            {
-              label: 'Age',
-              data: usersData.map(user => user.age),
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'Likes',
-              data: usersData.map(user => user.likes),
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            }
-          ]
+          labels: artworks.map(artwork => artwork.title),
+          datasets: [{
+            label: 'Likes',
+            data: likesData,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
         },
         options: {
           scales: {
-            x: { // X-axis
-              stacked: true,
-            },
-            y: { // Y-axis
-              beginAtZero: true,
-            },
+            y: {
+              beginAtZero: true
+            }
           },
           plugins: {
-            legend: {
-              position: 'top',
-            },
             title: {
               display: true,
-              text: 'Users Chart'
+              text: 'Likes by Artwork'
             }
           }
         }
       });
+
+      // Creating a pie chart for artwork types
+      const typeCtx = document.getElementById('typeChart').getContext('2d');
+      const typeChart = new Chart(typeCtx, {
+        type: 'pie',
+        data: {
+          labels: Object.keys(typeData),
+          datasets: [{
+            data: Object.values(typeData),
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 206, 86, 0.7)',
+              'rgba(75, 192, 192, 0.7)',
+              'rgba(153, 102, 255, 0.7)',
+              'rgba(255, 159, 64, 0.7)',
+              'rgba(233, 30, 99, 0.7)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(233, 30, 99, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Artworks by Type'
+            }
+          }
+        }
+      });
+
+      const artworksByYear = artworks.reduce((acc, artwork) => {
+        const year = artwork.year || 'Unknown';
+        acc[year] = (acc[year] || 0) + 1;
+        return acc;
+      }, {});
+
+      const artworksByYearCtx = document.getElementById('artworksByYearChart').getContext('2d');
+      const artworksByYearChart = new Chart(artworksByYearCtx, {
+        type: 'bubble',
+        data: {
+          labels: Object.keys(artworksByYear),
+          datasets: [{
+            label: 'Number of Artworks',
+            data: Object.values(artworksByYear),
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: false
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'linear',
+              position: 'bottom'
+            },
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Artworks by Year'
+            }
+          }
+        }
+      });
+
+    </script>
+
+    <script>
+      // Sample users data
+      const users = [
+        { name: 'Dat', age: 25, likes: 10 },
+        { name: 'Duy', age: 30, likes: 15 },
+        { name: 'Son', age: 28, likes: 8 },
+        { name: 'admin', age: 35, likes: 20 }
+        // Add more user data as needed
+      ];
+
+      // Function to create the users chart
+      function createUsersChart(usersData) {
+        const ctx = document.getElementById('usersChart').getContext('2d');
+        const usersChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: usersData.map(user => user.name),
+            datasets: [
+              {
+                label: 'Age',
+                data: usersData.map(user => user.age),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              },
+              {
+                label: 'Likes',
+                data: usersData.map(user => user.likes),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            scales: {
+              x: { // X-axis
+                stacked: true,
+              },
+              y: { // Y-axis
+                beginAtZero: true,
+              },
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Users Chart'
+              }
+            }
+          }
+        });
+      }
+
+      // Call the function to create the users chart
+      createUsersChart(users);
+      </script>
+    <%- include('../partials/footer.ejs') %>
+  </body>
+  <style>
+    :root {
+      --timing: 200ms;
+      --z-index: 999;
     }
 
-    // Call the function to create the users chart
-    createUsersChart(users);
-  </script>
-  <%- include('../partials/footer.ejs') %>
-</body>
-<style>
-  :root {
-    --timing: 200ms;
-    --z-index: 999;
-  }
-
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  body.close {
-    overflow: hidden;
-  }
-
-  /* Navbar */
-  .navbar {
-    width: 100vw;
-    height: 90px;
-    background-color: #333333;
-    position: fixed;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1%;
-  }
-
-  .header {
-    color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 380px;
-    padding-left: 10px;
-  }
-
-  .museum-name {
-    font-size: larger;
-  }
-
-  .manager {
-    font-size: smaller;
-    color: #b6b6b6;
-  }
-
-  .toggle_btn {
-    z-index: 99999;
-  }
-
-  .toggle {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .toggle span {
-    position: absolute;
-    width: 40%;
-    height: 2px;
-    border-radius: 4px;
-    transition: 0.5s;
-    background-color: #ffffff;
-  }
-
-  .toggle span:nth-child(1) {
-    transform: translateY(-8px);
-    left: 15px;
-  }
-
-  .toggle.active span:nth-child(1) {
-    transform: translateY(0px) rotate(-45deg);
-  }
-
-  .toggle span:nth-child(2) {
-    transform: translateY(8px);
-    left: 15px;
-  }
-
-  .toggle.active span:nth-child(2) {
-    transform: translateY(0px) rotate(45deg);
-  }
-
-  /* over-lay */
-  .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    min-width: 100vw;
-    opacity: 0;
-    z-index: -1;
-    top: 90px;
-  }
-
-  .overlay.open {
-    opacity: 1;
-    z-index: 1001;
-  }
-
-  /* map container */
-  .map-title {
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
-    row-gap: 1.25rem;
-    column-gap: 1.25rem;
-  }
-
-  .mb-4 {
-    height: auto;
-    width: 100%;
-    border: 2px solid #fff;
-    color: #fff;
-    font-size: 1.25em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-  }
-
-  /* dropdown-menu */
-  .dropdown-menu {
-    width: 1000px;
-    height: 450px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: var(--timing) ease-in;
-    pointer-events: none;
-  }
-
-  .dropdown-menu.open {
-    z-index: 1002;
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .dropdown-menu li {
-    list-style: none;
-    overflow: hidden;
-  }
-
-  .dropdown-menu a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-  }
-
-  /* Content */
-  .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-  }
-
-  .content {
-    display: grid;
-    width: 70%;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2rem;
-    margin-top: 50px;
-  }
-
-  .graph {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    height: 250px;
-    width: 100%;
-    text-align: center;
-    border: 1px solid black;
-  }
-
-  .graph:nth-child(1) {
-    grid-column: span 3;
-    height: 150px;
-  }
-
-  /* Footer */
-  footer {
-    width: 100%;
-  }
-
-  .footer-row {
-    box-sizing: border-box;
-  }
-
-  .footer .container-footer ul {
-    list-style: none;
-  }
-
-  .container-footer .footer-row {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .container-footer {
-    max-width: 80%;
-    margin: auto;
-  }
-
-  .footer {
-    background-color: black;
-    padding: 70px 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .footer-col {
-    width: 25%;
-    padding: 0 15px;
-  }
-
-  .footer-col h4 {
-    font-size: 2em;
-    color: #fff;
-    text-transform: capitalize;
-    margin-bottom: 30px;
-    position: relative;
-  }
-
-  .footer-col h4::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    background-color: red;
-    height: 2px;
-    box-sizing: border-box;
-    width: 30%;
-  }
-
-  .footer-col ul li:not(:last-child) {
-    margin-bottom: 10px;
-  }
-
-  .footer-col ul li a {
-    font-size: 1em;
-    text-transform: capitalize;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 300;
-    color: #fff;
-    display: block;
-    transition: all 0.3s ease;
-  }
-
-  .footer-col ul li a:hover {
-    color: yellow;
-    padding-left: 2%;
-  }
-
-  .footer-col .social-links i {
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    margin: 0 10px 10px 0;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 50%;
-    color: #fff;
-    transition: all 0.3s ease;
-  }
-
-  .footer-col .social-links i:hover {
-    color: black;
-    background-color: #fff;
-  }
-
-  @media (max-width: 992px) {
-    .dropdown-menu {
-      width: 80% !important;
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
-    .container {
-      margin: 0 auto;
+    body.close {
+      overflow: hidden;
     }
-  }
 
-  @media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+      width: 100vw;
+      height: 90px;
+      background-color: #333333;
+      position: fixed;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1%;
+    }
+
     .header {
-      flex-direction: column;
-      align-items: baseline;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 380px;
+      padding-left: 10px;
     }
 
-    .main {
-      margin-top: 140px;
+    .museum-name {
+      font-size: larger;
     }
 
-    .content {
-      grid-template-columns: auto;
+    .manager {
+      font-size: smaller;
+      color: #b6b6b6;
     }
 
-    .graph:nth-child(1) {
-      grid-column: span 1;
-      height: 150px;
+    .toggle_btn {
+      z-index: 99999;
     }
 
-    .dropdown-menu {
-      height: 70vh;
+    .toggle {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .toggle span {
+      position: absolute;
+      width: 40%;
+      height: 2px;
+      border-radius: 4px;
+      transition: 0.5s;
+      background-color: #ffffff;
+    }
+
+    .toggle span:nth-child(1) {
+      transform: translateY(-8px);
+      left: 15px;
+    }
+
+    .toggle.active span:nth-child(1) {
+      transform: translateY(0px) rotate(-45deg);
+    }
+
+    .toggle span:nth-child(2) {
+      transform: translateY(8px);
+      left: 15px;
+    }
+
+    .toggle.active span:nth-child(2) {
+      transform: translateY(0px) rotate(45deg);
+    }
+
+    /* over-lay */
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      min-width: 100vw;
+      opacity: 0;
+      z-index: -1;
+      top: 90px;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      z-index: 1001;
+    }
+
+    /* map container */
+    .map-title {
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
     }
 
     .grid {
-      grid-template-columns: auto;
-    }
-
-    .map-title {
-      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: auto auto;
+      row-gap: 1.25rem;
+      column-gap: 1.25rem;
     }
 
     .mb-4 {
-      padding: 10px;
+      height: auto;
+      width: 100%;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 1.25em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
     }
-  }
 
-  @media (max-width: 768px) {
-    .footer-col {
-      width: 50%;
-      margin-bottom: 30px;
+    /* dropdown-menu */
+    .dropdown-menu {
+      width: 1000px;
+      height: 450px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: var(--timing) ease-in;
+      pointer-events: none;
     }
-  }
 
-  @media (max-width: 574px) {
-    .footer-col {
+    .dropdown-menu.open {
+      z-index: 1002;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .dropdown-menu li {
+      list-style: none;
+      overflow: hidden;
+    }
+
+    .dropdown-menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+    }
+
+    /* Content */
+    .main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .content {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2rem;
+      margin-top: 50px;
+      place-items: center;
+    }
+
+    .graph {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+      height: 250px;
+      width: 80%;
+      text-align: center;
+      border: 1px solid black;
+    }
+
+    .graph:nth-child(1) {
+      grid-column: span 3;
+      height: 150px;
+    }
+
+    /* Footer */
+    footer {
       width: 100%;
     }
-  }
-</style>
 
+    .footer-row {
+      box-sizing: border-box;
+    }
+
+    .footer .container-footer ul {
+      list-style: none;
+    }
+
+    .container-footer .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .container-footer {
+      max-width: 80%;
+      margin: auto;
+    }
+
+    .footer {
+      background-color: black;
+      padding: 70px 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .footer-col {
+      width: 25%;
+      padding: 0 15px;
+    }
+
+    .footer-col h4 {
+      font-size: 2em;
+      color: #fff;
+      text-transform: capitalize;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .footer-col h4::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      background-color: red;
+      height: 2px;
+      box-sizing: border-box;
+      width: 30%;
+    }
+
+    .footer-col ul li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      font-size: 1em;
+      text-transform: capitalize;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 300;
+      color: #fff;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .footer-col ul li a:hover {
+      color: yellow;
+      padding-left: 2%;
+    }
+
+    .footer-col .social-links i {
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      margin: 0 10px 10px 0;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .footer-col .social-links i:hover {
+      color: black;
+      background-color: #fff;
+    }
+
+    @media (max-width: 992px) {
+      .dropdown-menu {
+        width: 80% !important;
+      }
+      .container {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: baseline;
+      }
+
+      .main {
+        margin-top: 140px;
+      }
+
+      .content {
+        grid-template-columns: auto;
+      }
+
+      .graph:nth-child(1) {
+        grid-column: span 1;
+        height: 150px;
+      }
+
+      .dropdown-menu {
+        height: 70vh;
+      }
+
+      .grid {
+        grid-template-columns: auto;
+      }
+
+      .map-title {
+        margin-bottom: 10px;
+      }
+
+      .mb-4 {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 574px) {
+      .footer-col {
+        width: 100%;
+      }
+    }
+  </style>
 </html>
